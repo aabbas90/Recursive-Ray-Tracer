@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="core">
+      <UniqueIdentifier>{6b284427-54d4-49ef-afb1-13a3a671aca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rt">
+      <UniqueIdentifier>{1b6f65d8-e391-4579-877a-da684d0a40f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{75961c76-1da5-4f6d-82bb-cd87c1449a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rt\cameras">
+      <UniqueIdentifier>{cace52b3-55b0-4e94-9656-29f7b9af3863}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="core\macros.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\scalar.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\vector.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\ray.h">
+      <Filter>rt</Filter>
+    </ClInclude>
+    <ClInclude Include="core\image.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\assert.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\cameras\perspective.h">
+      <Filter>rt\cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\renderer.h">
+      <Filter>rt</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\cameras\camera.h">
+      <Filter>rt\cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="core\point.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\color.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\julia.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\cameras\orthographic.h">
+      <Filter>rt\cameras</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main\main.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="core\image.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\scalar.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\julia.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="main\a_julia.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="main\a_cameras.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="core\color.cpp" />
+  </ItemGroup>
+</Project>
