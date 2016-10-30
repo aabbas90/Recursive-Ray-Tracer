@@ -1,6 +1,7 @@
 #include "vector.h"
 #include "point.h"
 #include <algorithm>
+#include <math.h>	
 
 namespace rt
 {
@@ -21,7 +22,7 @@ namespace rt
 
 	float Vector::length() const
 	{
-		return std::sqrtf(this->lensqr());
+		return sqrtf(this->lensqr());
 	}
 
 	float Vector::lensqr() const

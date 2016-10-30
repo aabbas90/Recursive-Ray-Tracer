@@ -1,5 +1,7 @@
 #include "color.h"
-#include<algorithm>
+
+#include <algorithm>
+#include <cmath>
 
 namespace rt
 {
