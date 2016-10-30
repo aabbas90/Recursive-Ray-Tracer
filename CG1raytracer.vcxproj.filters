@@ -74,6 +74,14 @@
     <ClCompile Include="main\a_cameras.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="core\color.cpp" />
+    <ClCompile Include="core\color.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\vector.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\point.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
