@@ -2,12 +2,11 @@
 
 namespace rt
 {
-	Ray::Ray(const Point & o, const Vector & d)
-	{
+	Ray::Ray(const Point & o, const Vector & d) : o(o), d(d) {
 	}
 
-	Point Ray::getPoint(float distance) const
-	{
-		return Point();
+	Point Ray::getPoint(float distance) const {
+		//TODO: Check if right logic
+		return o + distance * d;
 	}
 }
