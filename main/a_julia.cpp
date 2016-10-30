@@ -5,6 +5,7 @@
 #include <core/julia.h>
 #include <core/image.h>
 #include <rt/renderer.h>
+#include <core/ImageDrawing.h>
 
 using namespace rt;
 
@@ -31,4 +32,5 @@ void a_julia() {
     Renderer engine(0,0);
     engine.test_render1(img);
     img.writePNG("a1.png");
+	DrawImage::displayImage(img);
 }

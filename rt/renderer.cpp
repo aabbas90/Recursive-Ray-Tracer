@@ -21,8 +21,8 @@ void Renderer::test_render2(Image & img)
 }
 
 void Renderer::test_render1(Image& img) {
-	for (uint i = 0; i<img.width(); ++i) {
-		for (uint j = 0; j<img.height(); ++j) {
+	for (uint i = 0; i < img.width(); ++i) {
+		for (uint j = 0; j < img.height(); ++j) {
 			//TODO: Check if width and height passed are correct
 			img(i, j) = a1computeColor(i, j, img.width(), img.height());
 		}

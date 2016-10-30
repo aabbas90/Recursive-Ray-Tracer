@@ -54,6 +54,12 @@
     <ClInclude Include="rt\cameras\orthographic.h">
       <Filter>rt\cameras</Filter>
     </ClInclude>
+    <ClInclude Include="CImg-1.7.9_pre102716\CImg.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\ImageDrawing.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -94,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="rt\ray.cpp">
       <Filter>rt</Filter>
+    </ClCompile>
+    <ClCompile Include="core\ImageDrawing.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
