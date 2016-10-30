@@ -2,6 +2,7 @@
 #define CG1RAYTRACER_RENDERER_HEADER
 
 #include <core/scalar.h>
+#include <core/image.h>
 
 namespace rt {
 

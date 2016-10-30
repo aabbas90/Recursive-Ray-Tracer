@@ -100,6 +100,10 @@
     <ClCompile Include="main\a_julia.cpp" />
     <ClCompile Include="main\a_cameras.cpp" />
     <ClCompile Include="main\main.cpp" />
+    <ClCompile Include="rt\cameras\orthographic.cpp" />
+    <ClCompile Include="rt\cameras\perspective.cpp" />
+    <ClCompile Include="rt\ray.cpp" />
+    <ClCompile Include="rt\renderer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,6 +4,7 @@
 #include <rt/cameras/camera.h>
 #include <core/vector.h>
 #include <core/point.h>
+#include <rt/ray.h>
 
 namespace rt {
 

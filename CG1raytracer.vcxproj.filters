@@ -83,5 +83,17 @@
     <ClCompile Include="core\point.cpp">
       <Filter>core</Filter>
     </ClCompile>
+    <ClCompile Include="rt\renderer.cpp">
+      <Filter>rt</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\cameras\orthographic.cpp">
+      <Filter>rt\cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\cameras\perspective.cpp">
+      <Filter>rt\cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\ray.cpp">
+      <Filter>rt</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
