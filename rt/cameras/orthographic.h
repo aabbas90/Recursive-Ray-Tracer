@@ -13,6 +13,7 @@ private:
 	Point center;
 	Vector forward;
 	Vector up;
+	Vector right;
 	float scaleX, scaleY;
 
 public:
@@ -22,7 +23,7 @@ public:
 		const Vector& up,
 		float scaleX,
 		float scaleY
-	) : center(center), forward(forward), up(up), scaleX(scaleX), scaleY(scaleY) {}
+	); 
 
     Ray getPrimaryRay(float x, float y) const;
 };

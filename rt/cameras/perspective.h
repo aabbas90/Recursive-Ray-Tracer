@@ -9,6 +9,12 @@
 namespace rt {
 
 class PerspectiveCamera : public Camera {
+private:
+	Point center;
+	Vector forward;
+	Vector up;
+	Vector right;
+	float verticalOpeningAngle, horizonalOpeningAngle;
 public:
     PerspectiveCamera(
         const Point& center,
