@@ -1,5 +1,5 @@
-#include<core/CImg.h>
-#include<core/image.h>
+#include <core/CImg.h>
+#include <core/image.h>
 
 namespace rt
 {

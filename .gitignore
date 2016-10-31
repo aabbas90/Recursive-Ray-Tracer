@@ -241,5 +241,9 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 
+# Binaries
 cgrayd
 cgray
+
+# Generated Images
+.png

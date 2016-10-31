@@ -1,9 +1,10 @@
-#include"ImageDrawing.h"
+#include "ImageDrawing.h"
 
 using namespace rt;
 
 void DrawImage::displayImage(Image image)
 {
+	// img (Image width, Image height, Image depth, Number of channels, initialization value)
 	cimg_library::CImg<float> img(image.width(), image.height(), 1, 3, 0);
 	for (uint i = 0; i < image.height(); i++)
 	{

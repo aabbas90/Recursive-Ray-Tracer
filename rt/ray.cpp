@@ -6,7 +6,6 @@ namespace rt
 	}
 
 	Point Ray::getPoint(float distance) const {
-		//TODO: Check if right logic
 		return o + distance * d;
 	}
 }

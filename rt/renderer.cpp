@@ -1,6 +1,6 @@
 #include "renderer.h"
 #include "ray.h"
-#include "cameras\orthographic.h"
+#include "cameras/orthographic.h"
 
 using namespace rt;
 
