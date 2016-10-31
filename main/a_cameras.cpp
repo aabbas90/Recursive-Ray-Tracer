@@ -8,6 +8,7 @@
 #include <rt/cameras/orthographic.h>
 #include <iostream>
 #include <rt/renderer.h>
+#include <core/ImageDrawing.h>
 
 using namespace rt;
 
@@ -53,4 +54,6 @@ void a_cameras() {
     Renderer r2(&ocam,0);
     r2.test_render2(img);
     img.writePNG("a1-4.png");
+	DrawImage::displayImage(img);
+
 }
