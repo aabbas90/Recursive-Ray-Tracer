@@ -1,7 +1,7 @@
 CC=g++
 LD=g++
-CCFLAGS=-I. -c -std=c++0x
-LDFLAGS=-lpng
+CCFLAGS=-I. -c -std=c++0x -I/opt/X11/include 
+LDFLAGS=-lpng -L/opt/X11/lib -lX11
 CCDEBUGFLAGS=-g
 LDDEBUGFLAGS=
 CCRELEASEFLAGS=-O3 -DNDEBUG
