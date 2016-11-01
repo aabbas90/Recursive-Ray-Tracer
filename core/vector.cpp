@@ -27,7 +27,7 @@ namespace rt
 
 	float Vector::lensqr() const
 	{
-		return this->x * this->x + this->y + this->y + this->z + this->z;
+		return this->x * this->x + this->y * this->y + this->z * this->z;
 	}
 
 	bool Vector::operator==(const Vector & b) const

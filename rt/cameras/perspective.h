@@ -15,6 +15,7 @@ private:
 	Vector up;
 	Vector right;
 	float verticalOpeningAngle, horizonalOpeningAngle;
+
 public:
     PerspectiveCamera(
         const Point& center,

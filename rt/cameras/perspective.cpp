@@ -8,16 +8,18 @@ namespace rt
 		const Vector & up, 
 		float verticalOpeningAngle, 
 		float horizonalOpeningAngle
-		) : center(center), forward(forward), up(up), verticalOpeningAngle(verticalOpeningAngle), horizonalOpeningAngle(horizonalOpeningAngle) {
-		right = cross(up, forward);
-		this->up = cross(forward, right); // Ensuring that all three vectors are perpendicular
+		) : center(center), forward(forward), up(up), verticalOpeningAngle(verticalOpeningAngle), horizonalOpeningAngle(horizonalOpeningAngle)
+	{
+		this->right = cross(up, forward).normalize();
+		this->up = cross(forward, right).normalize(); // Ensuring that all three vectors are perpendicular
 	}
 
 	Ray PerspectiveCamera::getPrimaryRay(float x, float y) const
 	{
+		Vector direction = forward.normalize() -
+			(right * x * tan(horizonalOpeningAngle / 2.0f)) -
+			(up * y * tan(verticalOpeningAngle / 2.0f));
 
-		Point rayPoint = center + right * x * tan(horizonalOpeningAngle / 2)  + up * y * tan(verticalOpeningAngle /2);
-		//Vector direction = right * x * tan(horizonalOpeningAngle / 2)  + upp * y * tan(verticalOpeningAngle /2);
-		return Ray(rayPoint, forward.normalize());
+		return Ray(center, direction.normalize());
 	}
 }
