@@ -12,15 +12,12 @@ namespace rt {
 		Vector forward;
 		Vector up;
 		Vector right;
-		float viewingAngleX, viewingAngleY;
 
 	public:
 		FishEyeCamera(
 			const Point& center,
 			const Vector& forward,
-			const Vector& up,
-			float viewingAngleX,
-			float viewingAngleY
+			const Vector& up
 		);
 
 		Ray getPrimaryRay(float x, float y) const;

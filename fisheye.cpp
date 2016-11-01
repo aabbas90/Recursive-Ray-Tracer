@@ -3,8 +3,8 @@
 
 using namespace rt;
 
-FishEyeCamera::FishEyeCamera(const Point & center, const Vector & forward, const Vector & up, float viewingAngleX, float viewingAngleY) : 
-	center(center), forward(forward), up(up), viewingAngleX(viewingAngleX), viewingAngleY(viewingAngleY)
+FishEyeCamera::FishEyeCamera(const Point & center, const Vector & forward, const Vector & up) : 
+	center(center), forward(forward), up(up)
 {
 	this->right = cross(up, forward).normalize();
 	this->up = cross(forward, right).normalize(); // Ensuring that all three vectors are perpendicular
