@@ -20,5 +20,5 @@ Ray FishEyeCamera::getPrimaryRay(float x, float y) const
 		return Ray(Point(0,0,0), Vector(0,0,0));
 
 	float zCoordinate =  sqrtf(1 - xyVector.x * xyVector.x - xyVector.y * xyVector.y);
-	return Ray(center, Vector(xyVector.x, xyVector.y, zCoordinate).normalize());
+	return Ray(center, (xVector + yVector + zCoordinate * forward.normalize()).normalize());
 }
