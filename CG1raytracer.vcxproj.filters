@@ -63,6 +63,9 @@
     <ClInclude Include="rt\cameras\fisheye.h">
       <Filter>rt\cameras</Filter>
     </ClInclude>
+    <ClInclude Include="rt\cameras\environment.h">
+      <Filter>rt\cameras</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -108,6 +111,9 @@
       <Filter>core</Filter>
     </ClCompile>
     <ClCompile Include="rt\cameras\fisheye.cpp">
+      <Filter>rt\cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\cameras\environment.cpp">
       <Filter>rt\cameras</Filter>
     </ClCompile>
   </ItemGroup>
