@@ -2,6 +2,7 @@
 #define CG1RAYTRACER_RGBCOLOR_HEADER
 
 #include <core/macros.h>
+#include <iostream>
 
 namespace rt {
 
@@ -35,6 +36,7 @@ public:
 RGBColor operator*(float scalar, const RGBColor& b);
 RGBColor operator*(const RGBColor& a, float scalar);
 RGBColor operator/(const RGBColor& a, float scalar);
+std::ostream& operator<<(std::ostream& os, const RGBColor& c);
 
 }
 
