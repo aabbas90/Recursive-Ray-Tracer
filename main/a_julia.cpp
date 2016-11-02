@@ -32,5 +32,5 @@ void a_julia() {
     Renderer engine(0,0);
     engine.test_render1(img);
     img.writePNG("a1.png");
-	DrawImage::displayImage(img);
+	// DrawImage::displayImage(img);
 }

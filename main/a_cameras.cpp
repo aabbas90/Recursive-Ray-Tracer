@@ -55,8 +55,8 @@ void a_cameras() {
 	FishEyeCamera fcam(Point(0, 0, 0), Vector(0.1, 0.1, 1), Vector(0.2, 1.0, 0.2));
 	Renderer r22(&fcam, 0);
 	r22.test_render2(img);
-	img.writePNG("a1-5.png");
-	DrawImage::displayImage(img);
+	img.writePNG("a1-FishEye.png");
+	// DrawImage::displayImage(img);
 
     OrthographicCamera ocam(Point(0, 0, 0), Vector(0.1, 0.1, 1), Vector(0.2, 1.0, 0.2), 10.f, 10.f);
     Renderer r2(&ocam,0);
@@ -69,6 +69,6 @@ void a_cameras() {
     Renderer r3(&ecam,0);
     r3.test_render2(img);
     img.writePNG("a1-Environment.png");
-    //DrawImage::displayImage(img);
+    DrawImage::displayImage(img);
 
 }
