@@ -60,6 +60,9 @@
     <ClInclude Include="core\ImageDrawing.h">
       <Filter>core</Filter>
     </ClInclude>
+    <ClInclude Include="fisheye.h">
+      <Filter>rt\cameras</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -104,5 +107,6 @@
     <ClCompile Include="core\ImageDrawing.cpp">
       <Filter>core</Filter>
     </ClCompile>
+    <ClCompile Include="fisheye.cpp" />
   </ItemGroup>
 </Project>
