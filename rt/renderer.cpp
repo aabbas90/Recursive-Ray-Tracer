@@ -32,7 +32,7 @@ void Renderer::test_render2(Image & img)
 			float jj = 2.0 * j / img.height() - 1;
 			Ray currentRay = cam->getPrimaryRay(ii, jj);
 
-			if (currentRay.d.lensqr() == 0)
+			if (currentRay.d == Vector(0,0,0))
 				img(i, j) = RGBColor(0,0,0);
 
 			else
