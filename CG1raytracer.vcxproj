@@ -86,8 +86,8 @@
     <ClInclude Include="core\point.h" />
     <ClInclude Include="core\scalar.h" />
     <ClInclude Include="core\vector.h" />
-    <ClInclude Include="fisheye.h" />
     <ClInclude Include="rt\cameras\camera.h" />
+    <ClInclude Include="rt\cameras\fisheye.h" />
     <ClInclude Include="rt\cameras\orthographic.h" />
     <ClInclude Include="rt\cameras\perspective.h" />
     <ClInclude Include="rt\ray.h" />
@@ -101,10 +101,10 @@
     <ClCompile Include="core\point.cpp" />
     <ClCompile Include="core\scalar.cpp" />
     <ClCompile Include="core\vector.cpp" />
-    <ClCompile Include="fisheye.cpp" />
     <ClCompile Include="main\a_julia.cpp" />
     <ClCompile Include="main\a_cameras.cpp" />
     <ClCompile Include="main\main.cpp" />
+    <ClCompile Include="rt\cameras\fisheye.cpp" />
     <ClCompile Include="rt\cameras\orthographic.cpp" />
     <ClCompile Include="rt\cameras\perspective.cpp" />
     <ClCompile Include="rt\ray.cpp" />

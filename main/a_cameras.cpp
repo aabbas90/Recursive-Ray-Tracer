@@ -6,6 +6,7 @@
 #include <rt/ray.h>
 #include <rt/cameras/perspective.h>
 #include <rt/cameras/orthographic.h>
+#include <rt/cameras/fisheye.h>
 #include <iostream>
 #include <rt/renderer.h>
 #include <core/ImageDrawing.h>
@@ -49,6 +50,12 @@ void a_cameras() {
     Renderer r12(&pcam2,0);
     r12.test_render2(img);
     img.writePNG("a1-3.png");
+
+	FishEyeCamera fcam(Point(0, 0, 0), Vector(0.1, 0.1, 1), Vector(0.2, 1.0, 0.2));
+	Renderer r22(&fcam, 0);
+	r22.test_render2(img);
+	img.writePNG("a1-5.png");
+	DrawImage::displayImage(img);
 
     OrthographicCamera ocam(Point(0, 0, 0), Vector(0.1, 0.1, 1), Vector(0.2, 1.0, 0.2), 10.f, 10.f);
     Renderer r2(&ocam,0);
