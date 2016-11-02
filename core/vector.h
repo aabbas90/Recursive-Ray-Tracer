@@ -2,6 +2,7 @@
 #define CG1RAYTRACER_VECTOR_HEADER
 
 #include <core/macros.h>
+#include <iostream>
 
 namespace rt {
 
@@ -46,6 +47,7 @@ Point operator+(const Point& a, const Vector& b);
 Point operator+(const Vector& a, const Point& b);
 Point operator-(const Point& a, const Vector& b);
 Point operator*(const Float4& scale, const Point& p);
+std::ostream& operator<<(std::ostream& os, const Vector& v);
 
 }
 
