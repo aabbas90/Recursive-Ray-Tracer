@@ -6,6 +6,9 @@
 #include <rt/ray.h>
 #include <rt/cameras/perspective.h>
 #include <rt/cameras/orthographic.h>
+#include <rt/cameras/environment.h>
+#include <rt/cameras/fisheye.h>
+#include <rt/cameras/environment.h>
 #include <rt/cameras/fisheye.h>
 #include <iostream>
 #include <rt/renderer.h>
@@ -61,6 +64,13 @@ void a_cameras() {
     Renderer r2(&ocam,0);
     r2.test_render2(img);
     img.writePNG("a1-4.png");
-	DrawImage::displayImage(img);
+    //DrawImage::displayImage(img);
+
+
+    EnvironmentCamera ecam(Point(0, 0, 0), Vector(1, 0, 0.1), Vector(0, 0, 1), pi, pi);
+    Renderer r3(&ecam,0);
+    r3.test_render2(img);
+    img.writePNG("a1-Environment.png");
+    //DrawImage::displayImage(img);
 
 }
