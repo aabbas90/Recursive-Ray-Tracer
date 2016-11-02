@@ -9,7 +9,6 @@
 #include <rt/cameras/environment.h>
 #include <rt/cameras/fisheye.h>
 #include <rt/cameras/environment.h>
-#include <rt/cameras/fisheye.h>
 #include <iostream>
 #include <rt/renderer.h>
 #include <core/ImageDrawing.h>

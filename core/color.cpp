@@ -51,4 +51,9 @@ namespace rt
 	{
 		return RGBColor(a.r / scalar, a.g / scalar, a.b / scalar);
 	}
+	std::ostream& operator<<(std::ostream& os, const RGBColor& c)
+	{
+	    os << "COLOR R:" << c.r << " G:" << c.g << " B:" << c.b;
+	    return os;
+	}
 }

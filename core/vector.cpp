@@ -107,4 +107,9 @@ namespace rt
 	{
 		return Point();
 	}
+	std::ostream& operator<<(std::ostream& os, const Vector& v)
+	{
+	    os << "VECTOR x:" << v.x << " y:" << v.y << " z:" << v.z  << " length: " << v.length();
+	    return os;
+	}
 }

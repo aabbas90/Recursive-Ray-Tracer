@@ -2,6 +2,7 @@
 #define CG1RAYTRACER_POINT_HEADER
 
 #include <core/macros.h>
+#include <iostream>
 
 namespace rt {
 
@@ -30,6 +31,7 @@ Point operator*(const Point& a, float scalar);
 
 Point min(const Point& a, const Point& b);
 Point max(const Point& a, const Point& b);
+std::ostream& operator<<(std::ostream& os, const Point& pt);
 
 }
 

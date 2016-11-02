@@ -41,5 +41,10 @@ namespace rt
 					 a.y > b.y ? a.y : b.y,
 					 a.z > b.z ? a.z : b.z);
 	}
+	std::ostream& operator<<(std::ostream& os, const Point& pt)
+	{
+	    os << "POINT x:" << pt.x << " y:" << pt.y << " z:" << pt.z;
+	    return os;
+	}
 }
 
