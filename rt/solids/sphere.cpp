@@ -29,16 +29,21 @@ namespace rt
 
 			if (currentMinDistance > previousBestDistance)
 			{
-				return Intersection();	// Indicates failure
+				return Intersection();
 			}
 
-			else
+			if (currentMinDistance < 0)
+				currentMinDistance = max(d1, d2);
+
+			if (currentMinDistance > 0 && currentMinDistance < previousBestDistance)
 			{
 				Point intersectionPoint = ray.getPoint(currentMinDistance);
 				Vector normalVector = 2 * Vector(intersectionPoint.x, intersectionPoint.y, intersectionPoint.z);
 				return Intersection(currentMinDistance, ray, this, normalVector.normalize());
 			}
 		}
+
+		return Intersection();
 	}
 
 	float Sphere::getArea() const

@@ -6,6 +6,8 @@ namespace rt
 	{
 		this->origin = origin;
 		this->normal = normal;
+		this->texMapper = texMapper;
+		this->material = material;
 	}
 
 	Intersection InfinitePlane::intersect(const Ray & ray, float previousBestDistance) const
@@ -19,5 +21,10 @@ namespace rt
 		}
 
 		return Intersection();
+	}
+
+	float InfinitePlane::getArea() const
+	{
+		return FLT_MAX;
 	}
 }

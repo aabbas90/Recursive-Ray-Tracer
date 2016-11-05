@@ -9,7 +9,7 @@ namespace rt {
 class Quad : public Solid {
 public:
 	Quad() {}
-	Quad(const Point& v1, const Vector& span1, const Vector& span2, CoordMapper* texMapper, Material* material);
+	Quad(const Point& p1, const Vector& span1, const Vector& span2, CoordMapper* texMapper, Material* material);
 
 	virtual BBox getBounds() const;
 	virtual Intersection intersect(const Ray& ray, float previousBestDistance=FLT_MAX) const;
@@ -17,7 +17,7 @@ public:
 	virtual float getArea() const;
 
 private:
-	Point v1;
+	Point p1;
 	Vector span1, span2;
 };
 

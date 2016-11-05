@@ -19,15 +19,17 @@ namespace rt
 			std::cout << "Intersection distance less than zero!";
 			throw;
 		}
+
 		this->ray = ray;
 		this->solid = solid;
 		this->normalVector = normal;
+		this->intersectionPoint = ray.getPoint(distance);
 		foundIntersection = true;
 	}
 
 	Point Intersection::hitPoint() const
 	{
-		return ray.getPoint(distance);
+		return intersectionPoint;
 	}
 
 	Vector Intersection::normal() const

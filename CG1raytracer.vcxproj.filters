@@ -206,5 +206,8 @@
     <ClCompile Include="rt\solids\quad.cpp">
       <Filter>rt\solids</Filter>
     </ClCompile>
+    <ClCompile Include="rt\solids\triangle.cpp">
+      <Filter>rt\solids</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

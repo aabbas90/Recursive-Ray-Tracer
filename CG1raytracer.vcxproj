@@ -138,6 +138,7 @@
     <ClCompile Include="rt\solids\quad.cpp" />
     <ClCompile Include="rt\solids\solid.cpp" />
     <ClCompile Include="rt\solids\sphere.cpp" />
+    <ClCompile Include="rt\solids\triangle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -29,6 +29,7 @@ public:
 private:
 	Vector normalVector; // This is normalized
 	bool foundIntersection = false;
+	Point intersectionPoint;
 };
 
 }
