@@ -1,5 +1,6 @@
 #include "intersection.h"
 #include <core/assert.h>
+#include <iostream>
 
 namespace rt
 {
@@ -11,6 +12,13 @@ namespace rt
 	Intersection::Intersection(float distance, const Ray & ray, const Solid * solid, const Vector & normal)
 	{
 		this->distance = distance;
+
+		// Normally the distance should always be positive!
+		if (distance < 0)
+		{
+			std::cout << "Intersection distance less than zero!";
+			throw;
+		}
 		this->ray = ray;
 		this->solid = solid;
 		this->normalVector = normal;

@@ -23,8 +23,6 @@ public:
 private:
 	Point center;
 	float radius;
-	CoordMapper* texMapper;
-	Material* material;
 };
 
 }
