@@ -23,13 +23,15 @@ public:
 	Point hitPoint() const;
 	Vector normal() const;
 	Point local() const;
+	void SetLocalIntersectingPoint(Point& point);
 
 	operator bool(); //this allows intersection object to be put directly in conditional statements. Becomes true iff there is an intersection
 
 private:
 	Vector normalVector; // This is normalized
 	bool foundIntersection = false;
-	Point intersectionPoint;
+	Point globalIntersectionPoint;
+	Point localIntersectionPoint;
 };
 
 }

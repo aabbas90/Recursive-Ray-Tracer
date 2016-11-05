@@ -23,13 +23,13 @@ namespace rt
 		this->ray = ray;
 		this->solid = solid;
 		this->normalVector = normal;
-		this->intersectionPoint = ray.getPoint(distance);
+		this->globalIntersectionPoint = ray.getPoint(distance);
 		foundIntersection = true;
 	}
 
 	Point Intersection::hitPoint() const
 	{
-		return intersectionPoint;
+		return globalIntersectionPoint;
 	}
 
 	Vector Intersection::normal() const
@@ -39,7 +39,13 @@ namespace rt
 
 	Point Intersection::local() const
 	{
-		NOT_IMPLEMENTED;
+		return localIntersectionPoint;
+	}
+
+	// Function to set the intersecting point as in local coordinates.
+	void Intersection::SetLocalIntersectingPoint(Point& point)
+	{
+		this->localIntersectionPoint = point;
 	}
 
 	Intersection::operator bool()

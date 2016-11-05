@@ -17,7 +17,10 @@ namespace rt
 		{
 			float currentDistance = dot(origin - ray.o, normal) / denom;
 			if (currentDistance < previousBestDistance)
-				return Intersection(currentDistance, ray, this, normal);			
+			{
+				Intersection intersect = Intersection(currentDistance, ray, this, normal);
+				intersect.SetLocalIntersectingPoint((ray.getPoint(currentDistance) - origin).ToPoint());
+			}
 		}
 
 		return Intersection();

@@ -1,4 +1,5 @@
 #include "quad.h"
+#include "triangle.h"
 #include <rt/intersection.h>
 #include <core/assert.h>
 
@@ -15,7 +16,30 @@ namespace rt
 
 	Intersection Quad::intersect(const Ray & ray, float previousBestDistance) const
 	{
-		NOT_IMPLEMENTED;
+		Point v1 = p1;
+		Point v2 = p1 + span1;
+		Point v3 = p1 + span2;
+		Point v4 = v3 + span1;
+
+		Triangle tri1 = Triangle(v1, v2, v4, texMapper, material);
+		Intersection tri1Intersection = tri1.intersect(ray, previousBestDistance);
+		if (tri1Intersection)
+		{
+			Intersection intersectionObject = Intersection(tri1Intersection.distance, ray, this, tri1Intersection.normal());
+			intersectionObject.SetLocalIntersectingPoint((ray.getPoint(tri1Intersection.distance) - v1).ToPoint());
+			return intersectionObject;
+		}
+
+		Triangle tri2 = Triangle(v1, v3, v4, texMapper, material);
+		Intersection tri2Intersection = tri2.intersect(ray, previousBestDistance);
+		if (tri2Intersection)
+		{
+			Intersection intersectionObject = Intersection(tri2Intersection.distance, ray, this, tri2Intersection.normal());
+			intersectionObject.SetLocalIntersectingPoint((ray.getPoint(tri2Intersection.distance) - v1).ToPoint());
+			return intersectionObject;
+		}
+
+		return Intersection();
 	}
 
 	float Quad::getArea() const

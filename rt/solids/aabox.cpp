@@ -76,26 +76,39 @@ namespace rt
 			maxTnormal = Vector(0, 0, 1);
 		}
 
+		Intersection intersect = Intersection();
 		if (minT < maxT)
 		{
 			// Assuming that the negative distance means no valid intersection
-			if (minT > 0)
-				return Intersection(minT, ray, this, minTnormal);
+			if (minT > 0 && minT < previousBestDistance)
+			{
+				intersect = Intersection(minT, ray, this, minTnormal);
+				intersect.SetLocalIntersectingPoint((ray.getPoint(minT) - minCorner).ToPoint());
+			}
 
-			else if (maxT > 0)
-				return Intersection(maxT, ray, this, maxTnormal);
+			else if (maxT > 0 && maxT < previousBestDistance)
+			{
+				intersect = Intersection(maxT, ray, this, maxTnormal);
+				intersect.SetLocalIntersectingPoint((ray.getPoint(maxT) - minCorner).ToPoint());
+			}
 		}
 
 		else 
 		{
-			if (maxT > 0)
-				return Intersection(maxT, ray, this, maxTnormal);
+			if (maxT > 0 && maxT < previousBestDistance)
+			{
+				intersect = Intersection(maxT, ray, this, maxTnormal);
+				intersect.SetLocalIntersectingPoint((ray.getPoint(maxT) - minCorner).ToPoint());
+			}
 
-			else if (minT > 0)
-				return Intersection(minT, ray, this, minTnormal);
+			else if (minT > 0 && minT < previousBestDistance)
+			{
+				intersect = Intersection(minT, ray, this, minTnormal);
+				intersect.SetLocalIntersectingPoint((ray.getPoint(minT) - minCorner).ToPoint());
+			}
 		}
 
-		return Intersection();
+		return intersect;
 	}
 
 	float AABox::getArea() const

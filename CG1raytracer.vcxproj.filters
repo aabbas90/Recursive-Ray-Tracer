@@ -209,5 +209,6 @@
     <ClCompile Include="rt\solids\triangle.cpp">
       <Filter>rt\solids</Filter>
     </ClCompile>
+    <ClCompile Include="rt\solids\striangle.cpp" />
   </ItemGroup>
 </Project>

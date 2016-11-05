@@ -3,6 +3,11 @@
 
 namespace rt
 {
+	Point Point::operator+(const Point & b) const
+	{
+		return Point(this->x + b.x, this->y + b.y, this->z + b.z);
+	}
+
 	Vector Point::operator-(const Point & b) const
 	{
 		return Vector(this->x - b.x, this->y - b.y, this->z - b.z);
@@ -41,6 +46,7 @@ namespace rt
 					 a.y > b.y ? a.y : b.y,
 					 a.z > b.z ? a.z : b.z);
 	}
+
 	std::ostream& operator<<(std::ostream& os, const Point& pt)
 	{
 	    os << "POINT x:" << pt.x << " y:" << pt.y << " z:" << pt.z;

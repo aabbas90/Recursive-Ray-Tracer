@@ -2,6 +2,7 @@
 #include "point.h"
 #include <algorithm>
 #include <math.h>	
+#include <core/assert.h>
 
 namespace rt
 {
@@ -44,6 +45,11 @@ namespace rt
 	{
 		float length = this->length();
 		return Vector(this->x / length, this->y / length, this->z / length);
+	}
+
+	Point Vector::ToPoint()
+	{
+		return Point(this->x, this->y, this->z);
 	}
 
 	Vector operator*(float scalar, const Vector & b)
@@ -105,8 +111,9 @@ namespace rt
 	// Incomplete:
 	Point operator*(const Float4 & scale, const Point & p)
 	{
-		return Point();
+		NOT_IMPLEMENTED;
 	}
+
 	std::ostream& operator<<(std::ostream& os, const Vector& v)
 	{
 	    os << "VECTOR x:" << v.x << " y:" << v.y << " z:" << v.z  << " length: " << v.length();

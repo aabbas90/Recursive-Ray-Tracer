@@ -1,5 +1,6 @@
 #include "primitive.h"
 #include <core/assert.h>
+#include <rt/bbox.h>
 
 namespace rt
 {

@@ -8,6 +8,7 @@ namespace rt
 		this->texMapper = texMapper;
 		this->material = material;
 	}
+
 	Point Solid::sample() const
 	{
 		NOT_IMPLEMENTED;
