@@ -128,10 +128,12 @@
     <ClCompile Include="rt\cameras\fisheye.cpp" />
     <ClCompile Include="rt\cameras\orthographic.cpp" />
     <ClCompile Include="rt\cameras\perspective.cpp" />
+    <ClCompile Include="rt\intersection.cpp" />
     <ClCompile Include="rt\primitive.cpp" />
     <ClCompile Include="rt\ray.cpp" />
     <ClCompile Include="rt\renderer.cpp" />
     <ClCompile Include="rt\solids\solid.cpp" />
+    <ClCompile Include="rt\solids\sphere.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

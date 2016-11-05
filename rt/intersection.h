@@ -11,19 +11,24 @@ class Solid;
 
 class Intersection {
 public:
-    Ray ray;
-    const Solid* solid;
-    float distance;
+	Ray ray;
+	const Solid* solid;
+	float distance;
 
-    Intersection() {}
-    static Intersection failure();
-    Intersection(float distance, const Ray& ray, const Solid* solid, const Vector& normal, const Point& uv);
+	Intersection() {}
+	static Intersection failure();
 
-    Point hitPoint() const;
-    Vector normal() const;
-    Point local() const;
+	Intersection(float distance, const Ray& ray, const Solid* solid, const Vector& normal);
 
-    operator bool(); //this allows intersection object to be put directly in conditional statements. Becomes true iff there is an intersection
+	Point hitPoint() const;
+	Vector normal() const;
+	Point local() const;
+
+	operator bool(); //this allows intersection object to be put directly in conditional statements. Becomes true iff there is an intersection
+
+private:
+	Vector normalVector; // This is normalized
+	bool foundIntersection = false;
 };
 
 }

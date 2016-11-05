@@ -184,5 +184,7 @@
     </ClCompile>
     <ClCompile Include="rt\primitive.cpp" />
     <ClCompile Include="rt\solids\solid.cpp" />
+    <ClCompile Include="rt\solids\sphere.cpp" />
+    <ClCompile Include="rt\intersection.cpp" />
   </ItemGroup>
 </Project>
