@@ -79,6 +79,7 @@
     <ClInclude Include="CImg-1.7.9_pre102716\CImg.h" />
     <ClInclude Include="core\assert.h" />
     <ClInclude Include="core\color.h" />
+    <ClInclude Include="core\float4.h" />
     <ClInclude Include="core\image.h" />
     <ClInclude Include="core\ImageDrawing.h" />
     <ClInclude Include="core\julia.h" />
@@ -86,13 +87,30 @@
     <ClInclude Include="core\point.h" />
     <ClInclude Include="core\scalar.h" />
     <ClInclude Include="core\vector.h" />
+    <ClInclude Include="rt\bbox.h" />
     <ClInclude Include="rt\cameras\camera.h" />
     <ClInclude Include="rt\cameras\environment.h" />
     <ClInclude Include="rt\cameras\fisheye.h" />
     <ClInclude Include="rt\cameras\orthographic.h" />
     <ClInclude Include="rt\cameras\perspective.h" />
+    <ClInclude Include="rt\groups\group.h" />
+    <ClInclude Include="rt\groups\simplegroup.h" />
+    <ClInclude Include="rt\integrators\casting.h" />
+    <ClInclude Include="rt\integrators\castingdist.h" />
+    <ClInclude Include="rt\integrators\integrator.h" />
+    <ClInclude Include="rt\intersection.h" />
+    <ClInclude Include="rt\primitive.h" />
     <ClInclude Include="rt\ray.h" />
     <ClInclude Include="rt\renderer.h" />
+    <ClInclude Include="rt\solids\aabox.h" />
+    <ClInclude Include="rt\solids\disc.h" />
+    <ClInclude Include="rt\solids\infiniteplane.h" />
+    <ClInclude Include="rt\solids\quad.h" />
+    <ClInclude Include="rt\solids\solid.h" />
+    <ClInclude Include="rt\solids\sphere.h" />
+    <ClInclude Include="rt\solids\striangle.h" />
+    <ClInclude Include="rt\solids\triangle.h" />
+    <ClInclude Include="rt\world.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="core\color.cpp" />
@@ -104,13 +122,16 @@
     <ClCompile Include="core\vector.cpp" />
     <ClCompile Include="main\a_julia.cpp" />
     <ClCompile Include="main\a_cameras.cpp" />
+    <ClCompile Include="main\a_solids.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="rt\cameras\environment.cpp" />
     <ClCompile Include="rt\cameras\fisheye.cpp" />
     <ClCompile Include="rt\cameras\orthographic.cpp" />
     <ClCompile Include="rt\cameras\perspective.cpp" />
+    <ClCompile Include="rt\primitive.cpp" />
     <ClCompile Include="rt\ray.cpp" />
     <ClCompile Include="rt\renderer.cpp" />
+    <ClCompile Include="rt\solids\solid.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
