@@ -3,6 +3,8 @@
 
 #include <rt/integrators/integrator.h>
 #include <core/color.h>
+#include <rt/world.h>
+
 
 namespace rt {
 

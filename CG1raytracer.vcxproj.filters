@@ -221,5 +221,6 @@
     <ClCompile Include="rt\bbox.cpp">
       <Filter>rt</Filter>
     </ClCompile>
+    <ClCompile Include="rt\integrators\castingdist.cpp" />
   </ItemGroup>
 </Project>

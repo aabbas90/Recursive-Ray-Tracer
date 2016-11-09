@@ -9,10 +9,11 @@ class RGBColor;
 
 class Integrator {
 public:
-    Integrator(World* world) : world(world) {}
-    virtual RGBColor getRadiance(const Ray& ray) const = 0;
+	Integrator() {}
+	Integrator(World* world) : world(world) {}
+	virtual RGBColor getRadiance(const Ray& ray) const = 0;
 protected:
-    World* world;
+	World* world;
 };
 
 }
