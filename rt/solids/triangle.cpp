@@ -1,5 +1,7 @@
 #include "triangle.h"
 #include "infiniteplane.h"
+#include<core/assert.h>
+#include<rt/bbox.h>
 
 namespace rt
 {
@@ -19,6 +21,11 @@ namespace rt
 		this->v3 = v3;
 		this->texMapper = texMapper;
 		this->material = material;
+	}
+
+	BBox Triangle::getBounds() const
+	{
+		NOT_IMPLEMENTED;
 	}
 
 	Intersection Triangle::intersect(const Ray & ray, float previousBestDistance) const
@@ -55,6 +62,11 @@ namespace rt
 		}
 
 		return intersectionObject;
+	}
+
+	Point Triangle::sample() const
+	{
+		NOT_IMPLEMENTED;
 	}
 
 	float Triangle::getArea() const

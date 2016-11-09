@@ -209,6 +209,17 @@
     <ClCompile Include="rt\solids\triangle.cpp">
       <Filter>rt\solids</Filter>
     </ClCompile>
-    <ClCompile Include="rt\solids\striangle.cpp" />
+    <ClCompile Include="rt\solids\striangle.cpp">
+      <Filter>rt\solids</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\groups\simplegroup.cpp">
+      <Filter>rt\groups</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\integrators\casting.cpp">
+      <Filter>rt\integrators</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\bbox.cpp">
+      <Filter>rt</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

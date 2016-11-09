@@ -11,6 +11,11 @@ namespace rt
 		this->material = material;
 	}
 
+	BBox AABox::getBounds() const
+	{
+		NOT_IMPLEMENTED;
+	}
+
 	// Idea adapted from:
 	// http://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection
 	Intersection AABox::intersect(const Ray & ray, float previousBestDistance) const
@@ -109,6 +114,11 @@ namespace rt
 		}
 
 		return intersect;
+	}
+
+	Point AABox::sample() const
+	{
+		NOT_IMPLEMENTED;
 	}
 
 	float AABox::getArea() const

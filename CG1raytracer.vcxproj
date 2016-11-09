@@ -124,10 +124,13 @@
     <ClCompile Include="main\a_cameras.cpp" />
     <ClCompile Include="main\a_solids.cpp" />
     <ClCompile Include="main\main.cpp" />
+    <ClCompile Include="rt\bbox.cpp" />
     <ClCompile Include="rt\cameras\environment.cpp" />
     <ClCompile Include="rt\cameras\fisheye.cpp" />
     <ClCompile Include="rt\cameras\orthographic.cpp" />
     <ClCompile Include="rt\cameras\perspective.cpp" />
+    <ClCompile Include="rt\groups\simplegroup.cpp" />
+    <ClCompile Include="rt\integrators\casting.cpp" />
     <ClCompile Include="rt\intersection.cpp" />
     <ClCompile Include="rt\primitive.cpp" />
     <ClCompile Include="rt\ray.cpp" />

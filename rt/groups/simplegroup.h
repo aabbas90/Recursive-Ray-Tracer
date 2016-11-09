@@ -10,7 +10,7 @@ class BBox;
 
 class SimpleGroup : public Group {
 public:
-    virtual BBox getBounds() const = 0;
+    virtual BBox getBounds() const;
     virtual Intersection intersect(const Ray& ray, float previousBestDistance=FLT_MAX) const;
     virtual void rebuildIndex();
     virtual void add(Primitive* p);

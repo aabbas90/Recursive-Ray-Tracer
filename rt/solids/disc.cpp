@@ -1,5 +1,8 @@
 #include "disc.h"
 #include "infiniteplane.h"
+#include<core/assert.h>
+#include<rt/bbox.h>
+
 namespace rt
 {
 	Disc::Disc(const Point & center, const Vector & normal, float radius, CoordMapper * texMapper, Material * material)
@@ -9,6 +12,11 @@ namespace rt
 		this->radius = radius;
 		this->texMapper = texMapper;
 		this->material = material;
+	}
+
+	BBox Disc::getBounds() const
+	{
+		NOT_IMPLEMENTED;
 	}
 
 	Intersection Disc::intersect(const Ray & ray, float previousBestDistance) const
@@ -29,6 +37,11 @@ namespace rt
 		}
 
 		return Intersection();
+	}
+
+	Point Disc::sample() const
+	{
+		NOT_IMPLEMENTED;
 	}
 
 	float Disc::getArea() const

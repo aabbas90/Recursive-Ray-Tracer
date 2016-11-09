@@ -1,5 +1,6 @@
 #include "sphere.h"
-
+#include<core/assert.h>
+#include<rt/bbox.h>
 
 namespace rt
 {
@@ -9,6 +10,11 @@ namespace rt
 		this->radius = radius;
 		this->texMapper = texMapper;
 		this->material = material;
+	}
+
+	BBox Sphere::getBounds() const
+	{
+		NOT_IMPLEMENTED;
 	}
 
 	Intersection Sphere::intersect(const Ray & ray, float previousBestDistance) const
@@ -41,10 +47,16 @@ namespace rt
 				Vector normalVector = 2 * Vector(intersectionPoint.x, intersectionPoint.y, intersectionPoint.z);
 				Intersection intersect = Intersection(currentMinDistance, ray, this, normalVector.normalize());
 				intersect.SetLocalIntersectingPoint((ray.getPoint(currentMinDistance) - center).ToPoint());
+				return intersect;
 			}
 		}
 
 		return Intersection();
+	}
+
+	Point Sphere::sample() const
+	{
+		NOT_IMPLEMENTED;
 	}
 
 	float Sphere::getArea() const

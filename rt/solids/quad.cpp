@@ -2,6 +2,7 @@
 #include "triangle.h"
 #include <rt/intersection.h>
 #include <core/assert.h>
+#include<rt/bbox.h>
 
 namespace rt
 {
@@ -12,6 +13,11 @@ namespace rt
 		this->span2 = span2;
 		this->texMapper = texMapper;
 		this->material = material;
+	}
+
+	BBox Quad::getBounds() const
+	{
+		NOT_IMPLEMENTED;
 	}
 
 	Intersection Quad::intersect(const Ray & ray, float previousBestDistance) const
@@ -40,6 +46,11 @@ namespace rt
 		}
 
 		return Intersection();
+	}
+
+	Point Quad::sample() const
+	{
+		NOT_IMPLEMENTED;
 	}
 
 	float Quad::getArea() const
