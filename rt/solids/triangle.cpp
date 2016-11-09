@@ -56,7 +56,12 @@ namespace rt
 			if (dot(normalVector, v1v3pNormal) < 0)
 				return Intersection();
 
-			intersectionObject.SetLocalIntersectingPoint(u * v1 + v * v2 + (1 - u - v) * v3);
+			float w = 1 - u - v;
+
+			if (w < 0 || w > 1)
+				return Intersection();
+
+			intersectionObject.SetLocalIntersectingPoint(u * v1 + v * v2 + w * v3);
 		}
 
 		return intersectionObject;
