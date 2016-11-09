@@ -44,7 +44,7 @@ namespace rt
 			if (currentMinDistance > 0 && currentMinDistance < previousBestDistance)
 			{
 				Point intersectionPoint = ray.getPoint(currentMinDistance);
-				Vector normalVector = 2 * Vector(intersectionPoint.x, intersectionPoint.y, intersectionPoint.z);
+				Vector normalVector = intersectionPoint - center;
 				Intersection intersect = Intersection(currentMinDistance, ray, this, normalVector.normalize());
 				intersect.SetLocalIntersectingPoint((ray.getPoint(currentMinDistance) - center).ToPoint());
 				return intersect;
