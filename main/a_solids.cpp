@@ -47,10 +47,12 @@ void a_solids() {
 	Renderer engine(&cam, &integrator);
 	engine.render(img);
 	img.writePNG("a2-1.png");
-	// DrawImage::displayImage(img);
+	DrawImage::displayImage(img);
 
 	RayCastingDistIntegrator integratorb(&world, RGBColor(1.0f,0.2f,0.0f), 4.0f, RGBColor(0.2f,1.0f,0.0f), 12.0f);
 	Renderer engineb(&cam, &integratorb);
 	engineb.render(img);
 	img.writePNG("a2-2.png");
+	DrawImage::displayImage(img);
+
 }

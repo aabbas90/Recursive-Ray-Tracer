@@ -1,4 +1,5 @@
 #include "ImageDrawing.h"
+#include <iostream>
 
 using namespace rt;
 
@@ -19,5 +20,7 @@ void DrawImage::displayImage(Image image)
 	}
 	cimg_library::CImgDisplay disp;
 	disp.display(img);
+	std::cout << "Press any key to continue...";
 	getchar();
+	std::cout << "\n\n Continuing...\n\n\n";
 }
