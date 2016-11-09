@@ -2,10 +2,11 @@
 #define CG1RAYTRACER_INTEGRATORS_CASTING_HEADER
 
 #include <rt/integrators/integrator.h>
+#include <core/color.h>
+#include <rt/world.h>
 
 namespace rt {
 
-class World;
 class Ray;
 class RGBColor;
 
