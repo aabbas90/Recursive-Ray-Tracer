@@ -35,7 +35,7 @@ namespace rt
 		Vector normalVector = cross(v1v2, v1v3);
 		float fullArea = normalVector.length() / 2;
 
-		InfinitePlane plane = InfinitePlane(v1, normalVector, texMapper, material);
+		InfinitePlane plane = InfinitePlane(v1, normalVector.normalize(), texMapper, material);
 		Intersection intersectionObject = plane.intersect(ray, previousBestDistance);
 
 		if (intersectionObject)
