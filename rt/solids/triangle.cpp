@@ -42,7 +42,6 @@ namespace rt
 		{
 			Point p = intersectionObject.hitPoint();
 
-
 			Vector v3v2 = v3 - v2;
 			Vector pv2 = p - v2;
 
@@ -51,9 +50,8 @@ namespace rt
 			if (dot(normalVector, v3v2pNormal) < 0)
 				return Intersection();
 
-			Vector v1v3 = v1 - v3;
 			Vector pv3 = p - v3;
-			Vector v1v3pNormal = cross(v1v3, pv3);
+			Vector v1v3pNormal = cross(pv3, v1v3);
 			float v = (v1v3pNormal.length() / 2) / fullArea;
 			if (dot(normalVector, v1v3pNormal) < 0)
 				return Intersection();

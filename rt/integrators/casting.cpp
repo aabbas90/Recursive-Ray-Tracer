@@ -11,7 +11,7 @@ namespace rt
 		Intersection intersection = this->world->scene->intersect(ray, MAX_DIST);
 		float grayColor = 0;
 		
-		if(intersection)
+		if (intersection)
 			grayColor = abs(dot(intersection.normal(), ray.d));
 
 		return RGBColor(grayColor, grayColor, grayColor);

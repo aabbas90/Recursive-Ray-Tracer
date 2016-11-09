@@ -20,7 +20,7 @@ namespace rt
 	Intersection InfinitePlane::intersect(const Ray & ray, float previousBestDistance) const
 	{
 		float denom = dot(normal, ray.d);
-		if (denom > 1e-6) 
+		if (abs(denom) > 1e-6) 
 		{
 			float currentDistance = dot(origin - ray.o, normal) / denom;
 			if (currentDistance < previousBestDistance && currentDistance > 0)
