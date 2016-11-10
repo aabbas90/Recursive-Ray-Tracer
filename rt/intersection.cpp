@@ -50,12 +50,12 @@ namespace rt
 	}
 
 	// Function to set the intersecting point as in local coordinates.
-	void Intersection::SetLocalIntersectingPoint(Vector& vector)
+	void Intersection::SetLocalIntersectingPoint(const Vector& vector)
 	{
 		this->localIntersectionPoint = vector.ToPoint();
 	}
 
-	void Intersection::SetLocalIntersectingPoint(Point& point)
+	void Intersection::SetLocalIntersectingPoint(const Point& point)
 	{
 		this->localIntersectionPoint = point;
 	}
