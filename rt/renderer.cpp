@@ -1,7 +1,7 @@
 #include "renderer.h"
 #include "ray.h"
 #include "cameras/orthographic.h"
-#include "integrators\integrator.h"
+#include "integrators/integrator.h"
 
 using namespace rt;
 

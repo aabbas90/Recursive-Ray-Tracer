@@ -22,7 +22,7 @@ namespace rt
 		if (intersection)
 		{
 			colorValue = (intersection.distance - nearDist) * farColor / (farDist - nearDist) + (farDist - intersection.distance) * nearColor / (farDist - nearDist);
-			colorValue = colorValue * abs(dot(intersection.normal(), ray.d));
+			colorValue = colorValue * std::abs(dot(intersection.normal(), ray.d));
 		}
 		return colorValue;
 	}

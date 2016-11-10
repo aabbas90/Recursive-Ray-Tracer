@@ -128,9 +128,9 @@ namespace rt
 		float width = maxCorner.y - minCorner.y;
 		float height = maxCorner.z - minCorner.z;
 
-		float xyPlaneArea = abs(length * width);
-		float yzPlaneArea = abs(width * height);
-		float zxPlaneArea = abs(length * height);
+		float xyPlaneArea = std::abs(length * width);
+		float yzPlaneArea = std::abs(width * height);
+		float zxPlaneArea = std::abs(length * height);
 
 		return 2 * (xyPlaneArea + yzPlaneArea + zxPlaneArea);
 	}

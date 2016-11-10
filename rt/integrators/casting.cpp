@@ -12,7 +12,7 @@ namespace rt
 		float grayColor = 0;
 		
 		if (intersection)
-			grayColor = abs(dot(intersection.normal(), ray.d));
+			grayColor = std::abs(dot(intersection.normal(), ray.d));
 
 		return RGBColor(grayColor, grayColor, grayColor);
 	}
