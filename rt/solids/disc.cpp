@@ -31,7 +31,7 @@ namespace rt
 
 			if (distance2FromCentre < radius * radius)
 			{
-				planeInt.SetLocalIntersectingPoint((intersectionPoint - center).ToPoint());
+				planeInt.SetLocalIntersectingPoint((intersectionPoint - center));
 				return planeInt;
 			}
 		}

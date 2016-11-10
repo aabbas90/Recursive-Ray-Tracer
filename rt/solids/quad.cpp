@@ -32,7 +32,7 @@ namespace rt
 		if (tri1Intersection)
 		{
 			Intersection intersectionObject = Intersection(tri1Intersection.distance, ray, this, tri1Intersection.normal());
-			intersectionObject.SetLocalIntersectingPoint((ray.getPoint(tri1Intersection.distance) - v1).ToPoint());
+			intersectionObject.SetLocalIntersectingPoint((ray.getPoint(tri1Intersection.distance) - v1));
 			return intersectionObject;
 		}
 
@@ -41,7 +41,7 @@ namespace rt
 		if (tri2Intersection)
 		{
 			Intersection intersectionObject = Intersection(tri2Intersection.distance, ray, this, tri2Intersection.normal());
-			intersectionObject.SetLocalIntersectingPoint((ray.getPoint(tri2Intersection.distance) - v1).ToPoint());
+			intersectionObject.SetLocalIntersectingPoint((ray.getPoint(tri2Intersection.distance) - v1));
 			return intersectionObject;
 		}
 

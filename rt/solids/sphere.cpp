@@ -46,7 +46,7 @@ namespace rt
 				Point intersectionPoint = ray.getPoint(currentMinDistance);
 				Vector normalVector = intersectionPoint - center;
 				Intersection intersect = Intersection(currentMinDistance, ray, this, normalVector.normalize());
-				intersect.SetLocalIntersectingPoint((ray.getPoint(currentMinDistance) - center).ToPoint());
+				intersect.SetLocalIntersectingPoint((ray.getPoint(currentMinDistance) - center));
 				return intersect;
 			}
 		}

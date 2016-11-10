@@ -47,7 +47,7 @@ namespace rt
 		return Vector(this->x / length, this->y / length, this->z / length);
 	}
 
-	Point Vector::ToPoint()
+	Point Vector::ToPoint() const
 	{
 		return Point(this->x, this->y, this->z);
 	}

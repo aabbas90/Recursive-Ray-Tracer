@@ -26,7 +26,7 @@ namespace rt
 			if (currentDistance < previousBestDistance && currentDistance > 0)
 			{
 				Intersection intersect = Intersection(currentDistance, ray, this, normal);
-				intersect.SetLocalIntersectingPoint((ray.getPoint(currentDistance) - origin).ToPoint());
+				intersect.SetLocalIntersectingPoint((ray.getPoint(currentDistance) - origin));
 				return intersect;
 			}
 		}
