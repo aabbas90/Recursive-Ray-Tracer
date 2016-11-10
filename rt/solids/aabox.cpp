@@ -88,13 +88,13 @@ namespace rt
 			if (minT > 0 && minT < previousBestDistance)
 			{
 				intersect = Intersection(minT, ray, this, minTnormal);
-				intersect.SetLocalIntersectingPoint((ray.getPoint(minT) - minCorner));
+				intersect.SetLocalIntersectingPoint((ray.getPoint(minT) - minCorner).ToPoint());
 			}
 
 			else if (maxT > 0 && maxT < previousBestDistance)
 			{
 				intersect = Intersection(maxT, ray, this, maxTnormal);
-				intersect.SetLocalIntersectingPoint((ray.getPoint(maxT) - minCorner));
+				intersect.SetLocalIntersectingPoint((ray.getPoint(maxT) - minCorner).ToPoint());
 			}
 		}
 
@@ -103,13 +103,13 @@ namespace rt
 			if (maxT > 0 && maxT < previousBestDistance)
 			{
 				intersect = Intersection(maxT, ray, this, maxTnormal);
-				intersect.SetLocalIntersectingPoint((ray.getPoint(maxT) - minCorner));
+				intersect.SetLocalIntersectingPoint((ray.getPoint(maxT) - minCorner).ToPoint());
 			}
 
 			else if (minT > 0 && minT < previousBestDistance)
 			{
 				intersect = Intersection(minT, ray, this, minTnormal);
-				intersect.SetLocalIntersectingPoint((ray.getPoint(minT) - minCorner));
+				intersect.SetLocalIntersectingPoint((ray.getPoint(minT) - minCorner).ToPoint());
 			}
 		}
 
