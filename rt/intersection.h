@@ -23,7 +23,7 @@ public:
 	Point hitPoint() const;
 	Vector normal() const;
 	Point local() const;
-	void SetLocalIntersectingPoint(Point& point);
+	void SetLocalIntersectingPoint(const Point& point);
 
 	operator bool(); //this allows intersection object to be put directly in conditional statements. Becomes true iff there is an intersection
 

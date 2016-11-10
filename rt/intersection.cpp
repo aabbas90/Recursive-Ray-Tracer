@@ -50,7 +50,7 @@ namespace rt
 	}
 
 	// Function to set the intersecting point as in local coordinates.
-	void Intersection::SetLocalIntersectingPoint(Point& point)
+	void Intersection::SetLocalIntersectingPoint(const Point& point)
 	{
 		this->localIntersectionPoint = point;
 	}
