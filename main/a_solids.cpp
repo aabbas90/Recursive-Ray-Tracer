@@ -38,12 +38,13 @@ void a_solids() {
 	// scene->add(new Disc(Point(-3, -0.75f, 1.5f), Vector(0, 0.5f, 0.5f), 1.5f, nullptr, nullptr));
 
 	// scene->add(new AABox(Point(2,1.5f,-0.5f), Point(3,2.5f,2.5f), nullptr, nullptr));
-	scene->add(new Quadric(1, 1, 1, 0, 0, 0, 0, 0, 0, 20, nullptr, nullptr));
+	scene->add(new Quadric(1, 1, -1, 0, 0, 0, 0, 0, 0, 1, nullptr, nullptr));
 
 	World world;
 	world.scene = scene;
 
-	PerspectiveCamera cam(Point(0, 0, 10), Vector(0, 0, -1), Vector(0, 1, 0), pi/4, pi/3);
+	//PerspectiveCamera cam(Point(0, 0, 10), Vector(0, 0, -1), Vector(0, 1, 0), pi/4, pi/3);
+	PerspectiveCamera cam(Point(0, 0, 0), Vector(0.5, 0.5, 0.3), Vector(0, 0, 1), pi * 0.9f, pi * 0.9f);
 	
 
 	RayCastingIntegrator integrator(&world);

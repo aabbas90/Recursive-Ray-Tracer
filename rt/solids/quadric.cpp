@@ -41,7 +41,7 @@ Intersection Quadric::intersect(const Ray& ray, float previousBestDistance) cons
                     + d * ray.o.x * ray.o.y + e * ray.o.x * ray.o.z + f * ray.o.y * ray.o.z 
                     + g * ray.o.x + h * ray.o.y + i * ray.o.z + j;
 
-    float D = t_b - 4.0 * t2_a * constant_c;
+    float D = t_b * t_b - 4.0 * t2_a * constant_c;
     float t = 0;
 
     if (D < 0) // Ray doesn't intersect the Quadric
