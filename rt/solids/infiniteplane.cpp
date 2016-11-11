@@ -1,6 +1,6 @@
-#include "infiniteplane.h"
-#include<core/assert.h>
-#include<rt/bbox.h>
+#include <rt/solids/infiniteplane.h>
+#include <core/assert.h>
+#include <rt/bbox.h>
 
 namespace rt
 {
