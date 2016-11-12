@@ -43,4 +43,13 @@ namespace rt
 	{
 		return FLT_MAX;
 	}
+
+	Quadric* InfinitePlane::ToQuadric()
+	{
+		float G = normal.x;
+		float H = normal.y;
+		float I = normal.z;
+		float J = -(G * origin.x + H * origin.y + I * origin.z);
+		return new Quadric(0, 0, 0, 0, 0, 0, G, H, I, J, texMapper, material);
+	}
 }

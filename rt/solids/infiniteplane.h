@@ -4,6 +4,7 @@
 #include <rt/solids/solid.h>
 #include <core/float4.h>
 #include <rt/intersection.h>
+#include <rt/solids/quadric.h>
 
 namespace rt {
 
@@ -16,6 +17,7 @@ public:
 	virtual Intersection intersect(const Ray& ray, float previousBestDistance=FLT_MAX) const;
 	virtual Point sample() const;
 	virtual float getArea() const;
+	Quadric* ToQuadric();
 
 private:
 	Point origin;

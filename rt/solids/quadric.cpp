@@ -50,26 +50,37 @@ Intersection Quadric::intersect(const Ray& ray, float previousBestDistance) cons
 	}
 	else if (D == 0) // Ray is tangent to Quadric
 	{
-		float t  = - t_b / (2.0 * t2_a);
+		t  = - t_b / (2.0 * t2_a);
 	}
 	else // if(D > 0) Ray intersects at two points
 	{
-		float t1 = (- t_b - sqrtf(D)) / (2.0 * t2_a); 
-		float t2 = (-t_b + sqrtf(D)) / (2.0 * t2_a);
-		t = min(t1, t2);
-		float maxT = max(t1, t2);
-		
-		if (t < 0 && maxT < 0)
-			return Intersection();
-
-		if (t < 0)
+		// For Plane:
+		if (t2_a == 0)
 		{
-			t = maxT;       
+			t = -constant_c / t_b;
+			if (t < 0 || t > previousBestDistance)
+				return Intersection();
 		}
-		
-		if (t > previousBestDistance)
+
+		else
 		{
-			return Intersection();
+			float t1 = (-t_b - sqrtf(D)) / (2.0 * t2_a);
+			float t2 = (-t_b + sqrtf(D)) / (2.0 * t2_a);
+			t = min(t1, t2);
+			float maxT = max(t1, t2);
+
+			if (t < 0 && maxT < 0)
+				return Intersection();
+
+			if (t < 0)
+			{
+				t = maxT;
+			}
+
+			if (t > previousBestDistance)
+			{
+				return Intersection();
+			}
 		}
 
 	}

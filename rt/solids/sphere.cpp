@@ -1,6 +1,7 @@
 #include "sphere.h"
 #include<core/assert.h>
 #include<rt/bbox.h>
+#include<rt/solids/quadric.h>
 
 namespace rt
 {
@@ -62,5 +63,21 @@ namespace rt
 	float Sphere::getArea() const
 	{
 		return 4 * pi * radius * radius;
+	}
+
+	Quadric* Sphere::ToQuadric()
+	{
+		float a = 1;
+		float b = 1;
+		float c = 1;
+		float d = 0;
+		float e = 0;
+		float f = 0;
+		float g = -2.0 * center.x;
+		float h = -2.0 * center.y;
+		float i = -2.0 * center.z;
+		float j = -radius * radius + center.x * center.x + center.y * center.y + center.z * center.z;
+
+		return new Quadric(a, b, c, d, e, f, g, h, i, j, texMapper, material);
 	}
 }
