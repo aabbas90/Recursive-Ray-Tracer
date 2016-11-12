@@ -106,6 +106,7 @@
     <ClInclude Include="rt\solids\disc.h" />
     <ClInclude Include="rt\solids\infiniteplane.h" />
     <ClInclude Include="rt\solids\quad.h" />
+    <ClInclude Include="rt\solids\quadric.h" />
     <ClInclude Include="rt\solids\solid.h" />
     <ClInclude Include="rt\solids\sphere.h" />
     <ClInclude Include="rt\solids\striangle.h" />
@@ -140,6 +141,7 @@
     <ClCompile Include="rt\solids\disc.cpp" />
     <ClCompile Include="rt\solids\infiniteplane.cpp" />
     <ClCompile Include="rt\solids\quad.cpp" />
+    <ClCompile Include="rt\solids\quadric.cpp" />
     <ClCompile Include="rt\solids\solid.cpp" />
     <ClCompile Include="rt\solids\sphere.cpp" />
     <ClCompile Include="rt\solids\striangle.cpp" />

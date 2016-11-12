@@ -129,6 +129,9 @@
     <ClInclude Include="rt\groups\simplegroup.h">
       <Filter>rt\groups</Filter>
     </ClInclude>
+    <ClInclude Include="rt\solids\quadric.h">
+      <Filter>rt\solids</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -222,5 +225,8 @@
       <Filter>rt</Filter>
     </ClCompile>
     <ClCompile Include="rt\integrators\castingdist.cpp" />
+    <ClCompile Include="rt\solids\quadric.cpp">
+      <Filter>rt\solids</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
