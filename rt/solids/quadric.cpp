@@ -56,7 +56,7 @@ Intersection Quadric::intersect(const Ray& ray, float previousBestDistance) cons
 	{
 		float t1 = (- t_b - sqrtf(D)) / (2.0 * t2_a); 
 		float t2 = (-t_b + sqrtf(D)) / (2.0 * t2_a);
-		float t = min(t1, t2);
+		t = min(t1, t2);
 		float maxT = max(t1, t2);
 		
 		if (t < 0 && maxT < 0)
