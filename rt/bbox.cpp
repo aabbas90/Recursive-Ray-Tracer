@@ -33,6 +33,15 @@ namespace rt
 	}
 	std::pair<float, float> BBox::intersect(const Ray & ray) const
 	{
+		// Return no intersection if empty:
+		if ((maxCorner - minCorner).lensqr() == 0)
+			return std::pair<float, float>(maxFloat, minFloat);
+
+		// Return successful intersection if full:
+		if (minCorner == Point(minFloat, minFloat, minFloat) && 
+			maxCorner == Point(maxFloat, maxFloat, maxFloat))
+			return std::pair<float, float>(minFloat, maxFloat);
+
 		float minT, maxT;
 
 		float tx0 = (minCorner.x - ray.o.x) / ray.d.x;
