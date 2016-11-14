@@ -2,6 +2,7 @@
 #include <core/assert.h>
 
 float maxFloat = std::numeric_limits<float>::max();
+float minFloat = std::numeric_limits<float>::min();
 
 namespace rt
 {
@@ -11,20 +12,21 @@ namespace rt
 	// }
 	BBox BBox::empty()
 	{
-		return BBox::BBox(0.0, 0.0);
+		return BBox::BBox(Point(0, 0, 0), Point(0, 0, 0));
 	}
 	BBox BBox::full()
 	{
-		return BBox::BBox(maxFloat, maxFloat);
+		return BBox::BBox(Point(minFloat, minFloat, minFloat), Point(maxFloat, maxFloat, maxFloat));
 	}
 	void BBox::extend(const Point & point)
 	{
-		return BBox::BBox(min(min(this->min, point), this->max), max(max(this->min, point), this->max));
+		minCorner = min(this->minCorner, point);
+		maxCorner = max(this->maxCorner, point);
 	}
 	void BBox::extend(const BBox & bbox)
 	{
-		this->max = max(this->max, bbox.max); 
-		this->min = min(this->min, bbox.min);
+		this->maxCorner = max(this->maxCorner, bbox.maxCorner);
+		this->minCorner = min(this->minCorner, bbox.minCorner);
 	}
 	std::pair<float, float> BBox::intersect(const Ray & ray) const
 	{
@@ -32,6 +34,10 @@ namespace rt
 	}
 	bool BBox::isUnbound()
 	{
-		NOT_IMPLEMENTED;
+		if (minCorner.x == minFloat || minCorner.y == minFloat || minCorner.z == minFloat ||
+			maxCorner.x == maxFloat || maxCorner.y == maxFloat || maxCorner.z == maxFloat)
+			return 1;
+
+		return 0;
 	}
 }

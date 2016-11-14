@@ -11,17 +11,17 @@ class Ray;
 
 class BBox {
 public:
-    Point min, max;
+    Point minCorner, maxCorner;
 
     BBox() {}
-    BBox(const Point& min, const Point& max) : min(min), max(max) {}
+    BBox(const Point& min, const Point& max) : minCorner(min), maxCorner(max) {}
     static BBox empty();
     static BBox full();
 
     void extend(const Point& point);
     void extend(const BBox& bbox);
 
-    Vector diagonal() const { return max - min; }
+    Vector diagonal() const { return maxCorner - minCorner; }
 
     std::pair<float,float> intersect(const Ray& ray) const;
 
