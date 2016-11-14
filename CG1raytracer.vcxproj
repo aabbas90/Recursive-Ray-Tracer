@@ -93,12 +93,15 @@
     <ClInclude Include="rt\cameras\fisheye.h" />
     <ClInclude Include="rt\cameras\orthographic.h" />
     <ClInclude Include="rt\cameras\perspective.h" />
+    <ClInclude Include="rt\groups\bvh.h" />
     <ClInclude Include="rt\groups\group.h" />
+    <ClInclude Include="rt\groups\kdtree.h" />
     <ClInclude Include="rt\groups\simplegroup.h" />
     <ClInclude Include="rt\integrators\casting.h" />
     <ClInclude Include="rt\integrators\castingdist.h" />
     <ClInclude Include="rt\integrators\integrator.h" />
     <ClInclude Include="rt\intersection.h" />
+    <ClInclude Include="rt\loaders\obj.h" />
     <ClInclude Include="rt\primitive.h" />
     <ClInclude Include="rt\ray.h" />
     <ClInclude Include="rt\renderer.h" />
@@ -121,6 +124,7 @@
     <ClCompile Include="core\point.cpp" />
     <ClCompile Include="core\scalar.cpp" />
     <ClCompile Include="core\vector.cpp" />
+    <ClCompile Include="main\a_indexing.cpp" />
     <ClCompile Include="main\a_julia.cpp" />
     <ClCompile Include="main\a_cameras.cpp" />
     <ClCompile Include="main\a_solids.cpp" />
@@ -134,6 +138,7 @@
     <ClCompile Include="rt\integrators\casting.cpp" />
     <ClCompile Include="rt\integrators\castingdist.cpp" />
     <ClCompile Include="rt\intersection.cpp" />
+    <ClCompile Include="rt\loaders\obj.cpp" />
     <ClCompile Include="rt\primitive.cpp" />
     <ClCompile Include="rt\ray.cpp" />
     <ClCompile Include="rt\renderer.cpp" />
