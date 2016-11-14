@@ -1,5 +1,8 @@
 #include <rt/bbox.h>
 #include <core/assert.h>
+#include <rt/ray.h>
+#include <core/point.h>
+#include <algorithm>
 
 float maxFloat = std::numeric_limits<float>::max();
 float minFloat = std::numeric_limits<float>::min();
@@ -30,8 +33,66 @@ namespace rt
 	}
 	std::pair<float, float> BBox::intersect(const Ray & ray) const
 	{
-		NOT_IMPLEMENTED;
+		float minT, maxT;
+
+		float tx0 = (minCorner.x - ray.o.x) / ray.d.x;
+		float tx1 = (maxCorner.x - ray.o.x) / ray.d.x;
+
+		if (tx0 < tx1)
+		{
+			minT = tx0;
+			maxT = tx1;
+		}
+
+		else
+		{
+			minT = tx1;
+			maxT = tx0;
+		}
+
+		float ty0 = (minCorner.y - ray.o.y) / ray.d.y;
+		float ty1 = (maxCorner.y - ray.o.y) / ray.d.y;
+
+		float tyMin = std::min(ty0, ty1);
+		float tyMax = std::max(ty0, ty1);
+
+		// Are these the two t0's and t1's required? Because there are two more of them as well.
+		if ((minT > tyMax) || (tyMin > maxT))
+			return std::pair<float, float>(tyMin, maxT);
+
+		if (tyMin > minT)
+		{
+			minT = tyMin;
+		}
+
+		if (tyMax < maxT)
+		{
+			maxT = tyMax;
+		}
+
+		float tz0 = (minCorner.z - ray.o.z) / ray.d.z;
+		float tz1 = (maxCorner.z - ray.o.z) / ray.d.z;
+
+		float tzMin = std::min(tz0, tz1);
+		float tzMax = std::max(tz0, tz1);
+
+		// Are these the two t0's and t1's required? Because there are two more of them as well.
+		if ((minT > tzMax) || (tzMin > maxT))
+			return std::pair<float, float>(tzMin, maxT);
+
+		if (tzMin > minT)
+		{
+			minT = tzMin;
+		}
+
+		if (tzMax < maxT)
+		{
+			maxT = tzMax;
+		}
+
+		return std::pair<float, float>(minT, maxT);
 	}
+
 	bool BBox::isUnbound()
 	{
 		if (minCorner.x == minFloat || minCorner.y == minFloat || minCorner.z == minFloat ||
