@@ -17,7 +17,14 @@ namespace rt
 
 	BBox Quad::getBounds() const
 	{
-		NOT_IMPLEMENTED;
+		Point v1 = p1;
+		Point v2 = p1 + span1;
+		BBox box = BBox(v1, v2);
+		Point v3 = p1 + span2;
+		box.extend(v3);
+		Point v4 = v3 + span1;
+		box.extend(v4);
+		return box;
 	}
 
 	Intersection Quad::intersect(const Ray & ray, float previousBestDistance) const

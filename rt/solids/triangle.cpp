@@ -25,7 +25,9 @@ namespace rt
 
 	BBox Triangle::getBounds() const
 	{
-		NOT_IMPLEMENTED;
+		BBox bbox = BBox(v1, v2);
+		bbox.extend(v3);
+		return bbox;
 	}
 
 	Intersection Triangle::intersect(const Ray & ray, float previousBestDistance) const

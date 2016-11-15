@@ -14,7 +14,27 @@ namespace rt
 
 	BBox InfinitePlane::getBounds() const
 	{
-		NOT_IMPLEMENTED;
+		Vector normalizedNormal = normal.normalize();
+		Vector xSpanningVector = Vector(1, 0, 0);
+		Vector ySpanningVector = Vector(0, 1, 0);
+		if (dot(xSpanningVector, normalizedNormal) != 1)
+		{
+			ySpanningVector = cross(normalizedNormal, xSpanningVector).normalize();
+			xSpanningVector = cross(ySpanningVector, normalizedNormal).normalize();
+		}
+		else
+		{
+			xSpanningVector = cross(ySpanningVector, normalizedNormal).normalize();
+			ySpanningVector = cross(normalizedNormal, xSpanningVector).normalize();
+		}
+		Point v1 = (maxFloat * xSpanningVector).ToPoint();
+		Point v2 = (minFloat * xSpanningVector).ToPoint();
+		BBox box = BBox(v1, v2);
+		Point v3 = (maxFloat * ySpanningVector).ToPoint();
+		Point v4 = (minFloat * ySpanningVector).ToPoint();
+		box.extend(v3);
+		box.extend(v4);
+		return box;
 	}
 
 	Intersection InfinitePlane::intersect(const Ray & ray, float previousBestDistance) const

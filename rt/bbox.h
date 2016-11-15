@@ -5,6 +5,10 @@
 #include <core/point.h>
 #include <core/vector.h>
 
+
+extern const float maxFloat;
+extern const float minFloat;
+
 namespace rt {
 
 class Ray;

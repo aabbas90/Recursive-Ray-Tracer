@@ -4,8 +4,8 @@
 #include <core/point.h>
 #include <algorithm>
 
-float maxFloat = std::numeric_limits<float>::max();
-float minFloat = std::numeric_limits<float>::min();
+const float maxFloat = std::numeric_limits<float>::max();
+const float minFloat = std::numeric_limits<float>::min();
 
 namespace rt
 {

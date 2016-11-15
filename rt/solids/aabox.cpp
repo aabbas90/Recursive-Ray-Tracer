@@ -13,7 +13,7 @@ namespace rt
 
 	BBox AABox::getBounds() const
 	{
-		NOT_IMPLEMENTED;
+		return BBox(minCorner, maxCorner);
 	}
 
 	// Idea adapted from:

@@ -14,9 +14,30 @@ namespace rt
 		this->material = material;
 	}
 
+	// Check if this works!:
+	// What happens when bbox has length along one dimension = 0?
 	BBox Disc::getBounds() const
 	{
-		NOT_IMPLEMENTED;
+		Vector normalizedNormal = normal.normalize();
+		Vector xSpanningVector = Vector(1, 0, 0);
+		Vector ySpanningVector = Vector(0, 1, 0);
+		if (dot(xSpanningVector, normalizedNormal) != 1)
+		{
+			ySpanningVector = cross(normalizedNormal, xSpanningVector).normalize();
+			xSpanningVector = cross(ySpanningVector, normalizedNormal).normalize();
+		}
+		else
+		{
+			xSpanningVector = cross(ySpanningVector, normalizedNormal).normalize();
+			ySpanningVector = cross(normalizedNormal, xSpanningVector).normalize();
+		}
+		Point v1 = center + radius * xSpanningVector;
+		Point v2 = center - radius * xSpanningVector;
+		BBox box = BBox(v1, v2);
+		Point v3 = center + radius * ySpanningVector;
+		Point v4 = center - radius * ySpanningVector;
+		box.extend(v3);
+		box.extend(v4);
 	}
 
 	Intersection Disc::intersect(const Ray & ray, float previousBestDistance) const
