@@ -21,7 +21,7 @@ namespace rt
 		Vector normalizedNormal = normal.normalize();
 		Vector xSpanningVector = Vector(1, 0, 0);
 		Vector ySpanningVector = Vector(0, 1, 0);
-		if (dot(xSpanningVector, normalizedNormal) != 1)
+		if (abs(dot(xSpanningVector, normalizedNormal)) != 1)
 		{
 			ySpanningVector = cross(normalizedNormal, xSpanningVector).normalize();
 			xSpanningVector = cross(ySpanningVector, normalizedNormal).normalize();
