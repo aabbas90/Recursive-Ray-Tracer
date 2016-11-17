@@ -33,7 +33,7 @@ namespace rt
 		}
 		Point v1 = center + radius * xSpanningVector;
 		Point v2 = center - radius * xSpanningVector;
-		BBox box = BBox(v1, v2);
+		BBox box = BBox(min(v1, v2), max(v1, v2));
 		Point v3 = center + radius * ySpanningVector;
 		Point v4 = center - radius * ySpanningVector;
 		box.extend(v3);

@@ -15,7 +15,9 @@ namespace rt
 
 	BBox Sphere::getBounds() const
 	{
-		return BBox(center + Vector(radius, radius, radius), center - Vector(radius, radius, radius));
+		Point p1 = center - Vector(radius, radius, radius);
+		Point p2 = center + Vector(radius, radius, radius);
+		return BBox(p1, p2);
 	}
 
 	Intersection Sphere::intersect(const Ray & ray, float previousBestDistance) const

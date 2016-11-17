@@ -31,7 +31,7 @@ public:
 	virtual void setCoordMapper(CoordMapper* cm);
 	int getIndexFromPlaneLocation(int startindex, int endIncludingIndex, int dimensionIndex, float planeLocation);
 	void buildBVH(Node* parentNode, int startIndex, int endIncludingIndex);
-	void BVH::setBoundingBoxOfNode(Node *node, int startIndex, int endIncludingIndex);
+	void setBoundingBoxOfNode(Node *node, int startIndex, int endIncludingIndex);
 
 private:
 	Primitives unsortedList;

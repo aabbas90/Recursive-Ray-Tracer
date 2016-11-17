@@ -19,7 +19,7 @@ namespace rt
 	{
 		Point v1 = p1;
 		Point v2 = p1 + span1;
-		BBox box = BBox(v1, v2);
+		BBox box = BBox(min(v1, v2), max(v1, v2));
 		Point v3 = p1 + span2;
 		box.extend(v3);
 		Point v4 = v3 + span1;

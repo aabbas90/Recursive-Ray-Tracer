@@ -29,7 +29,7 @@ namespace rt
 		}
 		Point v1 = (maxFloat * xSpanningVector).ToPoint();
 		Point v2 = (minFloat * xSpanningVector).ToPoint();
-		BBox box = BBox(v1, v2);
+		BBox box = BBox(min(v1, v2), max(v1, v2));
 		Point v3 = (maxFloat * ySpanningVector).ToPoint();
 		Point v4 = (minFloat * ySpanningVector).ToPoint();
 		box.extend(v3);

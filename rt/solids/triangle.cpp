@@ -25,7 +25,7 @@ namespace rt
 
 	BBox Triangle::getBounds() const
 	{
-		BBox bbox = BBox(v1, v2);
+		BBox bbox = BBox(min(v1, v2), max(v1, v2));
 		bbox.extend(v3);
 		return bbox;
 	}
