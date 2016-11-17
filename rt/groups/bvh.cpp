@@ -6,23 +6,76 @@ namespace rt
 {
 	BVH::BVH()
 	{
-		root = new Node();
+		root = new BVHNode();
 	}
 	BBox BVH::getBounds() const
 	{
 		return BBox();
 	}
+
 	Intersection BVH::intersect(const Ray & ray, float previousBestDistance) const
 	{
-		std::pair<float,float> nodeDistances = root->boundingBox.intersect();
-		if(nodeDistances.first > nodeDistances.second) {
-			return Intersection();
-		} else
+		auto t1t2 = root->boundingBox.intersect(ray);
+		if (t1t2.first > t1t2.second || t1t2.first > previousBestDistance)
 		{
-			//rest
 			return Intersection();
 		}
-		
+		else
+		{
+			std::priority_queue<IntersectionElement> pqueue;
+			pqueue.push(IntersectionElement(root, t1t2.first, true));
+			Intersection bestIntersection = IterateOverQueue(pqueue, ray, previousBestDistance);
+			return bestIntersection;
+		}
+	}
+
+	Intersection BVH::IterateOverQueue(std::priority_queue<IntersectionElement> pqueue, const Ray & ray, float previousBestDistance) const
+	{
+		if (pqueue.empty())
+			return Intersection();
+
+		IntersectionElement currentElement = pqueue.top();
+		pqueue.pop();
+		if (currentElement.node->isLeaf)
+		{
+			Intersection smallestIntersection;
+			for (int i = currentElement.node->primitiveStartIndex; i <= currentElement.node->primitiveStartIndex; i++)
+			{
+				Intersection intersection = unsortedList[i]->intersect(ray, previousBestDistance);
+				if (intersection && (intersection.distance < previousBestDistance))
+				{
+					smallestIntersection = intersection;
+					previousBestDistance = intersection.distance;
+				}
+			}
+			if (smallestIntersection)
+				return smallestIntersection;
+		}
+
+		// if not reached the leaf:
+		else
+		{
+			std::vector<BVHNode*> nodesToIterate;
+			auto leftChild = currentElement.node->leftChild;
+			auto rightChild = currentElement.node->rightChild;
+			
+			if (leftChild != NULL)
+				nodesToIterate.push_back(leftChild);
+			if (rightChild != NULL)
+				nodesToIterate.push_back(rightChild);
+
+			for (auto currentChild : nodesToIterate)
+			{
+				auto t1t2 = currentChild->boundingBox.intersect(ray);
+				if (t1t2.first < t1t2.second || t1t2.first < previousBestDistance)
+				{
+					IntersectionElement currentChildElement = IntersectionElement(currentChild, t1t2.first, true);
+					pqueue.push(currentChildElement);
+				}
+			}
+		}
+
+		return IterateOverQueue(pqueue, ray, previousBestDistance);
 	}
 	void BVH::rebuildIndex()
 	{
@@ -48,7 +101,7 @@ namespace rt
 	{
 	}
 
-	void BVH::buildBVH(Node* parentNode, int startIndex, int endIncludingIndex)
+	void BVH::buildBVH(BVHNode* parentNode, int startIndex, int endIncludingIndex)
 	{
 		int numElements = endIncludingIndex - startIndex + 1;
 		if (numElements <= maxNumberElementsInLeaf)
@@ -60,8 +113,8 @@ namespace rt
 		}
 		else
 		{
-			parentNode->leftChild = new Node();
-			parentNode->rightChild = new Node();
+			parentNode->leftChild = new BVHNode();
+			parentNode->rightChild = new BVHNode();
 			auto splitDimensionAndLocation = parentNode->boundingBox.findGreatestDimensionAndMiddleLocation();
 			int dimension = splitDimensionAndLocation.first;
 			float location = splitDimensionAndLocation.second;
@@ -76,18 +129,18 @@ namespace rt
 			buildBVH(parentNode->rightChild, splittingIndex + 1, endIncludingIndex);
 		}
 	}
-	
+
 	int BVH::getIndexFromPlaneLocation(int startIndex, int endIncludingIndex, int dimensionIndex, float planeLocation)
 	{
 		auto startItr = unsortedList.begin() + startIndex;
 		auto endItr = unsortedList.end() - (unsortedList.size() - endIncludingIndex - 1);
-		std::sort(startItr, endItr, MyComp(dimensionIndex));	//TODO: This is splitting upon minCorner location, maybe centre is better?
-		auto newItr = std::lower_bound(startItr, endItr, planeLocation, MyComp(dimensionIndex));
-		 // TODO: Check if works
+		std::sort(startItr, endItr, PrimitiveComparator(dimensionIndex));	//TODO: This is splitting upon minCorner location, maybe centre is better?
+		auto newItr = std::lower_bound(startItr, endItr, planeLocation, PrimitiveComparator(dimensionIndex));
+		// TODO: Check if works
 		return (newItr - startItr) + startIndex;
 	}
 
-	void BVH::setBoundingBoxOfNode(Node *node, int startIndex, int endIncludingIndex)
+	void BVH::setBoundingBoxOfNode(BVHNode *node, int startIndex, int endIncludingIndex)
 	{
 		for (int i = startIndex; i <= endIncludingIndex; i++)
 		{
@@ -95,28 +148,29 @@ namespace rt
 		}
 	}
 
-	MyComp::MyComp(int dimensionIndex) :dimensionIndex(dimensionIndex){}
 
-	bool MyComp::operator()(const Primitive* l, const Primitive* r)
+	PrimitiveComparator::PrimitiveComparator(int dimensionIndex) :dimensionIndex(dimensionIndex) {}
+
+	bool PrimitiveComparator::operator()(const Primitive* l, const Primitive* r) const
 	{
 		BBox lBox = l->getBounds();
 		BBox rBox = r->getBounds();
 		switch (dimensionIndex)
 		{
-			case 0: 
-				return lBox.minCorner.x < rBox.minCorner.x;
+		case 0:
+			return lBox.minCorner.x < rBox.minCorner.x;
 
-			case 1:
-				return lBox.minCorner.y < rBox.minCorner.y;
+		case 1:
+			return lBox.minCorner.y < rBox.minCorner.y;
 
-			case 2:
-				return lBox.minCorner.z < rBox.minCorner.z;
-			default:
-				throw;
+		case 2:
+			return lBox.minCorner.z < rBox.minCorner.z;
+		default:
+			throw;
 		}
 	}
 
-	bool MyComp::operator()(const Primitive* l, float valueToCompare)
+	bool PrimitiveComparator::operator()(const Primitive* l, float valueToCompare) const
 	{
 		switch (dimensionIndex)
 		{

@@ -7,15 +7,15 @@
 #define maxNumberOfChildren 3;
 namespace rt
 {
-	class Node
+	class BVHNode
 	{
 
 	public:
-		Node();
+		BVHNode();
 		BBox boundingBox;
 		void extendBox(const BBox& inputBox);
-		Node* leftChild;
-		Node* rightChild;
+		BVHNode* leftChild = NULL;
+		BVHNode* rightChild = NULL;
 		bool isLeaf;
 		int primitiveStartIndex, primitiveEndIncludingIndex;
 	};

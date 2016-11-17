@@ -2,7 +2,7 @@
 
 namespace rt
 {
-	Node::Node()
+	BVHNode::BVHNode()
 	{
 		boundingBox = BBox::empty();
 		isLeaf = false;
@@ -10,7 +10,7 @@ namespace rt
 		rightChild = NULL;
 	}
 
-	void Node::extendBox(const BBox& inputBox)
+	void BVHNode::extendBox(const BBox& inputBox)
 	{
 		boundingBox.extend(inputBox);
 	}
