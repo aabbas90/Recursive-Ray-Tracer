@@ -98,9 +98,7 @@ namespace rt
 			case 2:
 				return l->getBounds().minCorner.z < r->getBounds().minCorner.z;
 			default:
-			{
 				throw;
-			}
 		}
 	}
 
@@ -118,7 +116,6 @@ namespace rt
 			return l->getBounds().minCorner.z < valueToCompare;
 
 		default:
-		{
 			throw;
 		}
 	}
