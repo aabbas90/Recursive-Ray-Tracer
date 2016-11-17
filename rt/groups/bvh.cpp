@@ -55,21 +55,19 @@ namespace rt
 		// if not reached the leaf:
 		else
 		{
-			std::vector<BVHNode*> nodesToIterate;
-			auto leftChild = currentElement.node->leftChild;
-			auto rightChild = currentElement.node->rightChild;
+			std::vector<BVHNode> nodesToIterate;
+			BVHNode leftChild = *(currentElement.node->leftChild);
+			BVHNode rightChild = *(currentElement.node->rightChild);
 			
-			if (leftChild != NULL)
-				nodesToIterate.push_back(leftChild);
-			if (rightChild != NULL)
-				nodesToIterate.push_back(rightChild);
+			nodesToIterate.push_back(leftChild);
+			nodesToIterate.push_back(rightChild);
 
-			for (auto currentChild : nodesToIterate)
+			for (BVHNode currentChild : nodesToIterate)
 			{
-				auto t1t2 = currentChild->boundingBox.intersect(ray);
+				auto t1t2 = currentChild.boundingBox.intersect(ray);
 				if (t1t2.first < t1t2.second || t1t2.first < previousBestDistance)
 				{
-					IntersectionElement currentChildElement = IntersectionElement(currentChild, t1t2.first, true);
+					IntersectionElement currentChildElement = IntersectionElement(&currentChild, t1t2.first, true);
 					pqueue.push(currentChildElement);
 				}
 			}
