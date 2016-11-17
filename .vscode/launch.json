@@ -5,7 +5,7 @@
             "name": "C++ Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/cgray",
+            "program": "${workspaceRoot}/cgrayd",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",

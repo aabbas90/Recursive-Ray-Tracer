@@ -54,7 +54,7 @@ public:
 	int getIndexFromPlaneLocation(int startindex, int endIncludingIndex, int dimensionIndex, float planeLocation);
 	void buildBVH(BVHNode* parentNode, int startIndex, int endIncludingIndex);
 	void setBoundingBoxOfNode(BVHNode *node, int startIndex, int endIncludingIndex);
-	Intersection BVH::IterateOverQueue(std::priority_queue<IntersectionElement> pqueue, const Ray & ray, float previousBestDistance) const;
+	Intersection IterateOverQueue(std::priority_queue<IntersectionElement> pqueue, const Ray & ray, float previousBestDistance) const;
 
 private:
 	Primitives unsortedList;
