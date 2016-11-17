@@ -19,14 +19,14 @@ namespace rt
 		this->v1 = v1;
 		this->v2 = v2;
 		this->v3 = v3;
+		this->bbox = BBox(min(v1, v2), max(v1, v2));
+		this->bbox.extend(v3);
 		this->texMapper = texMapper;
 		this->material = material;
 	}
 
 	BBox Triangle::getBounds() const
 	{
-		BBox bbox = BBox(min(v1, v2), max(v1, v2));
-		bbox.extend(v3);
 		return bbox;
 	}
 

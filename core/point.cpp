@@ -35,9 +35,11 @@ namespace rt
 
 	Point min(const Point & a, const Point & b)
 	{
-		return Point(a.x < b.x ? a.x : b.x,
-					 a.y < b.y ? a.y : b.y,
-				     a.z < b.z ? a.z : b.z);
+		float minX = std::fmin(a.x, b.x);
+		float minY = std::fmin(a.y, b.y);
+		float minZ = std::fmin(a.z, b.z);
+
+		return Point(minX, minY, minZ);
 	}
 
 	Point max(const Point & a, const Point & b)
