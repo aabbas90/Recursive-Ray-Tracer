@@ -14,8 +14,8 @@ namespace rt
 		BVHNode();
 		BBox boundingBox;
 		void extendBox(const BBox& inputBox);
-		BVHNode* leftChild = NULL;
-		BVHNode* rightChild = NULL;
+		BVHNode* leftChild = nullptr;
+		BVHNode* rightChild = nullptr;
 		bool isLeaf;
 		int primitiveStartIndex, primitiveEndIncludingIndex;
 	};

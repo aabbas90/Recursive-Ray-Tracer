@@ -51,9 +51,9 @@ public:
 	virtual void add(Primitive* p);
 	virtual void setMaterial(Material* m);
 	virtual void setCoordMapper(CoordMapper* cm);
-	int getIndexFromPlaneLocation(int startindex, int endIncludingIndex, int dimensionIndex, float planeLocation);
-	void buildBVH(BVHNode* parentNode, int startIndex, int endIncludingIndex);
-	void setBoundingBoxOfNode(BVHNode *node, int startIndex, int endIncludingIndex);
+	int getIndexFromPlaneLocation(unsigned int startindex, unsigned int endIncludingIndex, int dimensionIndex, float planeLocation);
+	void buildBVH(BVHNode* parentNode, unsigned int startIndex, unsigned int endIncludingIndex);
+	void setBoundingBoxOfNode(BVHNode *node, unsigned int startIndex, unsigned int endIncludingIndex);
 	Intersection IterateOverQueue(std::priority_queue<IntersectionElement> pqueue, const Ray & ray, float previousBestDistance) const;
 
 private:

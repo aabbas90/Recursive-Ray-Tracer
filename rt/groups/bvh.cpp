@@ -56,11 +56,10 @@ namespace rt
 		else
 		{
 			std::vector<BVHNode> nodesToIterate;
-			BVHNode leftChild = *(currentElement.node->leftChild);
-			BVHNode rightChild = *(currentElement.node->rightChild);
-			
-			nodesToIterate.push_back(leftChild);
-			nodesToIterate.push_back(rightChild);
+			if(currentElement.node->leftChild != nullptr)
+				nodesToIterate.push_back(*(currentElement.node->leftChild));
+			if(currentElement.node->rightChild != nullptr)
+				nodesToIterate.push_back(*(currentElement.node->rightChild));
 
 			for (BVHNode currentChild : nodesToIterate)
 			{
@@ -99,7 +98,7 @@ namespace rt
 	{
 	}
 
-	void BVH::buildBVH(BVHNode* parentNode, int startIndex, int endIncludingIndex)
+	void BVH::buildBVH(BVHNode* parentNode, unsigned int startIndex, unsigned int endIncludingIndex)
 	{
 		int numElements = endIncludingIndex - startIndex + 1;
 		if (numElements <= maxNumberElementsInLeaf)
@@ -128,7 +127,7 @@ namespace rt
 		}
 	}
 
-	int BVH::getIndexFromPlaneLocation(int startIndex, int endIncludingIndex, int dimensionIndex, float planeLocation)
+	int BVH::getIndexFromPlaneLocation(unsigned int startIndex, unsigned int endIncludingIndex, int dimensionIndex, float planeLocation)
 	{
 		auto startItr = unsortedList.begin() + startIndex;
 		auto endItr = unsortedList.end() - (unsortedList.size() - endIncludingIndex - 1);
@@ -138,7 +137,7 @@ namespace rt
 		return (newItr - startItr) + startIndex - 1;
 	}
 
-	void BVH::setBoundingBoxOfNode(BVHNode *node, int startIndex, int endIncludingIndex)
+	void BVH::setBoundingBoxOfNode(BVHNode *node, unsigned int startIndex, unsigned int endIncludingIndex)
 	{
 		for (int i = startIndex; i <= endIncludingIndex; i++)
 		{
