@@ -144,6 +144,9 @@
     <ClInclude Include="rt\loaders\obj.h">
       <Filter>rt\loaders</Filter>
     </ClInclude>
+    <ClInclude Include="rt\groups\Node.h">
+      <Filter>rt\groups</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -245,6 +248,11 @@
     </ClCompile>
     <ClCompile Include="main\a_indexing.cpp">
       <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\groups\bvh.cpp" />
+    <ClCompile Include="rt\groups\group.cpp" />
+    <ClCompile Include="rt\groups\Node.cpp">
+      <Filter>rt\groups</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -15,21 +15,22 @@ class Ray;
 
 class BBox {
 public:
-    Point minCorner, maxCorner;
+	Point minCorner, maxCorner;
 
-    BBox() {}
-    BBox(const Point& min, const Point& max) : minCorner(min), maxCorner(max) {}
-    static BBox empty();
-    static BBox full();
+	BBox() {}
+	BBox(const Point& min, const Point& max) : minCorner(min), maxCorner(max) {}
+	static BBox empty();
+	static BBox full();
 
-    void extend(const Point& point);
-    void extend(const BBox& bbox);
+	void extend(const Point& point);
+	void extend(const BBox& bbox);
 
-    Vector diagonal() const { return maxCorner - minCorner; }
+	Vector diagonal() const { return maxCorner - minCorner; }
 
-    std::pair<float,float> intersect(const Ray& ray) const;
+	std::pair<float,float> intersect(const Ray& ray) const;
 
-    bool isUnbound();
+	bool isUnbound();
+	std::pair<int, float> findGreatestDimensionAndMiddleLocation();
 };
 
 }

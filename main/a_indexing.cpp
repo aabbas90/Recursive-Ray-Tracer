@@ -18,18 +18,18 @@ using namespace rt;
 void a_indexing() {
 	Image img(800, 600);
 	
-	SimpleGroup* scene = new SimpleGroup();
+//	SimpleGroup* scene = new SimpleGroup();
 
 	// Uncomment after BVH:
-//	BVH* scene = new BVH();
+	BVH* scene = new BVH();
 	scene->add(new Sphere(Point(2.5f,  .5f,  -1), 0.5  , nullptr, nullptr));
 	scene->add(new Sphere(Point(2.5f,  -1.f,  -1), 0.5, nullptr, nullptr));
 	scene->add(new Sphere(Point(4.5f,  .5f,  -1), 0.5 , nullptr, nullptr));
 
-	loadOBJ(scene, "models/", "cow.obj");
+	// loadOBJ(scene, "models/", "cow.obj");
   
 	// Uncomment after BVH:
-	// scene->rebuildIndex();
+	scene->rebuildIndex();
 	World world;
 	world.scene = scene;
 

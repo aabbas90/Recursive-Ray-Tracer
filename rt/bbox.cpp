@@ -110,4 +110,29 @@ namespace rt
 
 		return 0;
 	}
+
+	std::pair<int, float> BBox::findGreatestDimensionAndMiddleLocation()
+	{
+		float xLength = maxCorner.x - minCorner.x;
+		float yLength = maxCorner.y - minCorner.y;
+		float zLength = maxCorner.z - minCorner.z;
+		if (xLength > yLength)
+		{
+			if (xLength > zLength)
+				return std::pair<int, float>(0, xLength / 2 + minCorner.x);
+
+			else
+				return std::pair<int, float>(2, zLength / 2 + minCorner.z);
+		}
+
+		else
+		{
+			if (yLength > zLength)
+				return std::pair<int, float>(1, yLength / 2 + minCorner.y);
+			else
+				return std::pair<int, float>(2, zLength / 2 + minCorner.z);
+		}
+
+		return std::pair<int, float>();
+	}
 }

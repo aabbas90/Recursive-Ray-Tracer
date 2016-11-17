@@ -38,6 +38,7 @@ namespace rt
 		Point v4 = center - radius * ySpanningVector;
 		box.extend(v3);
 		box.extend(v4);
+		return box;
 	}
 
 	Intersection Disc::intersect(const Ray & ray, float previousBestDistance) const
