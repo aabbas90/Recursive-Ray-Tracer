@@ -3,6 +3,7 @@
 
 #include <rt/solids/solid.h>
 #include <core/point.h>
+#include <rt/bbox.h>
 
 namespace rt {
 
@@ -19,6 +20,7 @@ public:
 
 private:
 	Point v1, v2, v3;
+	BBox bbox;
 };
 
 }

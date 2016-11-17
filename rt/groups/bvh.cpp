@@ -66,6 +66,10 @@ namespace rt
 			int dimension = splitDimensionAndLocation.first;
 			float location = splitDimensionAndLocation.second;
 			int splittingIndex = getIndexFromPlaneLocation(startIndex, endIncludingIndex, dimension, location);
+			if (splittingIndex == endIncludingIndex)
+			{
+				splittingIndex = (startIndex + endIncludingIndex) / 2;
+			}
 			setBoundingBoxOfNode(parentNode->leftChild, startIndex, splittingIndex);
 			setBoundingBoxOfNode(parentNode->rightChild, splittingIndex + 1, endIncludingIndex);
 			buildBVH(parentNode->leftChild, startIndex, splittingIndex);
@@ -95,16 +99,18 @@ namespace rt
 
 	bool MyComp::operator()(const Primitive* l, const Primitive* r)
 	{
+		BBox lBox = l->getBounds();
+		BBox rBox = r->getBounds();
 		switch (dimensionIndex)
 		{
 			case 0: 
-				return l->getBounds().minCorner.x < r->getBounds().minCorner.x;
+				return lBox.minCorner.x < rBox.minCorner.x;
 
 			case 1:
-				return l->getBounds().minCorner.y < r->getBounds().minCorner.y;
+				return lBox.minCorner.y < rBox.minCorner.y;
 
 			case 2:
-				return l->getBounds().minCorner.z < r->getBounds().minCorner.z;
+				return lBox.minCorner.z < rBox.minCorner.z;
 			default:
 				throw;
 		}

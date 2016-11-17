@@ -13,17 +13,16 @@ namespace rt
 		this->span2 = span2;
 		this->texMapper = texMapper;
 		this->material = material;
+		Point v2 = p1 + span1;
+		this->box = BBox(min(v1, v2), max(v1, v2));
+		Point v3 = p1 + span2;
+		this->box.extend(v3);
+		Point v4 = v3 + span1;
+		this->box.extend(v4);
 	}
 
 	BBox Quad::getBounds() const
 	{
-		Point v1 = p1;
-		Point v2 = p1 + span1;
-		BBox box = BBox(min(v1, v2), max(v1, v2));
-		Point v3 = p1 + span2;
-		box.extend(v3);
-		Point v4 = v3 + span1;
-		box.extend(v4);
 		return box;
 	}
 

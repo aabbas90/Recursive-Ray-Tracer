@@ -3,6 +3,7 @@
 
 #include <rt/solids/solid.h>
 #include <core/point.h>
+#include <rt/bbox.h>
 
 namespace rt {
 
@@ -19,6 +20,7 @@ public:
 private:
 	Point p1;
 	Vector span1, span2;
+	BBox box;
 };
 
 }
