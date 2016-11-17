@@ -19,6 +19,18 @@ class MyComp
 
 };
 
+class IntersectionElement
+{
+	bool operator<(const Node& l, const Node& r) 
+	{
+ 		return l.nodeDistance < r.nodeDistance;
+	}
+private:
+	Node* node;
+	float nodeDistance;
+}
+
+
 class BVH : public Group {
 public:
 	BVH();

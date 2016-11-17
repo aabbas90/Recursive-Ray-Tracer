@@ -14,7 +14,15 @@ namespace rt
 	}
 	Intersection BVH::intersect(const Ray & ray, float previousBestDistance) const
 	{
-		return Intersection();
+		std::pair<float,float> nodeDistances = root->boundingBox.intersect();
+		if(nodeDistances.first > nodeDistances.second) {
+			return Intersection();
+		} else
+		{
+			//rest
+			return Intersection();
+		}
+		
 	}
 	void BVH::rebuildIndex()
 	{
