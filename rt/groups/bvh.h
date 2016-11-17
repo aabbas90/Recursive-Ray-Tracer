@@ -31,12 +31,12 @@ public:
 		:node(node), nodeDistance(nodeDistance), isIntersected(isIntersected) {}
 	bool operator < (const IntersectionElement& r) const
 	{
-		return this->nodeDistance < r.nodeDistance;
+		return this->nodeDistance > r.nodeDistance;
 	}
 
 	bool operator() (const IntersectionElement& l, const IntersectionElement& r) const
 	{
-		return l.nodeDistance < r.nodeDistance;
+		return l.nodeDistance > r.nodeDistance;
 	}
 };
 
