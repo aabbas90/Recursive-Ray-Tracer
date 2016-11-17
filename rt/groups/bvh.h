@@ -1,7 +1,7 @@
 #ifndef CG1RAYTRACER_GROUPS_BVH_HEADER
 #define CG1RAYTRACER_GROUPS_BVH_HEADER
 
-const int maxNumberElementsInLeaf = 2;
+const int maxNumberElementsInLeaf = 5;
 #include <vector>
 #include <rt/groups/group.h>
 #include <rt/bbox.h>
