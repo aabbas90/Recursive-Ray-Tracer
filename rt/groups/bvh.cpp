@@ -39,7 +39,7 @@ namespace rt
 		if (currentElement.node->isLeaf)
 		{
 			Intersection smallestIntersection;
-			for (int i = currentElement.node->primitiveStartIndex; i <= currentElement.node->primitiveStartIndex; i++)
+			for (int i = currentElement.node->primitiveStartIndex; i <= currentElement.node->primitiveEndIncludingIndex; i++)
 			{
 				Intersection intersection = unsortedList[i]->intersect(ray, previousBestDistance);
 				if (intersection && (intersection.distance < previousBestDistance))
@@ -119,7 +119,7 @@ namespace rt
 			int dimension = splitDimensionAndLocation.first;
 			float location = splitDimensionAndLocation.second;
 			int splittingIndex = getIndexFromPlaneLocation(startIndex, endIncludingIndex, dimension, location);
-			if (splittingIndex == endIncludingIndex)
+			if (splittingIndex >= endIncludingIndex)
 			{
 				splittingIndex = (startIndex + endIncludingIndex) / 2;
 			}
@@ -137,7 +137,7 @@ namespace rt
 		std::sort(startItr, endItr, PrimitiveComparator(dimensionIndex));	//TODO: This is splitting upon minCorner location, maybe centre is better?
 		auto newItr = std::lower_bound(startItr, endItr, planeLocation, PrimitiveComparator(dimensionIndex));
 		// TODO: Check if works
-		return (newItr - startItr) + startIndex;
+		return (newItr - startItr) + startIndex - 1;
 	}
 
 	void BVH::setBoundingBoxOfNode(BVHNode *node, int startIndex, int endIncludingIndex)

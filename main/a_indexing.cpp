@@ -1,4 +1,5 @@
-
+#include <rt/solids/triangle.h>
+#include <rt/solids/aabox.h>
 #include <core/assert.h>
 #include <core/scalar.h>
 #include <core/image.h>
@@ -18,9 +19,6 @@ using namespace rt;
 void a_indexing() {
 	Image img(800, 600);
 	
-//	SimpleGroup* scene = new SimpleGroup();
-
-	// Uncomment after BVH:
 	BVH* scene = new BVH();
 	scene->add(new Sphere(Point(2.5f,  .5f,  -1), 0.5  , nullptr, nullptr));
 	scene->add(new Sphere(Point(2.5f,  -1.f,  -1), 0.5, nullptr, nullptr));
@@ -44,4 +42,24 @@ void a_indexing() {
 	Renderer engine2(&cam2, &integrator);
 	engine2.render(img);
 	img.writePNG("a3-2.png");
+
+
+/*	scene->add(new Sphere(Point(-2.2f, 1.7f, 0), 2, nullptr, nullptr));
+	scene->add(new Sphere(Point(1, -1, 1), 2.2f, nullptr, nullptr));
+	scene->add(new Sphere(Point(3.f, 0.8f, -2), 2, nullptr, nullptr));
+
+	scene->add(new Triangle(Point(-2.01, 3.7f, 0), Point(1, 2, 1), Point(3, 2.8f, -2), nullptr, nullptr));
+	scene->add(new Triangle(Point(3, 2, 3), Point(3, 2, -3), Point(-3, 2, -3), nullptr, nullptr));
+
+	scene->add(new AABox(Point(2.01, 1.5f, -0.5f), Point(3, 2.5f, 2.5f), nullptr, nullptr));
+	scene->rebuildIndex();
+
+	World world;
+	world.scene = scene;
+
+	PerspectiveCamera cam(Point(0, 0, 10), Vector(0, 0, -1), Vector(0, 1, 0), pi / 4, pi / 3);
+	RayCastingIntegrator integrator(&world);
+	Renderer engine(&cam, &integrator);
+	engine.render(img);
+	img.writePNG("a3-1.png")*/;
 }
