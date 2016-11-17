@@ -119,7 +119,7 @@ namespace rt
 			int dimension = splitDimensionAndLocation.first;
 			float location = splitDimensionAndLocation.second;
 			int splittingIndex = getIndexFromPlaneLocation(startIndex, endIncludingIndex, dimension, location);
-			if (splittingIndex >= endIncludingIndex)
+			if (splittingIndex >= endIncludingIndex || splittingIndex <= 0)
 			{
 				splittingIndex = (startIndex + endIncludingIndex) / 2;
 			}
