@@ -15,7 +15,7 @@ namespace rt
 	// }
 	BBox BBox::empty()
 	{
-		return BBox::BBox(Point(0, 0, 0), Point(0, 0, 0));
+		return BBox::BBox();
 	}
 	BBox BBox::full()
 	{
@@ -23,13 +23,31 @@ namespace rt
 	}
 	void BBox::extend(const Point & point)
 	{
-		minCorner = min(this->minCorner, point);
-		maxCorner = max(this->maxCorner, point);
+		if (this->isEmpty)
+		{
+			minCorner = point;
+			maxCorner = point;
+		}
+		else
+		{
+			minCorner = min(this->minCorner, point);
+			maxCorner = max(this->maxCorner, point);
+		}
+		this->isEmpty = false;
 	}
 	void BBox::extend(const BBox & bbox)
 	{
-		this->maxCorner = max(this->maxCorner, bbox.maxCorner);
-		this->minCorner = min(this->minCorner, bbox.minCorner);
+		if (this->isEmpty)
+		{
+			this->minCorner = bbox.minCorner;
+			this->maxCorner = bbox.maxCorner;
+		}
+		else
+		{
+			this->maxCorner = max(this->maxCorner, bbox.maxCorner);
+			this->minCorner = min(this->minCorner, bbox.minCorner);
+		}
+		this->isEmpty = false;
 	}
 	std::pair<float, float> BBox::intersect(const Ray & ray) const
 	{

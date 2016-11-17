@@ -16,16 +16,21 @@ class Ray;
 class BBox {
 public:
 	Point minCorner, maxCorner;
-
+	bool isEmpty = true;
 	BBox() {}
-	BBox(const Point& min, const Point& max) : minCorner(min), maxCorner(max) {}
+	BBox(const Point& min, const Point& max) : minCorner(min), maxCorner(max) { this->isEmpty = false; }
 	static BBox empty();
 	static BBox full();
 
 	void extend(const Point& point);
 	void extend(const BBox& bbox);
 
-	Vector diagonal() const { return maxCorner - minCorner; }
+	Vector diagonal() const {
+		if (this->isEmpty)
+			return Vector(0, 0, 0);
+		else
+			return maxCorner - minCorner;
+	}
 
 	std::pair<float,float> intersect(const Ray& ray) const;
 
