@@ -29,7 +29,7 @@ namespace rt
 		}
 	}
 
-	Intersection BVH::IterateOverQueue(std::priority_queue<IntersectionElement> pqueue, const Ray & ray, float previousBestDistance) const
+	Intersection BVH::IterateOverQueue(std::priority_queue<IntersectionElement>& pqueue, const Ray & ray, float previousBestDistance) const
 	{
 		if (pqueue.empty())
 			return Intersection();
