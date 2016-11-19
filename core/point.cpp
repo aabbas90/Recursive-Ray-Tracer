@@ -1,4 +1,5 @@
 #include "point.h"
+#include<algorithm>
 #include "vector.h"
 
 namespace rt

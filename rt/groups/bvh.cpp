@@ -1,6 +1,7 @@
 #include "bvh.h"
 #include<rt/bbox.h>
 #include<rt/intersection.h>
+#include<tuple>
 
 namespace rt
 {

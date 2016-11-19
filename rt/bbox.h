@@ -24,6 +24,7 @@ public:
 
 	void extend(const Point& point);
 	void extend(const BBox& bbox);
+	void Inflate(float factor);
 
 	Vector diagonal() const {
 		if (this->isEmpty)
