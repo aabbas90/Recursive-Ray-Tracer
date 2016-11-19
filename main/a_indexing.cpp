@@ -58,7 +58,6 @@ uint64 GetTimeMs64()
 void a_indexing(bool doSAH) {
 	Image img(800, 600);
 
-	//	SimpleGroup* scene = new SimpleGroup();
 	std::cout << "SAH Running ==" << doSAH << std::endl;
 	BVH* scene = new BVH(doSAH);
 	scene->add(new Sphere(Point(2.5f, .5f, -1), 0.5, nullptr, nullptr));
@@ -76,6 +75,8 @@ void a_indexing(bool doSAH) {
 
 	PerspectiveCamera cam1(Point(-8.85f, -7.85f, 7.0f), Vector(1.0f, 1.0f, -0.6f), Vector(0, 0, 1), pi / 8, pi / 6);
 	PerspectiveCamera cam2(Point(16.065f, -12.506f, 1.771f), Point(-0.286f, -0.107f, 1.35f) - Point(16.065f, -12.506f, 1.771f), Vector(0, 0, 1), pi / 8, pi / 6);
+	PerspectiveCamera cam3(Point(0, 4, -30), Vector(0, 0, 1), Vector(0, 1, 0), pi / 8, pi / 6);
+
 	RayCastingIntegrator integrator(&world);
 
 	Renderer engine1(&cam1, &integrator);
@@ -97,4 +98,28 @@ void a_indexing(bool doSAH) {
 		img.writePNG("a3-2-WithoutSAH.png");
 	else
 		img.writePNG("a3-2-WithSAH.png");
+
+	World world2;
+
+	BVH* scene2 = new BVH(doSAH);
+	world2.scene = scene2;
+	RayCastingIntegrator integrator2(&world2);
+
+	loadOBJ(scene2, "models/", "dragon.obj");
+	
+	startTime = GetTimeMs64();
+	scene2->rebuildIndex();
+	endTime = GetTimeMs64();
+
+	Renderer engine3(&cam3, &integrator2);
+	startTime = GetTimeMs64();
+	engine3.render(img);
+	endTime = GetTimeMs64();
+	std::cout << "Image 3 (Dragon) rendering time(ms): " << endTime - startTime << std::endl << std::endl << std::endl << std::endl;
+	if (!doSAH)
+		img.writePNG("a3-3-WithoutSAH.png");
+	else
+		img.writePNG("a3-3-WithSAH.png");
+
+
 }

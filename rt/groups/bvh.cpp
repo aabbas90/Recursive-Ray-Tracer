@@ -164,12 +164,95 @@ namespace rt
 
 	int BVH::getIndexFromPlaneLocation(unsigned int startIndex, unsigned int endIncludingIndex, int dimensionIndex, float planeLocation)
 	{
+		/*if (endIncludingIndex >= unsortedList.size())
+			throw;
+
+		for (int i = startIndex; i <= endIncludingIndex; i++)
+		{
+			float minDistance = maxFloat;
+			int minIndex;
+			for (int j = i; j <= endIncludingIndex; j++)
+			{
+				try
+				{
+					BBox bounds = unsortedList[j]->getBounds();
+					switch (dimensionIndex)
+					{
+					case 0:
+						if ((bounds.minCorner.x + bounds.maxCorner.x) / 2 < minDistance)
+						{
+							minIndex = j;
+							minDistance = (bounds.minCorner.x + bounds.maxCorner.x) / 2;
+						}
+						break;
+					case 1:
+						if ((bounds.minCorner.y + bounds.maxCorner.y) / 2 < minDistance)
+						{
+							minIndex = j;
+							minDistance = (bounds.minCorner.y + bounds.maxCorner.y) / 2;
+						}
+						break;
+					case 2:
+						if ((bounds.minCorner.z + bounds.maxCorner.z) / 2 < minDistance)
+						{
+							minIndex = j;
+							minDistance = (bounds.minCorner.z + bounds.maxCorner.z) / 2;
+						}
+						break;
+					default:
+						throw;
+					}
+				}
+				catch (...)
+				{
+					std::cout << j;
+				}
+
+			}
+			auto temp = unsortedList[i];
+			unsortedList[i] = unsortedList[minIndex];
+			unsortedList[minIndex] = temp;
+		}
+
+		int splittingIndex = startIndex;
+		for (int i = startIndex; i <= endIncludingIndex; i++)
+		{
+			BBox bounds = unsortedList[i]->getBounds();
+			switch (dimensionIndex)
+			{
+			case 0:
+				if ((bounds.minCorner.x + bounds.maxCorner.x) / 2 < planeLocation)
+				{
+					splittingIndex++;
+				}
+				break;
+
+			case 1:
+				if ((bounds.minCorner.y + bounds.maxCorner.y) / 2 < planeLocation)
+				{
+					splittingIndex++;
+				}
+				break;
+			case 2:
+				if ((bounds.minCorner.z + bounds.maxCorner.z) / 2 < planeLocation)
+				{
+					splittingIndex++;
+
+				}
+				break;
+			default:
+				throw;
+			}
+		}*/
+
 		auto startItr = unsortedList.begin() + startIndex;
-		auto endItr = unsortedList.end() - (unsortedList.size() - endIncludingIndex - 1);
+		auto endItr = unsortedList.end() - (unsortedList.size() - endIncludingIndex) + 1;
 		std::sort(startItr, endItr, PrimitiveComparator(dimensionIndex));	//TODO: This is splitting upon minCorner location, maybe centre is better?
 		auto newItr = std::lower_bound(startItr, endItr, planeLocation, PrimitiveComparator(dimensionIndex));
-		// TODO: Check if works
+		//// TODO: Check if works
 		return (newItr - startItr) + startIndex - 1;
+		//std::cout << itrSI << std::endl;
+		//return splittingIndex + 1;
 	}
 
 	void BVH::setBoundingBoxOfNode(BVHNode *node, unsigned int startIndex, unsigned int endIncludingIndex)
