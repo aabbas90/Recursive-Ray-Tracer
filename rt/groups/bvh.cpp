@@ -132,6 +132,7 @@ namespace rt
 		{
 			parentNode->leftChild = new BVHNode();
 			parentNode->rightChild = new BVHNode();
+			numNodes += 2; 
 			auto splitDimensionAndLocation = parentNode->boundingBox.findGreatestDimensionAndMiddleLocation();
 			int dimension = splitDimensionAndLocation.first;
 			float location = splitDimensionAndLocation.second;

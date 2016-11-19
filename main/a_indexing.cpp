@@ -38,11 +38,11 @@ void a_indexing() {
 
     Renderer engine1(&cam1, &integrator);
     engine1.render(img);
-    printf("Time taken: %.2fs\n", (double)(clock() - tStart)/CLOCKS_PER_SEC);
 	
     img.writePNG("a3-1.png");
 
     Renderer engine2(&cam2, &integrator);
     engine2.render(img);
+    printf("Time taken: %.2fs\n", (double)(clock() - tStart)/CLOCKS_PER_SEC);
     img.writePNG("a3-2.png");
 }

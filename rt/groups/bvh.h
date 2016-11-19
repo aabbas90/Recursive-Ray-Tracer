@@ -43,6 +43,7 @@ public:
 
 class BVH : public Group {
 public:
+	int numNodes;
 	BVH();
 	virtual BBox getBounds() const;
 	virtual Intersection intersect(const Ray& ray, float previousBestDistance=FLT_MAX) const;
