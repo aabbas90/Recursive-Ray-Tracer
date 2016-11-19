@@ -4,6 +4,7 @@
 #include <core/point.h>
 #include <algorithm>
 #include<tuple>
+#include <math.h>
 
 
 const float maxFloat = std::numeric_limits<float>::max();
@@ -201,9 +202,9 @@ namespace rt
 		float width = maxCorner.y - minCorner.y;
 		float height = maxCorner.z - minCorner.z;
 
-		float xyPlaneArea = std::abs(length * width);
-		float yzPlaneArea = std::abs(width * height);
-		float zxPlaneArea = std::abs(length * height);
+		float xyPlaneArea = fabs(length * width);
+		float yzPlaneArea = fabs(width * height);
+		float zxPlaneArea = fabs(length * height);
 
 		return 2 * (xyPlaneArea + yzPlaneArea + zxPlaneArea);
 	}

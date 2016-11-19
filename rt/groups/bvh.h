@@ -59,7 +59,7 @@ public:
 	void setBoundingBoxOfNode(BVHNode *node, unsigned int startIndex, unsigned int endIncludingIndex);
 	Intersection IterateOverQueue(std::priority_queue<IntersectionElement>& pqueue, const Ray & ray, float previousBestDistance) const;
 	std::pair<int, int> getSplittingIndexAndDimensionSAH(int startIndex, int endIncludingIndex);
-	BBox BVH::getBBoxOfPrimitives(int startIndex, int endIncludingIndex);
+	BBox getBBoxOfPrimitives(int startIndex, int endIncludingIndex);
 private:
 	Primitives unsortedList;
 	BVHNode* root;
