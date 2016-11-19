@@ -5,9 +5,10 @@
 
 namespace rt
 {
-	BVH::BVH()
+	BVH::BVH(bool doSAH)
 	{
 		root = new BVHNode();
+		this->doSAH = doSAH;
 	}
 	BBox BVH::getBounds() const
 	{
@@ -17,9 +18,9 @@ namespace rt
 	{
 		return intersectNode(ray, previousBestDistance, root);
 	}
-	Intersection BVH::intersectNode(const Ray & ray, float previousBestDistance, BVHNode* node) const 
+	Intersection BVH::intersectNode(const Ray & ray, float previousBestDistance, BVHNode* node) const
 	{
-		if(node == nullptr)
+		if (node == nullptr)
 		{
 			return Intersection();
 		}
@@ -30,7 +31,7 @@ namespace rt
 		{
 			return Intersection();
 		}
-		if(node->isLeaf)
+		if (node->isLeaf)
 		{
 			Intersection smallestIntersection;
 			for (unsigned int i = node->primitiveStartIndex; i <= node->primitiveEndIncludingIndex; ++i)
@@ -42,7 +43,7 @@ namespace rt
 					previousBestDistance = intersection.distance;
 				}
 			}
-			if(smallestIntersection)
+			if (smallestIntersection)
 			{
 				return smallestIntersection;
 			}
@@ -50,15 +51,15 @@ namespace rt
 			{
 				return Intersection();
 			}
-			
+
 		}
-		else if(!node->isLeaf)
+		else if (!node->isLeaf)
 		{
 			Intersection leftIntersection = intersectNode(ray, previousBestDistance, node->leftChild);
 			Intersection rightIntersection = intersectNode(ray, previousBestDistance, node->rightChild);
-			if(leftIntersection && rightIntersection)
+			if (leftIntersection && rightIntersection)
 			{
-				if(leftIntersection.distance < rightIntersection.distance)
+				if (leftIntersection.distance < rightIntersection.distance)
 				{
 					if (leftIntersection.distance < previousBestDistance)
 						return leftIntersection;
@@ -73,19 +74,19 @@ namespace rt
 						return Intersection();
 				}
 			}
-			else if(leftIntersection && !rightIntersection)
+			else if (leftIntersection && !rightIntersection)
 			{
-					if (leftIntersection.distance < previousBestDistance)
-						return leftIntersection;
-					else
-						return Intersection();
+				if (leftIntersection.distance < previousBestDistance)
+					return leftIntersection;
+				else
+					return Intersection();
 			}
-			else if(!leftIntersection && rightIntersection)
+			else if (!leftIntersection && rightIntersection)
 			{
-					if (rightIntersection.distance < previousBestDistance)
-						return rightIntersection;
-					else
-						return Intersection();
+				if (rightIntersection.distance < previousBestDistance)
+					return rightIntersection;
+				else
+					return Intersection();
 			}
 			else
 			{
@@ -93,7 +94,7 @@ namespace rt
 			}
 		} //end else if(!node->isLeaf)
 	}
-	
+
 	void BVH::rebuildIndex()
 	{
 		buildBVH(root, 0, unsortedList.size() - 1);
@@ -118,9 +119,12 @@ namespace rt
 	{
 	}
 
-	void BVH::buildBVH(BVHNode* parentNode, unsigned int startIndex, unsigned int endIncludingIndex)
+	void BVH::buildBVH(BVHNode* parentNode, int startIndex, int endIncludingIndex)
 	{
 		int numElements = endIncludingIndex - startIndex + 1;
+		if (numElements < 0)
+			throw;
+
 		if (numElements <= maxNumberElementsInLeaf)
 		{
 			parentNode->isLeaf = true;
@@ -132,14 +136,24 @@ namespace rt
 		{
 			parentNode->leftChild = new BVHNode();
 			parentNode->rightChild = new BVHNode();
-			numNodes += 2; 
-			auto splitDimensionAndLocation = parentNode->boundingBox.findGreatestDimensionAndMiddleLocation();
-			int dimension = splitDimensionAndLocation.first;
-			float location = splitDimensionAndLocation.second;
-			int splittingIndex = getIndexFromPlaneLocation(startIndex, endIncludingIndex, dimension, location);
-			if (splittingIndex >= endIncludingIndex || splittingIndex <= 0)
+			numNodes += 2;
+			int splittingIndex;
+			if (!doSAH)
 			{
-				splittingIndex = (startIndex + endIncludingIndex) / 2;
+				auto splitDimensionAndLocation = parentNode->boundingBox.findGreatestDimensionAndMiddleLocation();
+				int dimension = splitDimensionAndLocation.first;
+				float location = splitDimensionAndLocation.second;
+				splittingIndex = getIndexFromPlaneLocation(startIndex, endIncludingIndex, dimension, location);
+				if (splittingIndex >= endIncludingIndex || splittingIndex <= 0)
+				{
+					splittingIndex = (startIndex + endIncludingIndex) / 2;
+				}
+			}
+
+			else
+			{
+				auto splittingIndexAndDimension = getSplittingIndexAndDimensionSAH(startIndex, endIncludingIndex);
+				splittingIndex = splittingIndexAndDimension.first;
 			}
 			setBoundingBoxOfNode(parentNode->leftChild, startIndex, splittingIndex);
 			setBoundingBoxOfNode(parentNode->rightChild, splittingIndex + 1, endIncludingIndex);
@@ -166,6 +180,75 @@ namespace rt
 		}
 	}
 
+	std::pair<int, int> BVH::getSplittingIndexAndDimensionSAH(int startIndex, int endIncludingIndex)
+	{
+		int minCostIndex;
+		int minCostDimension;
+		float minCost = maxFloat;
+		auto startItr = unsortedList.begin() + startIndex;
+		auto endItr = unsortedList.end() - (unsortedList.size() - endIncludingIndex);
+		BBox bigBox = getBBoxOfPrimitives(startIndex, endIncludingIndex);
+		for (int dimensionIndex = 0; dimensionIndex < 3; dimensionIndex++)
+		{
+			std::sort(startItr, endItr, PrimitiveComparator(dimensionIndex));
+			float totalDistance;
+			float startLocation;
+			if (dimensionIndex == 0)
+			{
+				startLocation = bigBox.minCorner.x;
+				totalDistance = bigBox.getXLength();
+			}
+			else if (dimensionIndex == 1)
+			{
+				startLocation = bigBox.minCorner.y;
+				totalDistance = bigBox.getYLength();
+			}
+			else if (dimensionIndex == 2)
+			{
+				startLocation = bigBox.minCorner.z;
+				totalDistance = bigBox.getZLength();
+			}
+
+			for (int currentBin = 1; currentBin <= numberBins; currentBin++)
+			{
+				float leftDistance = totalDistance * currentBin / numberBins;
+				// float rightDistance = totalDistance * (numberBins - currentBin) / numberBins;
+				float splitLocation = startLocation + leftDistance;
+				auto newItr = std::lower_bound(startItr, endItr, splitLocation, PrimitiveComparator(dimensionIndex));
+				
+				int splitIndex = (newItr - startItr) + startIndex - 1;
+
+				int numberPrimitivesLeft = splitIndex - startIndex + 1;
+				int numberPrimitivesRight = endIncludingIndex - splitIndex;
+
+				BBox bboxLeft = getBBoxOfPrimitives(startIndex, splitIndex);
+				BBox bboxRight = getBBoxOfPrimitives(splitIndex + 1, endIncludingIndex);
+
+				float currentCost = numberPrimitivesLeft *  bboxLeft.getSurfaceArea() / bigBox.getSurfaceArea() +
+					numberPrimitivesRight * bboxRight.getSurfaceArea() / bigBox.getSurfaceArea();
+
+				if (currentCost < minCost)
+				{
+					minCostDimension = dimensionIndex;
+					minCostIndex = splitIndex;
+					minCost = currentCost;
+				}
+			}
+		}
+
+		std::sort(startItr, endItr, PrimitiveComparator(minCostDimension));
+		return std::pair<int, int>(minCostIndex, minCostDimension);
+	}
+
+	BBox BVH::getBBoxOfPrimitives(int startIndex, int endIncludingIndex)
+	{
+		BBox box;
+		for (int i = startIndex; i <= endIncludingIndex; i++)
+		{
+			box.extend(unsortedList[i]->getBounds());
+		}
+		return box;
+	}
 
 	PrimitiveComparator::PrimitiveComparator(int dimensionIndex) :dimensionIndex(dimensionIndex) {}
 

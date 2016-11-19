@@ -37,6 +37,11 @@ public:
 
 	bool isUnbound();
 	std::pair<int, float> findGreatestDimensionAndMiddleLocation();
+	float getSurfaceArea();
+	float getXLength();
+	float getYLength();
+	float getZLength();
+
 };
 
 }

@@ -1,7 +1,8 @@
 #ifndef CG1RAYTRACER_GROUPS_BVH_HEADER
 #define CG1RAYTRACER_GROUPS_BVH_HEADER
 
-const int maxNumberElementsInLeaf = 5;
+const int maxNumberElementsInLeaf = 2;
+const int numberBins = 25;
 #include <vector>
 #include <rt/groups/group.h>
 #include <rt/bbox.h>
@@ -44,7 +45,7 @@ public:
 class BVH : public Group {
 public:
 	int numNodes;
-	BVH();
+	BVH(bool doSAH = true);
 	virtual BBox getBounds() const;
 	virtual Intersection intersect(const Ray& ray, float previousBestDistance=FLT_MAX) const;
 	Intersection intersectNode(const Ray & ray, float previousBestDistance, BVHNode* node) const;
@@ -54,13 +55,15 @@ public:
 	virtual void setMaterial(Material* m);
 	virtual void setCoordMapper(CoordMapper* cm);
 	int getIndexFromPlaneLocation(unsigned int startindex, unsigned int endIncludingIndex, int dimensionIndex, float planeLocation);
-	void buildBVH(BVHNode* parentNode, unsigned int startIndex, unsigned int endIncludingIndex);
+	void buildBVH(BVHNode* parentNode, int startIndex, int endIncludingIndex);
 	void setBoundingBoxOfNode(BVHNode *node, unsigned int startIndex, unsigned int endIncludingIndex);
 	Intersection IterateOverQueue(std::priority_queue<IntersectionElement>& pqueue, const Ray & ray, float previousBestDistance) const;
-
+	std::pair<int, int> getSplittingIndexAndDimensionSAH(int startIndex, int endIncludingIndex);
+	BBox BVH::getBBoxOfPrimitives(int startIndex, int endIncludingIndex);
 private:
 	Primitives unsortedList;
 	BVHNode* root;
+	bool doSAH = true;
 };
 
 }

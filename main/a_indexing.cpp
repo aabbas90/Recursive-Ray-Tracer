@@ -55,11 +55,12 @@ uint64 GetTimeMs64()
 #endif
 }
 
-void a_indexing() {
+void a_indexing(bool doSAH) {
 	Image img(800, 600);
 
 	//	SimpleGroup* scene = new SimpleGroup();
-	BVH* scene = new BVH();
+	std::cout << "SAH Running ==" << doSAH << std::endl;
+	BVH* scene = new BVH(doSAH);
 	scene->add(new Sphere(Point(2.5f, .5f, -1), 0.5, nullptr, nullptr));
 	scene->add(new Sphere(Point(2.5f, -1.f, -1), 0.5, nullptr, nullptr));
 	scene->add(new Sphere(Point(4.5f, .5f, -1), 0.5, nullptr, nullptr));
@@ -82,12 +83,18 @@ void a_indexing() {
 	engine1.render(img);
 	endTime = GetTimeMs64();
 	std::cout << "Image 1 rendering time(ms): " << endTime - startTime << std::endl;
-	img.writePNG("a3-1.png");
+	if (!doSAH)
+		img.writePNG("a3-1-WithoutSAH.png");
+	else
+		img.writePNG("a3-1-WithSAH.png");
 
 	Renderer engine2(&cam2, &integrator);
 	startTime = GetTimeMs64();
 	engine2.render(img);
 	endTime = GetTimeMs64();
-	std::cout << "Image 2 rendering time(ms): " << endTime - startTime << std::endl;
-	img.writePNG("a3-2.png");
+	std::cout << "Image 2 rendering time(ms): " << endTime - startTime << std::endl << std::endl << std::endl << std::endl;
+	if (!doSAH)
+		img.writePNG("a3-2-WithoutSAH.png");
+	else
+		img.writePNG("a3-2-WithSAH.png");
 }

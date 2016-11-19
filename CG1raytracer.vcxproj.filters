@@ -249,9 +249,11 @@
     <ClCompile Include="main\a_indexing.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="rt\groups\bvh.cpp" />
     <ClCompile Include="rt\groups\group.cpp" />
     <ClCompile Include="rt\groups\Node.cpp">
+      <Filter>rt\groups</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\groups\bvh.cpp">
       <Filter>rt\groups</Filter>
     </ClCompile>
   </ItemGroup>

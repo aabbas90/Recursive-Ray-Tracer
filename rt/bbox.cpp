@@ -194,4 +194,40 @@ namespace rt
 
 		return std::pair<int, float>();
 	}
+
+	float BBox::getSurfaceArea()
+	{
+		float length = maxCorner.x - minCorner.x;
+		float width = maxCorner.y - minCorner.y;
+		float height = maxCorner.z - minCorner.z;
+
+		float xyPlaneArea = std::abs(length * width);
+		float yzPlaneArea = std::abs(width * height);
+		float zxPlaneArea = std::abs(length * height);
+
+		return 2 * (xyPlaneArea + yzPlaneArea + zxPlaneArea);
+	}
+	float BBox::getXLength()
+	{
+		if (isEmpty)
+			return 0;
+
+		return this->maxCorner.x - this->minCorner.x;
+	}
+
+	float BBox::getYLength()
+	{
+		if (isEmpty)
+			return 0;
+
+		return this->maxCorner.y - this->minCorner.y;
+	}
+
+	float BBox::getZLength()
+	{
+		if (isEmpty)
+			return 0;
+
+		return this->maxCorner.z - this->minCorner.z;
+	}
 }
