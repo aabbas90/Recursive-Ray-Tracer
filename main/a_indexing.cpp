@@ -11,49 +11,9 @@
 #include <rt/solids/sphere.h>
 #include <rt/cameras/perspective.h>
 #include <rt/integrators/casting.h>
-#ifdef _WIN32
-#include <Windows.h>
-#else
-#include <sys/time.h>
-#include <ctime>
-#endif
+#include <time.h>
+
 using namespace rt;
-typedef long long int64; typedef unsigned long long uint64;
-
-uint64 GetTimeMs64()
-{
-#ifdef _WIN32
-	/* Windows */
-	FILETIME ft;
-	LARGE_INTEGER li;
-
-	/* Get the amount of 100 nano seconds intervals elapsed since January 1, 1601 (UTC) and copy it
-	* to a LARGE_INTEGER structure. */
-	GetSystemTimeAsFileTime(&ft);
-	li.LowPart = ft.dwLowDateTime;
-	li.HighPart = ft.dwHighDateTime;
-
-	uint64 ret = li.QuadPart;
-	ret -= 116444736000000000LL; /* Convert from file time to UNIX epoch time. */
-	ret /= 10000; /* From 100 nano seconds (10^-7) to 1 millisecond (10^-3) intervals */
-
-	return ret;
-#else
-	/* Linux */
-	struct timeval tv;
-
-	gettimeofday(&tv, NULL);
-
-	uint64 ret = tv.tv_usec;
-	/* Convert from micro seconds (10^-6) to milliseconds (10^-3) */
-	ret /= 1000;
-
-	/* Adds the seconds (10^0) after converting them to milliseconds (10^-3) */
-	ret += (tv.tv_sec * 1000);
-
-	return ret;
-#endif
-}
 
 void a_indexing() {
     Image img(800, 600);
@@ -64,12 +24,11 @@ void a_indexing() {
     scene->add(new Sphere(Point(2.5f,  -1.f,  -1), 0.5, nullptr, nullptr));
     scene->add(new Sphere(Point(4.5f,  .5f,  -1), 0.5 , nullptr, nullptr));
 
-	loadOBJ(scene, "models/", "cow.obj");
-  
-	auto startTime = GetTimeMs64();
+    loadOBJ(scene, "models/", "cow.obj");
+
+	clock_t tStart = clock();
+
 	scene->rebuildIndex();
-	auto endTime = GetTimeMs64();
-	std::cout << "Tree building time(ms): " << endTime - startTime << std::endl;
     World world;
     world.scene = scene;
 
@@ -78,16 +37,12 @@ void a_indexing() {
     RayCastingIntegrator integrator(&world);
 
     Renderer engine1(&cam1, &integrator);
-	startTime = GetTimeMs64();
     engine1.render(img);
-	endTime = GetTimeMs64();
-	std::cout << "Image 1 rendering time(ms): " << endTime - startTime << std::endl;
+	
     img.writePNG("a3-1.png");
 
     Renderer engine2(&cam2, &integrator);
-	startTime = GetTimeMs64();
     engine2.render(img);
-	endTime = GetTimeMs64();
-	std::cout << "Image 2 rendering time(ms): " << endTime - startTime << std::endl;
+    printf("Time taken: %.2fs\n", (double)(clock() - tStart)/CLOCKS_PER_SEC);
     img.writePNG("a3-2.png");
 }
