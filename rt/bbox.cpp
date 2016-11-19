@@ -3,6 +3,7 @@
 #include <rt/ray.h>
 #include <core/point.h>
 #include <algorithm>
+#include <tuple>
 
 const float maxFloat = std::numeric_limits<float>::max();
 const float minFloat = std::numeric_limits<float>::min();
@@ -37,11 +38,15 @@ namespace rt
 	}
 	void BBox::extend(const BBox & bbox)
 	{
+		if (bbox.isEmpty)
+			return;
+
 		if (this->isEmpty)
 		{
 			this->minCorner = bbox.minCorner;
 			this->maxCorner = bbox.maxCorner;
 		}
+
 		else
 		{
 			this->maxCorner = max(this->maxCorner, bbox.maxCorner);
@@ -49,16 +54,49 @@ namespace rt
 		}
 		this->isEmpty = false;
 	}
-	std::pair<float, float> BBox::intersect(const Ray & ray) const
+
+	void BBox::Inflate(float factor)
+	{
+		float width = maxCorner.x - minCorner.x;
+		float length = maxCorner.y - minCorner.y;
+		float height = maxCorner.z - minCorner.z;
+		Vector inflationVector = Vector(0, 0, 0);
+		if (width < length)
+		{
+			if (width < height)
+			{
+				inflationVector = Vector(factor, 0, 0);
+			}
+			else
+			{
+				inflationVector = Vector(0, 0, factor);
+			}
+		}
+		else
+		{
+			if (length < height)
+			{
+				inflationVector = Vector(0, factor, 0);
+			}
+			else
+			{
+				inflationVector = Vector(0, 0, factor);
+			}
+		}
+		this->minCorner = this->minCorner - inflationVector;
+		this->maxCorner = this->maxCorner + inflationVector;
+	}
+
+	std::tuple< float, float, bool> BBox::intersect(const Ray & ray) const
 	{
 		// Return no intersection if empty:
-		if ((maxCorner - minCorner).lensqr() == 0)
-			return std::pair<float, float>(maxFloat, minFloat);
+		if ((maxCorner - minCorner).lensqr() == 0 || this->isEmpty)
+			return std::tuple< float, float, bool>( maxFloat, minFloat, false);
 
 		// Return successful intersection if full:
 		if (minCorner == Point(minFloat, minFloat, minFloat) && 
 			maxCorner == Point(maxFloat, maxFloat, maxFloat))
-			return std::pair<float, float>(minFloat, maxFloat);
+			return std::tuple<float, float, bool>(minFloat, maxFloat, true);
 
 		float minT, maxT;
 
@@ -84,8 +122,8 @@ namespace rt
 		float tyMax = std::max(ty0, ty1);
 
 		// Are these the two t0's and t1's required? Because there are two more of them as well.
-		if ((minT > tyMax) || (tyMin > maxT))
-			return std::pair<float, float>(tyMin, maxT);
+		if ((minT > tyMax + 0.5) || (tyMin > maxT + 0.5))
+			return std::tuple<float, float, bool>( tyMin, maxT, false);
 
 		if (tyMin > minT)
 		{
@@ -104,8 +142,8 @@ namespace rt
 		float tzMax = std::max(tz0, tz1);
 
 		// Are these the two t0's and t1's required? Because there are two more of them as well.
-		if ((minT > tzMax) || (tzMin > maxT))
-			return std::pair<float, float>(tzMin, maxT);
+		if ((minT > tzMax + 0.5) || (tzMin > maxT + 0.5))
+			return std::tuple<float, float, bool>(tzMin, maxT, false);
 
 		if (tzMin > minT)
 		{
@@ -117,7 +155,13 @@ namespace rt
 			maxT = tzMax;
 		}
 
-		return std::pair<float, float>(minT, maxT);
+		if (minT < 0 && maxT < 0)
+			return std::tuple<float, float, bool>(minT, maxT, false);
+
+		if (minT < 0)
+			minT = maxT;
+
+		return std::tuple<float, float, bool>(minT, maxT, true);
 	}
 
 	bool BBox::isUnbound()
@@ -127,6 +171,16 @@ namespace rt
 			return 1;
 
 		return 0;
+	}
+
+	bool BBox::isInside(BBox& parent, BBox& child)
+	{
+		BBox parentBox = BBox(parent.minCorner, parent.maxCorner);
+		parentBox.extend(child);
+		if (parentBox.minCorner == parent.minCorner && parentBox.maxCorner == parent.maxCorner)
+			return true;
+		else
+			return false;
 	}
 
 	std::pair<int, float> BBox::findGreatestDimensionAndMiddleLocation()

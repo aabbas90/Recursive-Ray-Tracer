@@ -18,12 +18,18 @@ public:
 	Point minCorner, maxCorner;
 	bool isEmpty = true;
 	BBox() {}
-	BBox(const Point& min, const Point& max) : minCorner(min), maxCorner(max) { this->isEmpty = false; }
+	BBox(const Point& minP, const Point& maxP) 
+	{
+		this->minCorner = min(minP, maxP);
+		this->maxCorner = max(minP, maxP);
+		this->isEmpty = false; 
+	}
 	static BBox empty();
 	static BBox full();
 
 	void extend(const Point& point);
 	void extend(const BBox& bbox);
+	void Inflate(float factor);
 
 	Vector diagonal() const {
 		if (this->isEmpty)
@@ -32,9 +38,10 @@ public:
 			return maxCorner - minCorner;
 	}
 
-	std::pair<float,float> intersect(const Ray& ray) const;
+	std::tuple<float, float, bool> intersect(const Ray& ray) const;
 
 	bool isUnbound();
+	static bool isInside(BBox& parent, BBox& child);
 	std::pair<int, float> findGreatestDimensionAndMiddleLocation();
 };
 

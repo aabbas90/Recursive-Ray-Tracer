@@ -21,6 +21,7 @@ namespace rt
 		this->v3 = v3;
 		this->bbox = BBox(min(v1, v2), max(v1, v2));
 		this->bbox.extend(v3);
+		this->bbox.Inflate(0.7);
 		this->texMapper = texMapper;
 		this->material = material;
 	}

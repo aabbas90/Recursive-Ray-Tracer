@@ -51,11 +51,11 @@ public:
 	virtual void add(Primitive* p);
 	virtual void setMaterial(Material* m);
 	virtual void setCoordMapper(CoordMapper* cm);
-	int getIndexFromPlaneLocation(unsigned int startindex, unsigned int endIncludingIndex, int dimensionIndex, float planeLocation);
-	void buildBVH(BVHNode* parentNode, unsigned int startIndex, unsigned int endIncludingIndex);
+	int getIndexFromPlaneLocation(const int startindex, const int endIncludingIndex, int dimensionIndex, float planeLocation);
+	void buildBVH(BVHNode* parentNode, const int startIndex, const int endIncludingIndex);
 	void setBoundingBoxOfNode(BVHNode *node, unsigned int startIndex, unsigned int endIncludingIndex);
 	Intersection IterateOverQueue(std::priority_queue<IntersectionElement>& pqueue, const Ray & ray, float previousBestDistance) const;
-
+	bool BVH::SanityCheck(BVHNode* parent, int* count);
 private:
 	Primitives unsortedList;
 	BVHNode* root;
