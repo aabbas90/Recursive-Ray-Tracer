@@ -49,16 +49,16 @@ namespace rt
 		}
 		this->isEmpty = false;
 	}
-	std::pair<float, float> BBox::intersect(const Ray & ray) const
+	std::tuple< float, float, bool> BBox::intersect(const Ray & ray) const
 	{
 		// Return no intersection if empty:
-		if ((maxCorner - minCorner).lensqr() == 0)
-			return std::pair<float, float>(maxFloat, minFloat);
+		if ((maxCorner - minCorner).lensqr() == 0 || this->isEmpty)
+			return std::tuple< float, float, bool>( maxFloat, minFloat, false);
 
 		// Return successful intersection if full:
 		if (minCorner == Point(minFloat, minFloat, minFloat) && 
 			maxCorner == Point(maxFloat, maxFloat, maxFloat))
-			return std::pair<float, float>(minFloat, maxFloat);
+			return std::tuple<float, float, bool>(minFloat, maxFloat, true);
 
 		float minT, maxT;
 
@@ -84,8 +84,8 @@ namespace rt
 		float tyMax = std::max(ty0, ty1);
 
 		// Are these the two t0's and t1's required? Because there are two more of them as well.
-		if ((minT > tyMax) || (tyMin > maxT))
-			return std::pair<float, float>(tyMin, maxT);
+		if ((minT > tyMax + 0.5) || (tyMin > maxT + 0.5))
+			return std::tuple<float, float, bool>( tyMin, maxT, false);
 
 		if (tyMin > minT)
 		{
@@ -104,8 +104,8 @@ namespace rt
 		float tzMax = std::max(tz0, tz1);
 
 		// Are these the two t0's and t1's required? Because there are two more of them as well.
-		if ((minT > tzMax) || (tzMin > maxT))
-			return std::pair<float, float>(tzMin, maxT);
+		if ((minT > tzMax + 0.5) || (tzMin > maxT + 0.5))
+			return std::tuple<float, float, bool>(tzMin, maxT, false);
 
 		if (tzMin > minT)
 		{
@@ -117,7 +117,13 @@ namespace rt
 			maxT = tzMax;
 		}
 
-		return std::pair<float, float>(minT, maxT);
+		if (minT < 0 && maxT < 0)
+			return std::tuple<float, float, bool>(minT, maxT, false);
+
+		if (minT < 0)
+			minT = maxT;
+
+		return std::tuple<float, float, bool>(minT, maxT, true);
 	}
 
 	bool BBox::isUnbound()

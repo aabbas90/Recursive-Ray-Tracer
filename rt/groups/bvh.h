@@ -46,6 +46,7 @@ public:
 	BVH();
 	virtual BBox getBounds() const;
 	virtual Intersection intersect(const Ray& ray, float previousBestDistance=FLT_MAX) const;
+	Intersection intersectNode(const Ray & ray, float previousBestDistance, BVHNode* node) const;
 	virtual void rebuildIndex();
 	virtual ~BVH();
 	virtual void add(Primitive* p);

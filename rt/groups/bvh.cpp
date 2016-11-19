@@ -12,95 +12,180 @@ namespace rt
 	{
 		return BBox();
 	}
-
 	Intersection BVH::intersect(const Ray & ray, float previousBestDistance) const
 	{
-		std::cout << "--------new ray----------\n";
-		BVHNode* currentNode = root;
-		Ray localRay = ray;
-		auto t1t2 = currentNode->boundingBox.intersect(ray);
-		if (t1t2.first > t1t2.second || t1t2.first > previousBestDistance)
+		return intersectNode(ray, previousBestDistance, root);
+	}
+	Intersection BVH::intersectNode(const Ray & ray, float previousBestDistance, BVHNode* node) const 
+	{
+		if(node == nullptr)
 		{
 			return Intersection();
 		}
-		std::priority_queue<IntersectionElement> pqueue;
-		int count = 0;
-		while(true)
+		auto t1t2 = node->boundingBox.intersect(ray);
+		bool isIntersected = std::get<2>(t1t2);
+		float minT = std::get<0>(t1t2);
+		if (!isIntersected || minT > previousBestDistance)
 		{
-			count++;
-			if (count > 1000)
-			{
-				return Intersection(); //TODO WORKAROUND, find a way to return
-			}
-			std::cout << count << "\n";
+			return Intersection();
+		}
+		if(node->isLeaf)
+		{
 			Intersection smallestIntersection;
-			if(!currentNode->isLeaf)
+			for (unsigned int i = node->primitiveStartIndex; i < node->primitiveEndIncludingIndex; ++i)
 			{
-				std::pair<float, float> t1t2Left, t1t2Right;
-				if(currentNode->leftChild != nullptr)
-					t1t2Left = currentNode->leftChild->boundingBox.intersect(localRay);
-				if(currentNode->rightChild != nullptr)
-					t1t2Right = currentNode->rightChild->boundingBox.intersect(localRay);
-				if(currentNode->leftChild != nullptr && t1t2Left.first < t1t2Left.second && currentNode->rightChild != nullptr &&  t1t2Right.first < t1t2Right.second)
+				Intersection intersection = unsortedList[i]->intersect(ray, previousBestDistance);
+				if (intersection && (intersection.distance < previousBestDistance))
 				{
-					if(t1t2Left.first > t1t2Right.first) //closest is right child
-					{
-						pqueue.push(IntersectionElement(currentNode->leftChild, t1t2.first, true));
-						currentNode = currentNode->rightChild;
-						std::cout << "pushed left" << "\n";
-					}
-					else
-					{
-						pqueue.push(IntersectionElement(currentNode->rightChild, t1t2.first, true));
-						std::cout << "pushed right" << "\n";
-						currentNode = currentNode->leftChild;
-					}
-				}
-				else if((currentNode->leftChild != nullptr  && t1t2Left.first < t1t2Left.second) && (currentNode->rightChild == nullptr || t1t2Right.first > t1t2Right.second)) //only left intersects
-				{
-					currentNode = currentNode->leftChild;
-				}
-				else if((currentNode->leftChild == nullptr || t1t2Left.first > t1t2Left.second )&& (currentNode->rightChild != nullptr && t1t2Right.first < t1t2Right.second))//only right intersects
-				{
-					currentNode = currentNode->rightChild;
-				}
-			}
-			else //if  leaf
-			{
-				
-				for (int i = currentNode->primitiveStartIndex; i < currentNode->primitiveEndIncludingIndex; i++)
-				{
-					Intersection intersection = unsortedList[i]->intersect(localRay, previousBestDistance);
-					if (intersection && (intersection.distance < previousBestDistance))
-					{
-						smallestIntersection = intersection;
-						previousBestDistance = intersection.distance;
-					}
-				}
-				//if (smallestIntersection)	
-			} // endif
-			auto qsize = pqueue.size();
-			while(pqueue.size() != 0)
-			{
-				std::cout << "INNER WHILE" << "\n";
-				if(pqueue.top().nodeDistance < previousBestDistance)
-				{
-					currentNode = pqueue.top().node;
-					pqueue.pop();
-					std::cout << "POP" << "\n";
-					break;
-				}
-				std::cout << "POP" << "\n";
-				pqueue.pop();
-				if(pqueue.size() == 0)
-				{
-					return smallestIntersection;
+					smallestIntersection = intersection;
+					previousBestDistance = intersection.distance;
 				}
 			}
 			if(smallestIntersection)
+			{
 				return smallestIntersection;
+			}
+			else
+			{
+				return Intersection();
+			}
+			
 		}
+		else if(!node->isLeaf)
+		{
+			Intersection leftIntersection = intersectNode(ray, previousBestDistance, node->leftChild);
+			Intersection rightIntersection = intersectNode(ray, previousBestDistance, node->rightChild);
+			if(leftIntersection && rightIntersection)
+			{
+				if(leftIntersection.distance < rightIntersection.distance)
+				{
+					if (leftIntersection.distance < previousBestDistance)
+						return leftIntersection;
+					else
+						return Intersection();
+				}
+				else
+				{
+					if (rightIntersection.distance < previousBestDistance)
+						return rightIntersection;
+					else
+						return Intersection();
+				}
+			}
+			else if(leftIntersection && !rightIntersection)
+			{
+					if (leftIntersection.distance < previousBestDistance)
+						return leftIntersection;
+					else
+						return Intersection();
+			}
+			else if(!leftIntersection && rightIntersection)
+			{
+					if (rightIntersection.distance < previousBestDistance)
+						return rightIntersection;
+					else
+						return Intersection();
+			}
+			else
+			{
+				return Intersection();
+			}
+		} //end else if(!node->isLeaf)
 	}
+
+
+	// Intersection BVH::intersect(const Ray & ray, float previousBestDistance) const
+	// {
+	// 	std::cout << "--------new ray----------\n";
+	// 	BVHNode* currentNode = root;
+	// 	Ray localRay = ray;
+	// 	auto t1t2 = currentNode->boundingBox.intersect(ray);
+	// 	if (t1t2.first > t1t2.second || t1t2.first > previousBestDistance)
+	// 	{
+	// 		return Intersection();
+	// 	}
+	// 	std::priority_queue<IntersectionElement> pqueue;
+	// 	int count = 0;
+	// 	while(true)
+	// 	{
+	// 		count++;
+	// 		if (count > 1000)
+	// 		{
+	// 			return Intersection(); //TODO WORKAROUND, find a way to return
+	// 		}
+	// 		std::cout << count << "\n";
+	// 		Intersection smallestIntersection;
+	// 		if(!currentNode->isLeaf)
+	// 		{
+	// 			std::pair<float, float> t1t2Left, t1t2Right;
+	// 			if(currentNode->leftChild != nullptr)
+	// 				t1t2Left = currentNode->leftChild->boundingBox.intersect(localRay);
+	// 			if(currentNode->rightChild != nullptr)
+	// 				t1t2Right = currentNode->rightChild->boundingBox.intersect(localRay);
+	// 			if(currentNode->leftChild != nullptr && t1t2Left.first < t1t2Left.second && currentNode->rightChild != nullptr &&  t1t2Right.first < t1t2Right.second)
+	// 			{
+	// 				if(t1t2Left.first > t1t2Right.first) //closest is right child
+	// 				{
+	// 					pqueue.push(IntersectionElement(currentNode->leftChild, t1t2.first, true));
+	// 					currentNode = currentNode->rightChild;
+	// 					std::cout << "pushed left" << "\n";
+	// 				}
+	// 				else
+	// 				{
+	// 					pqueue.push(IntersectionElement(currentNode->rightChild, t1t2.first, true));
+	// 					std::cout << "pushed right" << "\n";
+	// 					currentNode = currentNode->leftChild;
+	// 				}
+	// 			}
+	// 			else if((currentNode->leftChild != nullptr  && t1t2Left.first < t1t2Left.second) && (currentNode->rightChild == nullptr || t1t2Right.first > t1t2Right.second)) //only left intersects
+	// 			{
+	// 				currentNode = currentNode->leftChild;
+	// 			}
+	// 			else if((currentNode->leftChild == nullptr || t1t2Left.first > t1t2Left.second )&& (currentNode->rightChild != nullptr && t1t2Right.first < t1t2Right.second))//only right intersects
+	// 			{
+	// 				currentNode = currentNode->rightChild;
+	// 			}
+	// 		}
+	// 		else //if  leaf
+	// 		{
+				
+	// 			for (int i = currentNode->primitiveStartIndex; i < currentNode->primitiveEndIncludingIndex; i++)
+	// 			{
+	// 				Intersection intersection = unsortedList[i]->intersect(localRay, previousBestDistance);
+	// 				if (intersection && (intersection.distance < previousBestDistance))
+	// 				{
+	// 					smallestIntersection = intersection;
+	// 					previousBestDistance = intersection.distance;
+	// 				}
+	// 			}
+	// 			//if (smallestIntersection)	
+	// 		} // endif
+	// 		auto qsize = pqueue.size();
+	// 		while(pqueue.size() != 0)
+	// 		{
+	// 			std::cout << "INNER WHILE" << "\n";
+	// 			if(pqueue.top().nodeDistance < previousBestDistance)
+	// 			{
+	// 				currentNode = pqueue.top().node;
+	// 				pqueue.pop();
+	// 				std::cout << "POP" << "\n";
+	// 				break;
+	// 			}
+	// 			std::cout << "POP" << "\n";
+	// 			pqueue.pop();
+	// 			if(pqueue.size() == 0)
+	// 			{
+	// 				return smallestIntersection;
+	// 			}
+	// 		}
+	// 		if(smallestIntersection)
+	// 			return smallestIntersection;
+	// 	}
+	// }
+
+
+
+
 	// Intersection BVH::intersect(const Ray & ray, float previousBestDistance) const
 	// {
 	// 	std::cout << "new ray--------------------------------------\n";
