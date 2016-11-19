@@ -17,9 +17,9 @@ void objTextured();
 
 int main(int argc, char* argv[])
 {
-    a_indexing(false);
+	a_indexing(false);
 	a_indexing(true);
-	std::cout << "Press any key to exit...";
-	getchar();
-    return 0;
+	//std::cout << "Press any key to exit...";
+	//getchar();
+	return 0;
 }
