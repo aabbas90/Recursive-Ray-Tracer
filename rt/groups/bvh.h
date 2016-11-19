@@ -21,27 +21,6 @@ class PrimitiveComparator
 
 };
 
-class IntersectionElement
-{
-public:
-	BVHNode* node;
-	float nodeDistance;
-	bool isIntersected = false;
-	IntersectionElement() {}
-	IntersectionElement(BVHNode * node, float nodeDistance, bool isIntersected)
-		:node(node), nodeDistance(nodeDistance), isIntersected(isIntersected) {}
-	bool operator < (const IntersectionElement& r) const
-	{
-		return this->nodeDistance > r.nodeDistance;
-	}
-
-	bool operator() (const IntersectionElement& l, const IntersectionElement& r) const
-	{
-		return l.nodeDistance > r.nodeDistance;
-	}
-};
-
-
 class BVH : public Group {
 public:
 	int numNodes;
@@ -57,7 +36,6 @@ public:
 	int getIndexFromPlaneLocation(unsigned int startindex, unsigned int endIncludingIndex, int dimensionIndex, float planeLocation);
 	void buildBVH(BVHNode* parentNode, int startIndex, int endIncludingIndex);
 	void setBoundingBoxOfNode(BVHNode *node, unsigned int startIndex, unsigned int endIncludingIndex);
-	Intersection IterateOverQueue(std::priority_queue<IntersectionElement>& pqueue, const Ray & ray, float previousBestDistance) const;
 	std::pair<int, int> getSplittingIndexAndDimensionSAH(int startIndex, int endIncludingIndex);
 	BBox getBBoxOfPrimitives(int startIndex, int endIncludingIndex);
 private:
