@@ -1,6 +1,7 @@
 #include "bvh.h"
 #include<rt/bbox.h>
 #include<rt/intersection.h>
+#include<tuple>
 
 namespace rt
 {
@@ -32,7 +33,7 @@ namespace rt
 		if(node->isLeaf)
 		{
 			Intersection smallestIntersection;
-			for (unsigned int i = node->primitiveStartIndex; i < node->primitiveEndIncludingIndex; ++i)
+			for (unsigned int i = node->primitiveStartIndex; i <= node->primitiveEndIncludingIndex; ++i)
 			{
 				Intersection intersection = unsortedList[i]->intersect(ray, previousBestDistance);
 				if (intersection && (intersection.distance < previousBestDistance))

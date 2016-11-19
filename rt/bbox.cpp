@@ -3,6 +3,8 @@
 #include <rt/ray.h>
 #include <core/point.h>
 #include <algorithm>
+#include<tuple>
+
 
 const float maxFloat = std::numeric_limits<float>::max();
 const float minFloat = std::numeric_limits<float>::min();
@@ -84,7 +86,7 @@ namespace rt
 		float tyMax = std::max(ty0, ty1);
 
 		// Are these the two t0's and t1's required? Because there are two more of them as well.
-		if ((minT > tyMax + 0.5) || (tyMin > maxT + 0.5))
+		if ((minT > tyMax) || (tyMin > maxT))
 			return std::tuple<float, float, bool>( tyMin, maxT, false);
 
 		if (tyMin > minT)
@@ -104,7 +106,7 @@ namespace rt
 		float tzMax = std::max(tz0, tz1);
 
 		// Are these the two t0's and t1's required? Because there are two more of them as well.
-		if ((minT > tzMax + 0.5) || (tzMin > maxT + 0.5))
+		if ((minT > tzMax) || (tzMin > maxT))
 			return std::tuple<float, float, bool>(tzMin, maxT, false);
 
 		if (tzMin > minT)
@@ -124,6 +126,39 @@ namespace rt
 			minT = maxT;
 
 		return std::tuple<float, float, bool>(minT, maxT, true);
+	}
+
+
+	void BBox::Inflate(float factor)
+	{
+		float width = maxCorner.x - minCorner.x;
+		float length = maxCorner.y - minCorner.y;
+		float height = maxCorner.z - minCorner.z;
+		Vector inflationVector = Vector(0, 0, 0);
+		if (width < length)
+		{
+			if (width < height)
+			{
+				inflationVector = Vector(factor, 0, 0);
+			}
+			else
+			{
+				inflationVector = Vector(0, 0, factor);
+			}
+		}
+		else
+		{
+			if (length < height)
+			{
+				inflationVector = Vector(0, factor, 0);
+			}
+			else
+			{
+				inflationVector = Vector(0, 0, factor);
+			}
+		}
+		this->minCorner = this->minCorner - inflationVector;
+		this->maxCorner = this->maxCorner + inflationVector;
 	}
 
 	bool BBox::isUnbound()
