@@ -10,6 +10,7 @@
 #include <rt/solids/sphere.h>
 #include <rt/cameras/perspective.h>
 #include <rt/integrators/casting.h>
+#include <time.h>
 
 using namespace rt;
 
@@ -22,7 +23,9 @@ void a_indexing() {
     scene->add(new Sphere(Point(4.5f,  .5f,  -1), 0.5 , nullptr, nullptr));
 
     loadOBJ(scene, "models/", "cow.obj");
-  
+
+	clock_t tStart = clock();
+
 	scene->rebuildIndex();
     World world;
     world.scene = scene;
@@ -33,6 +36,8 @@ void a_indexing() {
 
     Renderer engine1(&cam1, &integrator);
     engine1.render(img);
+    printf("Time taken: %.2fs\n", (double)(clock() - tStart)/CLOCKS_PER_SEC);
+	
     img.writePNG("a3-1.png");
 
     Renderer engine2(&cam2, &integrator);
