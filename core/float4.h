@@ -2,12 +2,10 @@
 #define CG1RAYTRACER_FLOAT4_HEADER
 
 #include <core/macros.h>
+#include <core/point.h>
+#include <core/vector.h>
 
 namespace rt {
-
-class Point;
-class Vector;
-
 class ALIGN(16) Float4 {
     
 public:

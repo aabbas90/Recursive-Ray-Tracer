@@ -2,6 +2,21 @@
 
 namespace rt 
 {
+    Float4::Float4(const Point& p)
+    {
+        this->x = p.x;
+        this->y = p.y;
+        this->z = p.z;
+        this->w = 1;
+    }
+    Float4::Float4(const Vector& v)
+    {
+        this->x = v.x;
+        this->y = v.y;
+        this->z = v.z;
+        this->w = 0;
+    }
+
     float& Float4::operator[](int idx)
     {
         switch(idx)
@@ -71,7 +86,7 @@ namespace rt
     }
     Float4 operator/(const Float4& a, float scalar)
     {
-        return Float4(a.x / scalar, a.y / scalar, a.z / scalar, a.w / scalar);
+        return Float4((1 / scalar) * a);
     }
     float dot(const Float4& a, const Float4& b)
     {
