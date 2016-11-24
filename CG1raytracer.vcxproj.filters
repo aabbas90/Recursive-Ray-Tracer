@@ -265,5 +265,8 @@
     <ClCompile Include="main\a_instancing.cpp">
       <Filter>main</Filter>
     </ClCompile>
+    <ClCompile Include="core\float4.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
