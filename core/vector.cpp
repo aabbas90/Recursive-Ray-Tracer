@@ -2,6 +2,7 @@
 #include "point.h"
 #include <algorithm>
 #include <math.h>	
+#include "float4.h"
 #include <core/assert.h>
 
 namespace rt
@@ -108,7 +109,7 @@ namespace rt
 		return Point(a.x - b.x, a.y - b.y, a.z - b.z);
 	}
 
-	// Incomplete:
+	// Use w here as well?
 	Point operator*(const Float4 & scale, const Point & p)
 	{
 		NOT_IMPLEMENTED;
@@ -119,7 +120,8 @@ namespace rt
 	    os << "VECTOR x:" << v.x << " y:" << v.y << " z:" << v.z  << " length: " << v.length();
 	    return os;
 	}
-	Vector::Vector(const Float4& f4)
+
+	Vector::Vector(const Float4 & f4)
 	{
 		this->x = f4.x;
 		this->y = f4.y;

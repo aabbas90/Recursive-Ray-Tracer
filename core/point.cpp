@@ -1,6 +1,7 @@
 #include "point.h"
-#include<algorithm>
+#include <algorithm>
 #include "vector.h"
+#include "float4.h"
 
 namespace rt
 {
@@ -55,11 +56,12 @@ namespace rt
 	    os << "POINT x:" << pt.x << " y:" << pt.y << " z:" << pt.z;
 	    return os;
 	}
+
 	Point::Point(const Float4& f4)
 	{
-		this->x = f4.x;
-		this->y = f4.y;
-		this->z = f4.z;
+		this->x = f4.x / f4.w;
+		this->y = f4.y / f4.w;
+		this->z = f4.z / f4.w;
 	}
 }
 

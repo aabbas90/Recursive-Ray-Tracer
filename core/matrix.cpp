@@ -53,6 +53,23 @@ namespace rt {
 		return Matrix(this->r1 - b.r1, this->r2 - b.r2, this->r3 - b.r3, this->r4 - b.r4);
 	}
 
+	Matrix Matrix::transpose() const
+	{
+		for (int rowIndex = 0; rowIndex < 4; rowIndex++)
+		{
+			for (int colIndex = rowIndex + 1; colIndex < 4; colIndex++)
+			{
+				if (rowIndex == colIndex)
+					continue;
+				
+				float originalValue = this->operator[](rowIndex).operator[](colIndex);
+				this->operator[](rowIndex).operator[](colIndex) = this->operator[](colIndex).operator[](rowIndex);
+				this->operator[](colIndex).operator[](rowIndex) = originalValue;
+			}
+		}
+		return *this;
+	}
+
 	Matrix Matrix::invert() const {
 		Matrix result;
 		const Matrix& m = *this;
@@ -106,6 +123,11 @@ namespace rt {
 
 	}
 
+	//Vector Matrix::operator*(const Vector & b) const
+	//{
+	//	return Vector();
+	//}
+
 	Matrix Matrix::zero()
 	{
 		return Matrix(Float4(0, 0, 0, 0), 
@@ -124,7 +146,24 @@ namespace rt {
 
 	Matrix product(const Matrix & a, const Matrix & b)
 	{
-		return Matrix();
+		Matrix output;
+		for (int outputRowIndex = 0; outputRowIndex < 4; outputRowIndex++)
+		{
+			for (int outputColumnIndex = 0; outputColumnIndex < 4; outputColumnIndex++)
+			{
+				output[outputRowIndex][outputColumnIndex] = dot(a[outputRowIndex], b[outputColumnIndex]);
+			}
+		}
+	}
+
+	Matrix operator*(const Matrix & a, float scalar)
+	{
+		return Matrix(a.r1 * scalar, a.r2 * scalar, a.r3 * scalar, a.r4 * scalar);
+	}
+
+	Matrix operator*(float scalar, const Matrix & a)
+	{
+		return Matrix(a * scalar);
 	}
 
 }

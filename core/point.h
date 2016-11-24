@@ -3,12 +3,12 @@
 
 #include <core/macros.h>
 #include <iostream>
-#include <core/float4.h>
 
 
 namespace rt {
 
 class Vector;
+class Float4;
 
 class ALIGN(16) Point {
 public:
