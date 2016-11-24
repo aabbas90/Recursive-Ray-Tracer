@@ -19,8 +19,8 @@ public:
 
     virtual BBox getBounds() const;
     virtual Intersection intersect(const Ray& ray, float previousBestDistance=FLT_MAX) const;
-    virtual void setMaterial(Material* m);
-    virtual void setCoordMapper(CoordMapper* cm);
+    virtual void setMaterial(Material* m) = 0;
+    virtual void setCoordMapper(CoordMapper* cm) = 0;
 
 };
 

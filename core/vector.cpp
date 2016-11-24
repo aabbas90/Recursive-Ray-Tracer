@@ -109,10 +109,10 @@ namespace rt
 		return Point(a.x - b.x, a.y - b.y, a.z - b.z);
 	}
 
-	// Use w here as well?
+	//TODO check for w
 	Point operator*(const Float4 & scale, const Point & p)
 	{
-		NOT_IMPLEMENTED;
+		return Point(scale.x * p.x, scale.y * p.y, scale.z * p.z);
 	}
 
 	std::ostream& operator<<(std::ostream& os, const Vector& v)
