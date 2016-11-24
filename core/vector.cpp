@@ -119,4 +119,10 @@ namespace rt
 	    os << "VECTOR x:" << v.x << " y:" << v.y << " z:" << v.z  << " length: " << v.length();
 	    return os;
 	}
+	Vector::Vector(const Float4& f4)
+	{
+		this->x = f4.x;
+		this->y = f4.y;
+		this->z = f4.z;
+	}
 }
