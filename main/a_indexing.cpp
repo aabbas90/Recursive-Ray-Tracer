@@ -107,9 +107,10 @@ void a_indexing(bool doSAH) {
 
 	loadOBJ(scene2, "models/", "dragon.obj");
 	
-	startTime = GetTimeMs64();
+	 startTime = GetTimeMs64();
 	scene2->rebuildIndex();
-	endTime = GetTimeMs64();
+	 endTime = GetTimeMs64();
+	std::cout << "Tree building time(ms): " << endTime - startTime << std::endl;
 
 	Renderer engine3(&cam3, &integrator2);
 	startTime = GetTimeMs64();

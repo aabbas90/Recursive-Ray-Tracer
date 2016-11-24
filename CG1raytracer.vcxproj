@@ -84,6 +84,7 @@
     <ClInclude Include="core\ImageDrawing.h" />
     <ClInclude Include="core\julia.h" />
     <ClInclude Include="core\macros.h" />
+    <ClInclude Include="core\matrix.h" />
     <ClInclude Include="core\point.h" />
     <ClInclude Include="core\scalar.h" />
     <ClInclude Include="core\vector.h" />
@@ -122,10 +123,12 @@
     <ClCompile Include="core\image.cpp" />
     <ClCompile Include="core\ImageDrawing.cpp" />
     <ClCompile Include="core\julia.cpp" />
+    <ClCompile Include="core\matrix.cpp" />
     <ClCompile Include="core\point.cpp" />
     <ClCompile Include="core\scalar.cpp" />
     <ClCompile Include="core\vector.cpp" />
     <ClCompile Include="main\a_indexing.cpp" />
+    <ClCompile Include="main\a_instancing.cpp" />
     <ClCompile Include="main\a_julia.cpp" />
     <ClCompile Include="main\a_cameras.cpp" />
     <ClCompile Include="main\a_solids.cpp" />

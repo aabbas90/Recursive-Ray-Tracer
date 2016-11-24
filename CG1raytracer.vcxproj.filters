@@ -147,6 +147,9 @@
     <ClInclude Include="rt\groups\Node.h">
       <Filter>rt\groups</Filter>
     </ClInclude>
+    <ClInclude Include="core\matrix.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -255,6 +258,12 @@
     </ClCompile>
     <ClCompile Include="rt\groups\bvh.cpp">
       <Filter>rt\groups</Filter>
+    </ClCompile>
+    <ClCompile Include="core\matrix.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="main\a_instancing.cpp">
+      <Filter>main</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

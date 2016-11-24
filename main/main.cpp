@@ -1,8 +1,7 @@
-#include<iostream>
 void a_julia();
 void a_cameras();
 void a_solids();
-void a_indexing(bool );
+void a_indexing();
 void a_instancing();
 void a_lighting();
 void a_materials();
@@ -17,9 +16,6 @@ void objTextured();
 
 int main(int argc, char* argv[])
 {
-	a_indexing(false);
-	a_indexing(true);
-	//std::cout << "Press any key to exit...";
-	//getchar();
-	return 0;
+    a_instancing();
+    return 0;
 }
