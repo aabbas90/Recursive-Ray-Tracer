@@ -1,4 +1,5 @@
 #include <core/matrix.h>
+#include<core/assert.h>
 
 namespace rt {
 	Matrix::Matrix(const Float4 & r1, const Float4 & r2, const Float4 & r3, const Float4 & r4)
@@ -161,6 +162,11 @@ namespace rt {
 					  Float4(0, 1, 0, 0),
 					  Float4(0, 0, 1, 0),
 					  Float4(0, 0, 0, 1));
+	}
+
+	Matrix Matrix::system(const Vector & e1, const Vector & e2, const Vector & e3)
+	{
+		NOT_IMPLEMENTED;
 	}
 
 	Matrix product(const Matrix & a, const Matrix & b)
