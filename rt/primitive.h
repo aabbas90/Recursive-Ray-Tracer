@@ -4,12 +4,12 @@
 #include<core/scalar.h>
 #include<core/vector.h>
 #include<vector>
+#include <rt/bbox.h>
+#include <rt/ray.h>
+#include <rt/intersection.h>
 
 namespace rt {
 
-class BBox;
-class Ray;
-class Intersection;
 class Material;
 class CoordMapper;
 

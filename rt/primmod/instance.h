@@ -2,11 +2,16 @@
 #define CG1RAYTRACER_PRIMMOD_INSTANCE_HEADER
 
 #include <rt/primitive.h>
+#include <core/matrix.h>
 
 namespace rt {
 
 class Instance : public Primitive {
 public:
+    Matrix transformation;
+    Primitive* primitive;
+    Material* material;
+	CoordMapper* texMapper;
 
     Instance(Primitive* content);
     Primitive* content();
@@ -19,8 +24,8 @@ public:
 
     virtual BBox getBounds() const;
     virtual Intersection intersect(const Ray& ray, float previousBestDistance=FLT_MAX) const;
-    virtual void setMaterial(Material* m) = 0;
-    virtual void setCoordMapper(CoordMapper* cm) = 0;
+    virtual void setMaterial(Material* m) { material = m; }
+    virtual void setCoordMapper(CoordMapper* cm) { texMapper = cm; }
 
 };
 
