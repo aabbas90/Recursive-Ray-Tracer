@@ -7,12 +7,11 @@ namespace rt {
 
     Instance::Instance(Primitive* content)
     {
-        this->primitive = content;
         transformation = Matrix::identity();
     }   
     Primitive* Instance::content()
     {
-        return primitive;
+        return this;
     }
     void Instance::reset()
     {
@@ -43,7 +42,7 @@ namespace rt {
     }
     BBox Instance::getBounds() const
     {
-        return primitive->getBounds(); //TODO: transform?
+        return getBounds(); ////TODO: transform?
     }
     Intersection Instance::intersect(const Ray& ray, float previousBestDistance) const
     {
@@ -52,7 +51,7 @@ namespace rt {
         tempRay.o = transformation.invert() * ray.o;
         tempRay.d = transformation.invert() * ray.d;
         // ray intersection in object space
-        Intersection intersection = primitive->intersect(tempRay, previousBestDistance);
+        Intersection intersection = intersect(tempRay, previousBestDistance);
         if(intersection)
         {
             // Transform intersection point to world space

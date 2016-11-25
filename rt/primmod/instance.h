@@ -9,7 +9,6 @@ namespace rt {
 class Instance : public Primitive {
 public:
     Matrix transformation;
-    Primitive* primitive;
     Material* material;
 	CoordMapper* texMapper;
 
