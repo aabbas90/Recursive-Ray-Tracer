@@ -25,6 +25,9 @@
     <Filter Include="rt\loaders">
       <UniqueIdentifier>{ce101ce7-57f0-4cb7-bbb5-f7acdbc5b23d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="rt\primod">
+      <UniqueIdentifier>{24c10a67-a98e-409f-b8d0-0c9dab76a2ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\macros.h">
@@ -150,6 +153,9 @@
     <ClInclude Include="core\matrix.h">
       <Filter>core</Filter>
     </ClInclude>
+    <ClInclude Include="rt\primmod\instance.h">
+      <Filter>rt\primod</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -267,6 +273,9 @@
     </ClCompile>
     <ClCompile Include="core\float4.cpp">
       <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\primmod\instance.cpp">
+      <Filter>rt\primod</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

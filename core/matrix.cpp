@@ -179,6 +179,7 @@ namespace rt {
 				output[outputRowIndex][outputColumnIndex] = dot(a[outputRowIndex], b[outputColumnIndex]);
 			}
 		}
+		return output;
 	}
 
 	Matrix operator*(const Matrix & a, float scalar)

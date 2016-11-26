@@ -105,6 +105,7 @@
     <ClInclude Include="rt\intersection.h" />
     <ClInclude Include="rt\loaders\obj.h" />
     <ClInclude Include="rt\primitive.h" />
+    <ClInclude Include="rt\primmod\instance.h" />
     <ClInclude Include="rt\ray.h" />
     <ClInclude Include="rt\renderer.h" />
     <ClInclude Include="rt\solids\aabox.h" />
@@ -148,6 +149,7 @@
     <ClCompile Include="rt\intersection.cpp" />
     <ClCompile Include="rt\loaders\obj.cpp" />
     <ClCompile Include="rt\primitive.cpp" />
+    <ClCompile Include="rt\primmod\instance.cpp" />
     <ClCompile Include="rt\ray.cpp" />
     <ClCompile Include="rt\renderer.cpp" />
     <ClCompile Include="rt\solids\aabox.cpp" />

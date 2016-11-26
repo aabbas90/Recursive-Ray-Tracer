@@ -8,23 +8,23 @@ namespace rt {
 
 class Instance : public Primitive {
 public:
-    Matrix transformation;
-    Material* material;
+	Matrix transformation;
+	Material* material;
 	CoordMapper* texMapper;
 
-    Instance(Primitive* content);
-    Primitive* content();
+	Instance(Primitive* content);
+	Primitive* content();
 
-    void reset(); //reset transformation back to identity
-    void translate(const Vector& t);
-    void rotate(const Vector& axis, float angle);
-    void scale(float scale);
-    void scale(const Vector& scale);
+	void reset(); //reset transformation back to identity
+	void translate(const Vector& t);
+	void rotate(const Vector& axis, float angle);
+	void scale(float scale);
+	void scale(const Vector& scale);
 
-    virtual BBox getBounds() const;
-    virtual Intersection intersect(const Ray& ray, float previousBestDistance=FLT_MAX) const;
-    virtual void setMaterial(Material* m) { material = m; }
-    virtual void setCoordMapper(CoordMapper* cm) { texMapper = cm; }
+	virtual BBox getBounds() const;
+	virtual Intersection intersect(const Ray& ray, float previousBestDistance=FLT_MAX) const;
+	virtual void setMaterial(Material* m) { material = m; }
+	virtual void setCoordMapper(CoordMapper* cm) { texMapper = cm; }
 
 };
 
