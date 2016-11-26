@@ -91,6 +91,7 @@ namespace rt {
 	{
 		// Todo: Transform all six corners of original bbox, and then recreate a transformed bbox with component-wise min and max coordinates of the transformed points:
 		return getBounds(); ////TODO: transform?
+		return this->Content->getBounds(); ////TODO: transform?
 	}
 	Intersection Instance::intersect(const Ray& ray, float previousBestDistance) const
 	{
