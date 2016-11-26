@@ -7,7 +7,7 @@ namespace rt {
 
 	Instance::Instance(Primitive* content)
 	{
-		content = this;
+		this->Content = content;
 		transformation = Matrix::identity();
 	}   
 	Primitive* Instance::content()
@@ -99,7 +99,7 @@ namespace rt {
 		float tempPreviousBestDistance = (inverseTransform * ray.getPoint(previousBestDistance) - tempRay.o).length();
 
 		// ray intersection in object space
-		Intersection intersection = intersect(tempRay, tempPreviousBestDistance);
+		Intersection intersection = Content->intersect(tempRay, tempPreviousBestDistance);
 		if (intersection)
 		{
 			// Transform intersection point to world space

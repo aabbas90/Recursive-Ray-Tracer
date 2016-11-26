@@ -11,6 +11,7 @@ public:
 	Matrix transformation;
 	Material* material;
 	CoordMapper* texMapper;
+	Primitive* Content;
 
 	Instance(Primitive* content);
 	Primitive* content();
