@@ -23,7 +23,7 @@ namespace rt {
 		case 3:
 			return this->r4;
 		default:
-			break;
+			return this->r1;
 		}
 	}
 
@@ -40,7 +40,7 @@ namespace rt {
 		case 3:
 			return this->r4;
 		default:
-			break;
+			return this->r1;
 		}
 	}
 
@@ -150,18 +150,18 @@ namespace rt {
 
 	Matrix Matrix::zero()
 	{
-		return Matrix(Float4(0, 0, 0, 0), 
-			  		  Float4(0, 0, 0, 0), 
-					  Float4(0, 0, 0, 0), 
-					  Float4(0, 0, 0, 0));
+		return Matrix(Float4(0.0f, 0.0f, 0.0f, 0.0f), 
+			  		  Float4(0.0f, 0.0f, 0.0f, 0.0f), 
+					  Float4(0.0f, 0.0f, 0.0f, 0.0f), 
+					  Float4(0.0f, 0.0f, 0.0f, 0.0f));
 	}
 
 	Matrix Matrix::identity()
 	{
-		return Matrix(Float4(1, 0, 0, 0),
-					  Float4(0, 1, 0, 0),
-					  Float4(0, 0, 1, 0),
-					  Float4(0, 0, 0, 1));
+		return Matrix(Float4(1.0f, 0.0f, 0.0f, 0.0f),
+					  Float4(0.0f, 1.0f, 0.0f, 0.0f),
+					  Float4(0.0f, 0.0f, 1.0f, 0.0f),
+					  Float4(0.0f, 0.0f, 0.0f, 1.0f));
 	}
 
 	Matrix Matrix::system(const Vector & e1, const Vector & e2, const Vector & e3)
@@ -189,7 +189,7 @@ namespace rt {
 
 	Matrix operator*(float scalar, const Matrix & a)
 	{
-		return Matrix(a * scalar);
+		return a * scalar;
 	}
 
 }

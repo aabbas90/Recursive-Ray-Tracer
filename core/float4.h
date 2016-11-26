@@ -11,7 +11,7 @@ class ALIGN(16) Float4 {
 public:
 	float x, y, z, w;
 	Float4() {}
-	Float4(float x, float y, float z, float w) :x(x), y(y), z(z), w(w){}
+	Float4(float x, float y, float z, float w);// :x(x), y(y), z(z), w(w){}
 	explicit Float4(const Point& p);
 	explicit Float4(const Vector& v);
 

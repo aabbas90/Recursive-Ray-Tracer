@@ -2,6 +2,13 @@
 
 namespace rt 
 {
+	Float4::Float4(float x, float y, float z, float w) 
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+		this->w = w;
+	}
 	Float4::Float4(const Point& p)
 	{
 		this->x = p.x;
