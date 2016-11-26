@@ -61,13 +61,13 @@ void addTree(Group* g, int trunkTessel, float trunkHeight, float trunkRadius, fl
 void a_instancing() {
     Image img(800, 600);
 
-    SimpleGroup* tree = new SimpleGroup();
-    //BVH* tree = new BVH(false);
+    //SimpleGroup* tree = new SimpleGroup();
+    BVH* tree = new BVH(false);
     addTree(tree, 16, 3.0f, 0.5f, 5.0f, 2.0f, 8, 8);
-    //tree->rebuildIndex();
+    tree->rebuildIndex();
 
-    SimpleGroup* scene = new SimpleGroup();
-    //BVH* scene = new BVH(false);
+    //SimpleGroup* scene = new SimpleGroup();
+    BVH* scene = new BVH(false);
 
     Instance* normal = new Instance(tree);
     scene->add(normal);
@@ -102,8 +102,9 @@ void a_instancing() {
     scene->add(flat);
     }
 
+    //todo 
     scene->add(new InfinitePlane(Point(0,0,0), Vector(0, 1, 0), nullptr, nullptr));
-    //scene->rebuildIndex();
+    scene->rebuildIndex();
 
     World world;
     world.scene = scene;
