@@ -90,7 +90,9 @@ namespace rt {
 	BBox Instance::getBounds() const
 	{
 		BBox bbox = this->Content->getBounds();
-		return BBox(transformation * bbox.minCorner, transformation * bbox.maxCorner);
+		Point newMinCorner = transformation * bbox.minCorner;
+		Point newMaxCorner = transformation * bbox.maxCorner;
+		return BBox(min(newMinCorner, newMaxCorner), max(newMinCorner, newMaxCorner));
 	}
 	Intersection Instance::intersect(const Ray& ray, float previousBestDistance) const
 	{
