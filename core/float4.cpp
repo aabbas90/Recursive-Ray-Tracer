@@ -7,14 +7,14 @@ namespace rt
 		this->x = p.x;
 		this->y = p.y;
 		this->z = p.z;
-		this->w = 1;
+		this->w = 1.0f;
 	}
 	Float4::Float4(const Vector& v)
 	{
 		this->x = v.x;
 		this->y = v.y;
 		this->z = v.z;
-		this->w = 0;
+		this->w = 0.0f;
 	}
 
 	float& Float4::operator[](int idx)
@@ -105,15 +105,5 @@ namespace rt
 				a.y > b.y ? a.y : b.y,
 				a.z > b.z ? a.z : b.z,
 				a.w > b.w ? a.w : b.w);
-	}
-
-	Vector Float4::ToVector()
-	{
-		return Vector(this->x, this->y, this->z);
-	}
-
-	Point Float4::ToPoint()
-	{
-		return Point(this->x / this->w, this->y / this->w, this->z / this->w);
 	}
 }

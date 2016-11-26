@@ -126,12 +126,12 @@ namespace rt {
 
 	Vector Matrix::operator*(const Vector & b) const
 	{
-		return this->operator*(Float4(b)).ToVector();
+		return Vector(this->operator*(Float4(b)));
 	}
 
 	Point Matrix::operator*(const Point & b) const
 	{
-		return this->operator*(Float4(b)).ToPoint();
+		return Point(this->operator*(Float4(b)));
 	}
 
 	float Matrix::det() const

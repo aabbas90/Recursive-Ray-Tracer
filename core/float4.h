@@ -30,9 +30,6 @@ public:
 
 	bool operator==(const Float4& b) const;
 	bool operator!=(const Float4& b) const;
-	Vector ToVector();
-	Point ToPoint();
-
 };
 
 Float4 operator*(float scalar, const Float4& b);

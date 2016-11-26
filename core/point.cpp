@@ -59,9 +59,18 @@ namespace rt
 
 	Point::Point(const Float4& f4)
 	{
-		this->x = f4.x / f4.w;
-		this->y = f4.y / f4.w;
-		this->z = f4.z / f4.w;
+		if(f4.w != 0.0f)
+		{
+			this->x = f4.x / f4.w;
+			this->y = f4.y / f4.w;
+			this->z = f4.z / f4.w;
+		}
+		else
+		{
+			this->x = f4.x;
+			this->y = f4.y;
+			this->z = f4.z;
+		}
 	}
 }
 
