@@ -26,52 +26,17 @@ namespace rt {
 	}
 	void Instance::rotate(const Vector& axis, float angle)
 	{
-		Vector originalTranslation = Vector(transformation[0][3], transformation[1][3], transformation[2][3]);
-		Vector sDash;
-		Vector r = axis.normalize();
-		if (fabs(r.x) < fabs(r.y))
-		{
-			if (fabs(r.x) < fabs(r.z))
-			{
-				sDash = Vector(0, -r.z, r.y);
-			}
-			else
-			{
-				sDash = Vector(-r.y, r.x, 0);
-			}
-		}
-		else
-		{
-			if (fabs(r.y) < fabs(r.z))
-			{
-				sDash = Vector(-r.z, 0, r.x);
-			}
-
-			else
-			{
-				sDash = Vector(-r.y, r.x, 0);
-			}
-		}
-		Vector s = sDash.normalize();
-		Vector t = cross(r, s).normalize();
-		Matrix M = Matrix(Float4(r.x, s.x, t.x, 0),
-						  Float4(r.y, s.y, t.y, 0),
-						  Float4(r.z, s.z, t.z, 0),
-						  Float4(0, 0, 0, 1));
-
-		Matrix Rx = Matrix(Float4(1, 0, 0, 0),
-			Float4(0, cos(angle), -sin(angle), 0),
-			Float4(0, sin(angle), cos(angle), 0),
+		Vector u = axis.normalize();
+		Matrix rotation = Matrix(
+			Float4(cos(angle) + u.x * u.x * (1 - cos(angle)), u.x * u.y * (1 - cos(angle)) - u.z * sin(angle), u.x * u.z * (1 - cos(angle)) + u.y * sin(angle), 0),
+			Float4(u.y * u.x * (1 - cos(angle)) + u.z * sin(angle), cos(angle) + u.y * u.y * (1 - cos(angle)), u.y * u.z * (1 - cos(angle)) - u.x * sin(angle), 0),
+			Float4(u.z * u.x * (1 - cos(angle)) - u.y * sin(angle), u.z * u.y * (1 - cos(angle)) + u.x * sin(angle), cos(angle) + u.z * u.z * (1 - cos(angle)), 0),
 			Float4(0, 0, 0, 1));
 
-		transformation = product(M.transpose(), transformation);
-		transformation = product(Rx, transformation);
-		transformation = product(M, transformation);
-
-		//Matrix FullR = product(M, product(Rx, M.transpose()));
-		//this->translate(-originalTranslation);
-		//transformation = product(FullR, transformation);
-		//this->translate(originalTranslation);
+		Vector originalTranslation = Vector(transformation[0][3], transformation[1][3], transformation[2][3]);
+		this->translate(-originalTranslation);
+		transformation = product(rotation, transformation);
+		this->translate(originalTranslation);
 	}
 
 	void Instance::scale(float scale)
@@ -87,11 +52,48 @@ namespace rt {
 		transformation[1][1] *= scale.y;
 		transformation[1][2] *= scale.z;
 	}
+
 	BBox Instance::getBounds() const
 	{
-		// Todo: Transform all six corners of original bbox, and then recreate a transformed bbox with component-wise min and max coordinates of the transformed points:
-		return getBounds(); ////TODO: transform?
+		BBox originalBox = Content->getBounds();
+
+		Point x1y1z1 = originalBox.minCorner;
+		Point x2y2z2 = originalBox.maxCorner;
+
+		float x1 = x1y1z1.x;
+		float y1 = x1y1z1.y;
+		float z1 = x1y1z1.z;
+
+		float x2 = x2y2z2.x;
+		float y2 = x2y2z2.y;
+		float z2 = x2y2z2.z;
+
+		Point x1y1z2 = Point(x1, y1, z2);
+
+		Point x1y2z1 = Point(x1, y2, z1);
+		Point x1y2z2 = Point(x1, y2, z2);
+		
+		Point x2y1z1 = Point(x2, y1, z1);
+		Point x2y1z2 = Point(x2, y1, z2);
+
+		Point x2y2z1 = Point(x2, y2, z1);
+		
+		Point p1 = transformation * x1y1z1;
+		Point p2 = transformation * x1y1z2;
+		Point p3 = transformation * x1y2z1;
+		Point p4 = transformation * x1y2z2;
+
+		Point p5 = transformation * x2y1z1;
+		Point p6 = transformation * x2y1z2;
+		Point p7 = transformation * x2y2z1;
+		Point p8 = transformation * x2y2z2;
+
+		Point newMinCorner = min(p1, min(p2, min(p3, min(p4, min(p5, min(p6, min(p7, p8)))))));
+		Point newMaxCorner = max(p1, max(p2, max(p3, max(p4, max(p5, max(p6, max(p7, p8)))))));
+
+		return BBox(newMinCorner, newMaxCorner);
 	}
+
 	Intersection Instance::intersect(const Ray& ray, float previousBestDistance) const
 	{
 		//T T-1 = I
@@ -107,12 +109,10 @@ namespace rt {
 		Intersection intersection = Content->intersect(tempRay, tempPreviousBestDistance);
 		if (intersection)
 		{
-			// Transform intersection point to world space
 			Point intersectedPoint = transformation * intersection.hitPoint();
-
-			//  Scale intersection distance in world space by normalization factor
-			Vector normal = (inverseTransform.transpose() * intersection.normal()).normalize();
-			//Todo previousbestdistance?
+			float distance = (intersectedPoint - ray.o).length();
+			Intersection backTransformedIntersection = Intersection(distance, ray, intersection.solid, (inverseTransform.transpose() * intersection.normal()).normalize());
+			return backTransformedIntersection;
 		}
 		return intersection;
 	}

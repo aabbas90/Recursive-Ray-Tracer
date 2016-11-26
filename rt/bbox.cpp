@@ -8,7 +8,7 @@
 
 
 const float maxFloat = std::numeric_limits<float>::max();
-const float minFloat = std::numeric_limits<float>::min();
+const float minFloat = -std::numeric_limits<float>::max();
 
 namespace rt
 {
