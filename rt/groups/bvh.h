@@ -40,7 +40,7 @@ public:
 	BBox getBBoxOfPrimitives(int startIndex, int endIncludingIndex);
 private:
 	Primitives unsortedList;
-	BVHNode* root;
+	BVHNode* root = nullptr;
 	bool doSAH = true;
 };
 

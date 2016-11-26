@@ -7,6 +7,7 @@ namespace rt {
 
 	Instance::Instance(Primitive* content)
 	{
+		content = this;
 		transformation = Matrix::identity();
 	}   
 	Primitive* Instance::content()
@@ -27,9 +28,9 @@ namespace rt {
 	{
 		Vector originalTranslation = Vector(transformation[0][3], transformation[1][3], transformation[2][3]);
 		Vector sDash;
-		if (abs(axis.x) < abs(axis.y))
+		if (fabs(axis.x) < fabs(axis.y))
 		{
-			if (abs(axis.x) < abs(axis.z))
+			if (fabs(axis.x) < fabs(axis.z))
 			{
 				sDash = Vector(0, -axis.z, axis.y);
 			}
@@ -40,7 +41,7 @@ namespace rt {
 		}
 		else
 		{
-			if (abs(axis.y) < abs(axis.z))
+			if (fabs(axis.y) < fabs(axis.z))
 			{
 				sDash = Vector(-axis.z, 0, axis.x);
 			}

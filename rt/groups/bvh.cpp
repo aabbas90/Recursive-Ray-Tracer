@@ -12,7 +12,10 @@ namespace rt
 	}
 	BBox BVH::getBounds() const
 	{
-		return BBox();
+		if(root)
+			return root->boundingBox;
+		else
+			return BBox();
 	}
 	Intersection BVH::intersect(const Ray & ray, float previousBestDistance) const
 	{
