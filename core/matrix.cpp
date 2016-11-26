@@ -56,18 +56,16 @@ namespace rt {
 
 	Matrix Matrix::transpose() const
 	{
+		Matrix result;
+
 		for (int rowIndex = 0; rowIndex < 4; rowIndex++)
 		{
-			for (int colIndex = rowIndex; colIndex < 4; colIndex++)
+			for (int colIndex = 0; colIndex < 4; colIndex++)
 			{
-				if (rowIndex == colIndex)
-					continue;
-				float originalValue = (*this)[rowIndex][colIndex];
-				(*this)[rowIndex][colIndex] = (*this)[colIndex][rowIndex];
-				(*this)[colIndex][rowIndex] = originalValue;
+				result[rowIndex][colIndex] = (*this)[colIndex][rowIndex];
 			}
 		}
-		return *this;
+		return result;
 	}
 
 	Matrix Matrix::invert() const {

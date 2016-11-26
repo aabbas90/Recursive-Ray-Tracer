@@ -28,34 +28,35 @@ namespace rt {
 	{
 		Vector originalTranslation = Vector(transformation[0][3], transformation[1][3], transformation[2][3]);
 		Vector sDash;
-		if (fabs(axis.x) < fabs(axis.y))
+		Vector r = axis.normalize();
+		if (fabs(r.x) < fabs(r.y))
 		{
-			if (fabs(axis.x) < fabs(axis.z))
+			if (fabs(r.x) < fabs(r.z))
 			{
-				sDash = Vector(0, -axis.z, axis.y);
+				sDash = Vector(0, -r.z, r.y);
 			}
 			else
 			{
-				sDash = Vector(-axis.y, axis.x, 0);
+				sDash = Vector(-r.y, r.x, 0);
 			}
 		}
 		else
 		{
-			if (fabs(axis.y) < fabs(axis.z))
+			if (fabs(r.y) < fabs(r.z))
 			{
-				sDash = Vector(-axis.z, 0, axis.x);
+				sDash = Vector(-r.z, 0, r.x);
 			}
 
 			else
 			{
-				sDash = Vector(-axis.y, axis.x, 0);
+				sDash = Vector(-r.y, r.x, 0);
 			}
 		}
 		Vector s = sDash.normalize();
-		Vector t = cross(axis, s);
-		Matrix M = Matrix(Float4(axis.x, s.x, t.x, 0),
-						  Float4(axis.y, s.y, t.y, 0),
-						  Float4(axis.z, s.z, t.z, 0),
+		Vector t = cross(r, s).normalize();
+		Matrix M = Matrix(Float4(r.x, s.x, t.x, 0),
+						  Float4(r.y, s.y, t.y, 0),
+						  Float4(r.z, s.z, t.z, 0),
 						  Float4(0, 0, 0, 1));
 
 		Matrix Rx = Matrix(Float4(1, 0, 0, 0),
@@ -63,10 +64,14 @@ namespace rt {
 			Float4(0, sin(angle), cos(angle), 0),
 			Float4(0, 0, 0, 1));
 
-		Matrix FullR = product(M, product(Rx, M.transpose()));
-		this->translate(-originalTranslation);
-		transformation = product(FullR, transformation);
-		this->translate(originalTranslation);
+		transformation = product(M.transpose(), transformation);
+		transformation = product(Rx, transformation);
+		transformation = product(M, transformation);
+
+		//Matrix FullR = product(M, product(Rx, M.transpose()));
+		//this->translate(-originalTranslation);
+		//transformation = product(FullR, transformation);
+		//this->translate(originalTranslation);
 	}
 
 	void Instance::scale(float scale)
