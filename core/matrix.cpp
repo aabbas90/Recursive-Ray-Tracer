@@ -58,14 +58,13 @@ namespace rt {
 	{
 		for (int rowIndex = 0; rowIndex < 4; rowIndex++)
 		{
-			for (int colIndex = rowIndex + 1; colIndex < 4; colIndex++)
+			for (int colIndex = rowIndex; colIndex < 4; colIndex++)
 			{
 				if (rowIndex == colIndex)
 					continue;
-				
-				float originalValue = this->operator[](rowIndex).operator[](colIndex);
-				this->operator[](rowIndex).operator[](colIndex) = this->operator[](colIndex).operator[](rowIndex);
-				this->operator[](colIndex).operator[](rowIndex) = originalValue;
+				float originalValue = (*this)[rowIndex][colIndex];
+				(*this)[rowIndex][colIndex] = (*this)[colIndex][rowIndex];
+				(*this)[colIndex][rowIndex] = originalValue;
 			}
 		}
 		return *this;
