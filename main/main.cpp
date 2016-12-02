@@ -1,3 +1,4 @@
+
 void a_julia();
 void a_cameras();
 void a_solids();
@@ -16,6 +17,6 @@ void objTextured();
 
 int main(int argc, char* argv[])
 {
-    a_instancing();
+    a_lighting();
     return 0;
 }

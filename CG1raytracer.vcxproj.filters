@@ -248,7 +248,6 @@
     <ClCompile Include="rt\bbox.cpp">
       <Filter>rt</Filter>
     </ClCompile>
-    <ClCompile Include="rt\integrators\castingdist.cpp" />
     <ClCompile Include="rt\solids\quadric.cpp">
       <Filter>rt\solids</Filter>
     </ClCompile>
@@ -258,7 +257,6 @@
     <ClCompile Include="main\a_indexing.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="rt\groups\group.cpp" />
     <ClCompile Include="rt\groups\Node.cpp">
       <Filter>rt\groups</Filter>
     </ClCompile>
@@ -276,6 +274,12 @@
     </ClCompile>
     <ClCompile Include="rt\primmod\instance.cpp">
       <Filter>rt\primod</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\groups\group.cpp">
+      <Filter>rt\groups</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\integrators\castingdist.cpp">
+      <Filter>rt\integrators</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
