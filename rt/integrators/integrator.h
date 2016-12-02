@@ -6,6 +6,7 @@ namespace rt {
 class World;
 class Ray;
 class RGBColor;
+const float MAX_DIST = 10000000;
 
 class Integrator {
 public:

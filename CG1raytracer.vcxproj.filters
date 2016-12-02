@@ -28,6 +28,12 @@
     <Filter Include="rt\primod">
       <UniqueIdentifier>{24c10a67-a98e-409f-b8d0-0c9dab76a2ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="rt\materials">
+      <UniqueIdentifier>{f9ad8c6d-6128-4080-9071-d8eb23fed4f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rt\lights">
+      <UniqueIdentifier>{53cfcbb0-51df-4058-9625-831a21d071db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\macros.h">
@@ -156,6 +162,27 @@
     <ClInclude Include="rt\primmod\instance.h">
       <Filter>rt\primod</Filter>
     </ClInclude>
+    <ClInclude Include="rt\materials\dummy.h">
+      <Filter>rt\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\materials\material.h">
+      <Filter>rt\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\lights\directional.h">
+      <Filter>rt\lights</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\lights\light.h">
+      <Filter>rt\lights</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\lights\pointlight.h">
+      <Filter>rt\lights</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\lights\spotlight.h">
+      <Filter>rt\lights</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\integrators\raytrace.h">
+      <Filter>rt\integrators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -281,5 +308,17 @@
     <ClCompile Include="rt\integrators\castingdist.cpp">
       <Filter>rt\integrators</Filter>
     </ClCompile>
+    <ClCompile Include="rt\materials\dummy.cpp">
+      <Filter>rt\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\lights\pointlight.cpp">
+      <Filter>rt\lights</Filter>
+    </ClCompile>
+    <ClCompile Include="main\a_lighting.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\integrators\raytrace.cpp" />
+    <ClCompile Include="rt\lights\spotlight.cpp" />
+    <ClCompile Include="rt\lights\directional.cpp" />
   </ItemGroup>
 </Project>

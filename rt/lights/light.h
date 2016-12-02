@@ -2,6 +2,8 @@
 #define CG1RAYTRACER_LIGHTS_LIGHT_HEADER
 
 #include <core/vector.h>
+#include <core/point.h>
+#include <core/color.h>
 
 namespace rt {
 
@@ -16,7 +18,10 @@ struct LightHit {
 class Light {
 public:
 	virtual LightHit getLightHit(const Point& p) const = 0;
-    virtual RGBColor getIntensity(const LightHit& irr) const = 0;
+	virtual RGBColor getIntensity(const LightHit& irr) const = 0;
+protected:
+	Point position;
+	RGBColor intensity;
 };
 
 }

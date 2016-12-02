@@ -116,10 +116,18 @@ namespace rt
 
 	void BVH::setMaterial(Material * m)
 	{
+		for (int i = 0; i < unsortedList.size(); i++)
+		{
+			unsortedList[i]->setMaterial(m);
+		}
 	}
 
 	void BVH::setCoordMapper(CoordMapper * cm)
 	{
+		for (int i = 0; i < unsortedList.size(); i++)
+		{
+			unsortedList[i]->setCoordMapper(cm);
+		}
 	}
 
 	void BVH::buildBVH(BVHNode* parentNode, int startIndex, int endIncludingIndex)
