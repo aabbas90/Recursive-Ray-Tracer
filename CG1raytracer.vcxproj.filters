@@ -317,8 +317,14 @@
     <ClCompile Include="main\a_lighting.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="rt\integrators\raytrace.cpp" />
-    <ClCompile Include="rt\lights\spotlight.cpp" />
-    <ClCompile Include="rt\lights\directional.cpp" />
+    <ClCompile Include="rt\lights\spotlight.cpp">
+      <Filter>rt\lights</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\integrators\raytrace.cpp">
+      <Filter>rt\integrators</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\lights\directional.cpp">
+      <Filter>rt\lights</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

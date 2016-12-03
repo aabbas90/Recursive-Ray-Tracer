@@ -12,6 +12,8 @@ public:
 	DirectionalLight(const Vector& direction, const RGBColor& color);
 	virtual LightHit getLightHit(const Point& p) const;
 	virtual RGBColor getIntensity(const LightHit& irr) const;
+private:
+	Vector direction;
 };
 
 }
