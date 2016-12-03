@@ -1,4 +1,5 @@
 #include "directional.h"
+#include <cfloat>
 
 namespace rt
 {

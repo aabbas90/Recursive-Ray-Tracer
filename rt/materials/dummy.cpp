@@ -1,6 +1,7 @@
 #include "dummy.h"
 #include <rt/materials/material.h>
 #include <core/assert.h>
+#include <cmath>
 
 namespace rt
 {	
@@ -9,7 +10,7 @@ namespace rt
 	}
 	RGBColor DummyMaterial::getReflectance(const Point & texPoint, const Vector & normal, const Vector & outDir, const Vector & inDir) const
 	{
-		float incomingFactor = abs(dot(normal.normalize(), inDir.normalize()));
+		float incomingFactor = std::abs(dot(normal.normalize(), inDir.normalize()));
 
 		return RGBColor(incomingFactor, incomingFactor, incomingFactor);
 	}
