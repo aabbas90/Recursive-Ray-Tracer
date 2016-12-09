@@ -17,6 +17,6 @@ void objTextured();
 
 int main(int argc, char* argv[])
 {
-    a_lighting();
+    a_materials();
     return 0;
 }
