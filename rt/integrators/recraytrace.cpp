@@ -5,6 +5,7 @@
 #include <rt/intersection.h>
 #include <rt/solids/solid.h>
 #include <rt/materials/material.h>
+#include <rt/materials/combine.h>
 
 namespace rt
 {
@@ -48,14 +49,14 @@ namespace rt
 			{
 				auto reflectance = currentMaterial->getSampleReflectance(intersection.local(), normal, outDir);
 				Vector inDir = reflectance.direction.normalize();
-				Ray shadowRay = Ray(intersection.hitPoint() + displacement * inDir, inDir);
+				Ray shadowRay = Ray(intersection.hitPoint() + displacement * normal, inDir);
 
 				RGBColor incomingLightColor = this->getRadiance(shadowRay, depth + 1);
 				color = incomingLightColor * reflectance.reflectance;
 			}
+
 			else if (currentMaterial->useSampling() == Material::Sampling::SAMPLING_SECONDARY)
 			{
-				
 				for (auto lightSource : this->world->light)
 				{
 					LightHit lightHit = lightSource->getLightHit(intersection.hitPoint());
@@ -72,12 +73,12 @@ namespace rt
 					color = color + reflected * lightSource->getIntensity(lightHit);
 				}
 				
-				// auto reflectance = currentMaterial->getSampleReflectance(intersection.local(), normal, outDir);
-				// Vector inDir = reflectance.direction.normalize();
-				// Ray shadowRay = Ray(intersection.hitPoint() + displacement * inDir, inDir);
+				 auto reflectance = currentMaterial->getSampleReflectance(intersection.local(), normal, outDir);
+				 Vector inDir = reflectance.direction.normalize();
+				 Ray shadowRay = Ray(intersection.hitPoint() + displacement * inDir, inDir);
 
-				// RGBColor incomingLightColor = this->getRadiance(shadowRay, depth + 1);
-				// color = color + incomingLightColor * reflectance.reflectance;
+				 RGBColor incomingLightColor = this->getRadiance(shadowRay, depth + 1);
+				 color = color + incomingLightColor * reflectance.reflectance;
 			}
 		}
 

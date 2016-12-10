@@ -24,9 +24,10 @@ namespace rt
     }
     SampleReflectance MirrorMaterial::getSampleReflectance(const Point& texPoint, const Vector& normal, const Vector& outDir) const
     {
-        Vector dir = 2 * dot(outDir, normal) * normal - outDir;
+		float dotP = dot(outDir, normal);
+        Vector dir = (outDir - 2 * dotP * normal).normalize();
 	    RGBColor color = getReflectance(texPoint, normal, outDir, dir);
-	    return SampleReflectance(-dir, color);
+	    return SampleReflectance(dir, color);
     }
     Material::Sampling MirrorMaterial::useSampling() const
     {

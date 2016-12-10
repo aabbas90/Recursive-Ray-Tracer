@@ -16,15 +16,16 @@ namespace rt
         //I = ks(V.R)^n
         //https://en.wikipedia.org/wiki/Phong_reflection_model
         //R = 2(L.N)N - L
-        Vector R = 2 * dot(inDir, normal) * normal - inDir;
+        Vector R = (2 * dot(inDir, normal) * normal - inDir).normalize();
+		if (dot(R, normal) < 0 || dot(inDir, normal) < 0)
+			return RGBColor(0, 0, 0);
+
          //TODO what if dot product is -ve -reflection or refraction
         //return specular->getColor(texPoint) * ((exponent+2)/(2*pi))* powf(dot(outDir, R), exponent);
-        return specular->getColor(texPoint) * powf(dot(outDir, R), exponent);
+		return specular->getColor(texPoint) * powf(dot(-outDir.normalize(), R.normalize()), exponent); // *(exponent + 2) / (2 * pi);
     }
     RGBColor PhongMaterial::getEmission(const Point& texPoint, const Vector& normal, const Vector& outDir) const
     {
-
-
         //No emission
         return RGBColor(0.0f, 0.0f, 0.0f);
     }

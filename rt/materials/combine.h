@@ -14,10 +14,10 @@ public:
     virtual RGBColor getEmission(const Point& texPoint, const Vector& normal, const Vector& outDir) const;
     virtual SampleReflectance getSampleReflectance(const Point& texPoint, const Vector& normal, const Vector& outDir) const;
     virtual Sampling useSampling() const;
+	Sampling sampling = Material::SAMPLING_NOT_NEEDED;
 
 private:
     std::vector<std::pair<Material*, float> > materials;
-    Sampling sampling = Material::SAMPLING_NOT_NEEDED;
 };
     int getSamplingPriority(Material::Sampling samplingType);
 }

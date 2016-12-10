@@ -18,7 +18,7 @@ namespace rt
 		for(int i = 0; i < materials.size(); ++i)
 		{
             //use reflectance if Sampling not required
-            if (materials[i].first->useSampling() != Material::SAMPLING_ALL) 
+            if (materials[i].first->useSampling() == Material::SAMPLING_NOT_NEEDED) 
             {
 			    color = color + materials[i].second * materials[i].first->getReflectance(texPoint, normal, outDir, inDir);
             }
@@ -41,7 +41,7 @@ namespace rt
         //at most one of the combined materials requires sampling
         for (int i = 0; i < materials.size(); ++i) 
         {
-            if (materials[i].first->useSampling() != Material::SAMPLING_NOT_NEEDED)
+            if (materials[i].first->useSampling() == Material::SAMPLING_ALL)
             {
                 sampleReflectance = materials[i].first->getSampleReflectance(texPoint, normal, outDir);
                 sampleReflectance.reflectance = materials[i].second * sampleReflectance.reflectance;
@@ -52,7 +52,7 @@ namespace rt
     }
     Material::Sampling CombineMaterial::useSampling() const
     {   
-        return sampling;
+        return Material::SAMPLING_SECONDARY;
     }
     int getSamplingPriority(Material::Sampling samplingType)  
     {
