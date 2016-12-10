@@ -22,7 +22,11 @@ namespace rt
 
          //TODO what if dot product is -ve -reflection or refraction
         //return specular->getColor(texPoint) * ((exponent+2)/(2*pi))* powf(dot(outDir, R), exponent);
-		return specular->getColor(texPoint) * powf(dot(-outDir.normalize(), R.normalize()), exponent); // *(exponent + 2) / (2 * pi);
+		float dotP = dot(-outDir.normalize(), R.normalize());
+		if (dotP < 0)
+			return RGBColor(0, 0, 0);
+
+		return specular->getColor(texPoint) * powf(dotP, exponent) * powf(dot(inDir, normal), 1); // *(exponent + 2) / (2 * pi);
     }
     RGBColor PhongMaterial::getEmission(const Point& texPoint, const Vector& normal, const Vector& outDir) const
     {
