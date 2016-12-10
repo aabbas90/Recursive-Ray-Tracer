@@ -32,7 +32,7 @@ namespace rt
 				if (shadowRayIntersection)
 					continue;
 
-				RGBColor reflected = solid->material->getReflectance(intersection.local(), normal, Vector(0, 0, 0), lightHit.direction);
+				RGBColor reflected = solid->material->getReflectance(intersection.local(), normal, ray.d.normalize(), lightHit.direction);
 				color = color + reflected * lightSource->getIntensity(lightHit);
 			}
 

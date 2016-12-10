@@ -103,14 +103,19 @@
     <ClInclude Include="rt\integrators\castingdist.h" />
     <ClInclude Include="rt\integrators\integrator.h" />
     <ClInclude Include="rt\integrators\raytrace.h" />
+    <ClInclude Include="rt\integrators\recraytrace.h" />
     <ClInclude Include="rt\intersection.h" />
     <ClInclude Include="rt\lights\directional.h" />
     <ClInclude Include="rt\lights\light.h" />
     <ClInclude Include="rt\lights\pointlight.h" />
     <ClInclude Include="rt\lights\spotlight.h" />
     <ClInclude Include="rt\loaders\obj.h" />
+    <ClInclude Include="rt\materials\combine.h" />
     <ClInclude Include="rt\materials\dummy.h" />
+    <ClInclude Include="rt\materials\lambertian.h" />
     <ClInclude Include="rt\materials\material.h" />
+    <ClInclude Include="rt\materials\mirror.h" />
+    <ClInclude Include="rt\materials\phong.h" />
     <ClInclude Include="rt\primitive.h" />
     <ClInclude Include="rt\primmod\instance.h" />
     <ClInclude Include="rt\ray.h" />
@@ -124,6 +129,8 @@
     <ClInclude Include="rt\solids\sphere.h" />
     <ClInclude Include="rt\solids\striangle.h" />
     <ClInclude Include="rt\solids\triangle.h" />
+    <ClInclude Include="rt\textures\constant.h" />
+    <ClInclude Include="rt\textures\texture.h" />
     <ClInclude Include="rt\world.h" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +148,7 @@
     <ClCompile Include="main\a_julia.cpp" />
     <ClCompile Include="main\a_cameras.cpp" />
     <ClCompile Include="main\a_lighting.cpp" />
+    <ClCompile Include="main\a_materials.cpp" />
     <ClCompile Include="main\a_solids.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="rt\bbox.cpp" />
@@ -160,7 +168,11 @@
     <ClCompile Include="rt\lights\pointlight.cpp" />
     <ClCompile Include="rt\lights\spotlight.cpp" />
     <ClCompile Include="rt\loaders\obj.cpp" />
+    <ClCompile Include="rt\materials\combine.cpp" />
     <ClCompile Include="rt\materials\dummy.cpp" />
+    <ClCompile Include="rt\materials\lambertian.cpp" />
+    <ClCompile Include="rt\materials\mirror.cpp" />
+    <ClCompile Include="rt\materials\phong.cpp" />
     <ClCompile Include="rt\primitive.cpp" />
     <ClCompile Include="rt\primmod\instance.cpp" />
     <ClCompile Include="rt\ray.cpp" />
@@ -174,6 +186,7 @@
     <ClCompile Include="rt\solids\sphere.cpp" />
     <ClCompile Include="rt\solids\striangle.cpp" />
     <ClCompile Include="rt\solids\triangle.cpp" />
+    <ClCompile Include="rt\textures\constant.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
