@@ -53,6 +53,32 @@ namespace rt
 				RGBColor incomingLightColor = this->getRadiance(shadowRay, depth + 1);
 				color = incomingLightColor * reflectance.reflectance;
 			}
+			else if (currentMaterial->useSampling() == Material::Sampling::SAMPLING_SECONDARY)
+			{
+				
+				for (auto lightSource : this->world->light)
+				{
+					LightHit lightHit = lightSource->getLightHit(intersection.hitPoint());
+					Vector inDir = lightHit.direction;
+					if (dot(inDir, normal) < 0)
+						continue;
+
+					Ray shadowRay = Ray(intersection.hitPoint() + displacement * inDir, inDir);
+					Intersection shadowRayIntersection = this->world->scene->intersect(shadowRay, lightHit.distance);
+					if (shadowRayIntersection)
+						continue;
+
+					RGBColor reflected = currentMaterial->getReflectance(intersection.local(), normal, outDir, inDir);
+					color = color + reflected * lightSource->getIntensity(lightHit);
+				}
+				
+				// auto reflectance = currentMaterial->getSampleReflectance(intersection.local(), normal, outDir);
+				// Vector inDir = reflectance.direction.normalize();
+				// Ray shadowRay = Ray(intersection.hitPoint() + displacement * inDir, inDir);
+
+				// RGBColor incomingLightColor = this->getRadiance(shadowRay, depth + 1);
+				// color = color + incomingLightColor * reflectance.reflectance;
+			}
 		}
 
 		return color.clamp();

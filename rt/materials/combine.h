@@ -20,8 +20,6 @@ private:
     Sampling sampling = Material::SAMPLING_NOT_NEEDED;
 };
     int getSamplingPriority(Material::Sampling samplingType);
-    Material::Sampling mapSamplingWithPriority(int priority);
-
 }
 
 #endif

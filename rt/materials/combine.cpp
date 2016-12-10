@@ -6,7 +6,7 @@ namespace rt
     {
         materials.push_back(std::make_pair(material, weight));
         Material::Sampling currentSampling = material->useSampling();
-        if(getSamplingPriority(sampling) > getSamplingPriority(currentSampling))
+        if(getSamplingPriority(currentSampling) > getSamplingPriority(sampling))
         {
             sampling = currentSampling;
         }
@@ -17,8 +17,11 @@ namespace rt
         RGBColor color = RGBColor(0.0f, 0.0f, 0.0f);
 		for(int i = 0; i < materials.size(); ++i)
 		{
-            //TODO: check if this is required if sampling = SAMPLING_ALL
-			color = color + materials[i].second * materials[i].first->getReflectance(texPoint, normal, outDir, inDir);
+            //use reflectance if Sampling not required
+            if (materials[i].first->useSampling() != Material::SAMPLING_ALL) 
+            {
+			    color = color + materials[i].second * materials[i].first->getReflectance(texPoint, normal, outDir, inDir);
+            }
 		}
 		return color;
     }
@@ -28,7 +31,6 @@ namespace rt
         RGBColor color = RGBColor(0.0f, 0.0f, 0.0f);
 		for(int i = 0; i < materials.size(); ++i)
 		{
-            //TODO: check if this is required if sampling = SAMPLING_ALL
 			color = color + materials[i].second * materials[i].first->getEmission(texPoint, normal, outDir);
 		}
 		return color;
@@ -42,6 +44,7 @@ namespace rt
             if (materials[i].first->useSampling() != Material::SAMPLING_NOT_NEEDED)
             {
                 sampleReflectance = materials[i].first->getSampleReflectance(texPoint, normal, outDir);
+                sampleReflectance.reflectance = materials[i].second * sampleReflectance.reflectance;
                 break;
             }    
         }
@@ -59,14 +62,5 @@ namespace rt
             return 1;
 		else if(samplingType == Material::SAMPLING_ALL)
             return 2;
-    }
-    Material::Sampling mapSamplingWithPriority(int priority)  
-    {
-        if(priority == 0)
-            return Material::SAMPLING_NOT_NEEDED;
-        else if(priority == 1)  
-            return Material::SAMPLING_SECONDARY;
-        else if(priority == 2)  
-            return Material::SAMPLING_ALL;
     }
 }

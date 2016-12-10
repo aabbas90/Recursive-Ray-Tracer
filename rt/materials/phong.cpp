@@ -1,6 +1,7 @@
 #include <rt/materials/phong.h>
 #include <rt/materials/material.h>
 #include <math.h>
+#include <core/scalar.h>
 
 namespace rt
 {
@@ -15,15 +16,15 @@ namespace rt
         //I = ks(V.R)^n
         //https://en.wikipedia.org/wiki/Phong_reflection_model
         //R = 2(L.N)N - L
-
-        //TODO V = vector pointing to viewer/camera : TODO Which one?
-        Vector V = outDir; 
         Vector R = 2 * dot(inDir, normal) * normal - inDir;
          //TODO what if dot product is -ve -reflection or refraction
-        return specular->getColor(texPoint) * powf(dot(V, R), exponent);
+        //return specular->getColor(texPoint) * ((exponent+2)/(2*pi))* powf(dot(outDir, R), exponent);
+        return specular->getColor(texPoint) * powf(dot(outDir, R), exponent);
     }
     RGBColor PhongMaterial::getEmission(const Point& texPoint, const Vector& normal, const Vector& outDir) const
     {
+
+
         //No emission
         return RGBColor(0.0f, 0.0f, 0.0f);
     }
