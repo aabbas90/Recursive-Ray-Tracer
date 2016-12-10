@@ -13,7 +13,7 @@ class RGBColor;
 class RayCastingIntegrator : public Integrator {
 public:
     RayCastingIntegrator(World* world) : Integrator(world) {}
-    virtual RGBColor getRadiance(const Ray& ray) const;
+    virtual RGBColor getRadiance(const Ray& ray, int depth = 0) const;
 };
 
 }

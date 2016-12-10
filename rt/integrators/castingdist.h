@@ -15,7 +15,7 @@ class RGBColor;
 class RayCastingDistIntegrator : public Integrator {
 public:
     RayCastingDistIntegrator(World* world, const RGBColor& nearColor, float nearDist, const RGBColor& farColor, float farDist);
-    virtual RGBColor getRadiance(const Ray& ray) const;
+    virtual RGBColor getRadiance(const Ray& ray, int depth = 0) const;
 private:
     RGBColor nearColor, farColor;
     float nearDist, farDist;

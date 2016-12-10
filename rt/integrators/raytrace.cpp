@@ -7,7 +7,7 @@
 
 namespace rt
 {
-	RGBColor RayTracingIntegrator::getRadiance(const Ray & ray) const
+	RGBColor RayTracingIntegrator::getRadiance(const Ray & ray, int depth) const
 	{
 		Intersection intersection = this->world->scene->intersect(ray, MAX_DIST);
 		RGBColor color = RGBColor(0, 0, 0);

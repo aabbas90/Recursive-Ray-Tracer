@@ -13,7 +13,7 @@ class Integrator {
 public:
 	Integrator() {}
 	Integrator(World* world) : world(world) {}
-	virtual RGBColor getRadiance(const Ray& ray) const = 0;
+	virtual RGBColor getRadiance(const Ray& ray, int depth = 0) const = 0;
 protected:
 	World* world;
 };

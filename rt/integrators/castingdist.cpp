@@ -13,7 +13,7 @@ namespace rt
 		this->farDist = farDist;
 	}
 
-	RGBColor RayCastingDistIntegrator::getRadiance(const Ray & ray) const
+	RGBColor RayCastingDistIntegrator::getRadiance(const Ray & ray, int depth) const
 	{
 		Intersection intersection = this->world->scene->intersect(ray, MAX_DIST);
 		RGBColor colorValue = RGBColor(0, 0, 0);
