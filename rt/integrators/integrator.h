@@ -7,6 +7,7 @@ class World;
 class Ray;
 class RGBColor;
 const float MAX_DIST = 10000000;
+const float displacement = 0.0001f;
 
 class Integrator {
 public:

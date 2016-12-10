@@ -368,5 +368,8 @@
     <ClCompile Include="main\a_materials.cpp">
       <Filter>main</Filter>
     </ClCompile>
+    <ClCompile Include="rt\integrators\recraytrace.cpp">
+      <Filter>rt\integrators</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
-#include "raytrace.h"
+#include "recraytrace.h"
+#include <core/color.h>
 #include <core/vector.h>
 #include <rt/lights/light.h>
 #include <rt/intersection.h>
@@ -7,7 +8,7 @@
 
 namespace rt
 {
-	RGBColor RayTracingIntegrator::getRadiance(const Ray & ray) const
+	RGBColor RecursiveRayTracingIntegrator::getRadiance(const Ray & ray) const
 	{
 		Intersection intersection = this->world->scene->intersect(ray, MAX_DIST);
 		RGBColor color = RGBColor(0, 0, 0);
@@ -18,7 +19,7 @@ namespace rt
 				normal = -1.0f * normal;
 
 			auto solid = intersection.solid;
-			
+
 			for (auto lightSource : this->world->light)
 			{
 				LightHit lightHit = lightSource->getLightHit(intersection.hitPoint());

@@ -163,6 +163,7 @@
     <ClCompile Include="rt\integrators\casting.cpp" />
     <ClCompile Include="rt\integrators\castingdist.cpp" />
     <ClCompile Include="rt\integrators\raytrace.cpp" />
+    <ClCompile Include="rt\integrators\recraytrace.cpp" />
     <ClCompile Include="rt\intersection.cpp" />
     <ClCompile Include="rt\lights\directional.cpp" />
     <ClCompile Include="rt\lights\pointlight.cpp" />
