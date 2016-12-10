@@ -17,7 +17,7 @@ namespace rt
         //R = 2(L.N)N - L
 
         //TODO V = vector pointing to viewer/camera : TODO Which one?
-        Vector V = Vector (1,1,1); //for now
+        Vector V = outDir; 
         Vector R = 2 * dot(inDir, normal) * normal - inDir;
          //TODO what if dot product is -ve -reflection or refraction
         return specular->getColor(texPoint) * powf(dot(V, R), exponent);
