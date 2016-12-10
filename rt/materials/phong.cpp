@@ -26,7 +26,7 @@ namespace rt
 		if (dotP < 0)
 			return RGBColor(0, 0, 0);
 
-		return specular->getColor(texPoint) * powf(dotP, exponent) * powf(dot(inDir, normal), 1); // *(exponent + 2) / (2 * pi);
+		return specular->getColor(texPoint) * powf(dotP, exponent) * powf(dot(inDir, normal), 1) * (exponent + 2) / (2 * pi);
     }
     RGBColor PhongMaterial::getEmission(const Point& texPoint, const Vector& normal, const Vector& outDir) const
     {
