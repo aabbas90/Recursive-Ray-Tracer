@@ -207,6 +207,9 @@
     <ClInclude Include="rt\textures\texture.h">
       <Filter>rt\textures</Filter>
     </ClInclude>
+    <ClInclude Include="rt\materials\cookTorrance.h">
+      <Filter>rt\materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -370,6 +373,9 @@
     </ClCompile>
     <ClCompile Include="rt\integrators\recraytrace.cpp">
       <Filter>rt\integrators</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\materials\cookTorrance.cpp">
+      <Filter>rt\materials</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -29,6 +29,10 @@ void Renderer::render(Image & img)
 			float jj = 2.0 * j / img.height() - 1;
 			Ray currentRay = cam->getPrimaryRay(ii, jj);
 
+			if (i == 270 && j == 298)
+			{
+				j = j;
+			}
 			img(i, j) = integrator->getRadiance(currentRay);
 		}
 	}

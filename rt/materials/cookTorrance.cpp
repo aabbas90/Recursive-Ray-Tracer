@@ -17,19 +17,20 @@ namespace rt
         RGBColor diffusedColor = diffusedCoeff * texture->getColor(texPoint) * dot(inDir, normal) / pi;
         
         Vector normalN = normal.normalize();
-        Vector halfVector = (inDir + outDir).normalize();
-        float grazingViewingAngle_NdotO = std::max(dot(normalN, outDir), 0.f);
+        Vector halfVector = (inDir - outDir).normalize();
+        float grazingViewingAngle_NdotO = std::max(dot(normalN, -outDir), 0.f);
         float grazingIlluminationAngle_NdotI = std::max(dot(normalN, inDir), 0.f);
         
         float specularCoeff = 0.0f;
         if(grazingIlluminationAngle_NdotI > 0.0f)
         {
             float IdotH = std::max(dot(inDir, halfVector), 0.f);
-            float OdotH = std::max(dot(outDir, halfVector), 0.f);
+            float OdotH = std::max(dot(-outDir, halfVector), 0.f);
             float NdotH = std::max(dot(normalN, halfVector), 0.f);
 
             //Schlick approximation to the Fresnel equation
-            float F = fresnelCoeff + fresnelCoeff * powf((1 - OdotH), 5);
+			float F = fresnelCoeff + (1 - fresnelCoeff) * powf((1 - OdotH), 5);
+            // float F = fresnelCoeff + fresnelCoeff * powf((1 - OdotH), 5);
 
             //Microfacet Distribution / roughness
             float roughnessMSq = roughnessM * roughnessM;
