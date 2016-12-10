@@ -1,7 +1,6 @@
 #include <rt/materials/lambertian.h>
 #include <rt/materials/material.h>
 #include <core/scalar.h>
-#include <core/assert.h>
 
 namespace rt
 {
@@ -23,11 +22,10 @@ namespace rt
     }
     SampleReflectance LambertianMaterial::getSampleReflectance(const Point& texPoint, const Vector& normal, const Vector& outDir) const
     {  
-        //TODO
-        NOT_IMPLEMENTED;
+        return SampleReflectance();
     }
     Material::Sampling LambertianMaterial::useSampling() const
     {
-        NOT_IMPLEMENTED;
+        return Material::Sampling::SAMPLING_NOT_NEEDED;
     }
 }
