@@ -10,12 +10,12 @@ namespace rt
     RGBColor CheckerboardTexture::getColor(const Point& coord)
     {
         //lattice coordinates
-        int lx = floor(2 * coord.x + 100000);
-        int ly = floor(2 * coord.y + 100000);
-        int lz = floor(2 * coord.z + 100000);
+        int lx = floor(2 * coord.x + BIG_POINT);//floor(2 * coord.x + BIG_POINT);
+        int ly = floor(2 * coord.y + BIG_POINT);
+        int lz = floor(2 * coord.z + BIG_POINT);
 
         //compute parity
-        int parity = (lx + ly + lz) % 2;
+        int parity = abs(lx + ly + lz) % 2;
         if(parity == 0)
             return black;    
         else

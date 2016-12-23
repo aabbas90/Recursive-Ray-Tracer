@@ -6,7 +6,8 @@
 
 
 namespace rt {
-
+	
+static int BIG_POINT = 100000;
 class Vector;
 class Float4;
 
