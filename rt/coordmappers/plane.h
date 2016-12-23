@@ -3,6 +3,7 @@
 
 #include <core/vector.h>
 #include <rt/coordmappers/coordmapper.h>
+#include <core/point.h>
 
 namespace rt {
 
@@ -12,6 +13,8 @@ class PlaneCoordMapper : public CoordMapper{
 public:
     PlaneCoordMapper(const Vector& e1, const Vector& e2);
     virtual Point getCoords(const Intersection& hit) const;
+private:
+    Vector e1, e2;
 };
 
 }
