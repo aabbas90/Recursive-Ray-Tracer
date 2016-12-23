@@ -56,4 +56,13 @@ namespace rt
 	    os << "COLOR R:" << c.r << " G:" << c.g << " B:" << c.b;
 	    return os;
 	}
+
+	RGBColor RGBColor::white()
+	{
+		return RGBColor(1.0f, 1.0f, 1.0f);
+	}
+	RGBColor RGBColor::black()
+	{
+		return RGBColor(0.0f, 0.0f, 0.0f);
+	}
 }
