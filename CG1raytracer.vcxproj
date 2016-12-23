@@ -205,6 +205,7 @@
     <ClCompile Include="rt\solids\sphere.cpp" />
     <ClCompile Include="rt\solids\striangle.cpp" />
     <ClCompile Include="rt\solids\triangle.cpp" />
+    <ClCompile Include="rt\textures\checkerboard.cpp" />
     <ClCompile Include="rt\textures\constant.cpp" />
     <ClCompile Include="rt\textures\perlin.cpp" />
   </ItemGroup>

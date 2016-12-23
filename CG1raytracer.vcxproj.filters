@@ -431,5 +431,8 @@
     <ClCompile Include="rt\materials\flatmaterial.cpp">
       <Filter>rt\materials</Filter>
     </ClCompile>
+    <ClCompile Include="rt\textures\checkerboard.cpp">
+      <Filter>rt\textures</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

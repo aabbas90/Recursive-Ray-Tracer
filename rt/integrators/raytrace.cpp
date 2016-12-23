@@ -34,6 +34,7 @@ namespace rt
 				RGBColor reflected = solid->material->getReflectance(intersection.local(), normal, ray.d.normalize(), lightHit.direction);
 				color = color + reflected * lightSource->getIntensity(lightHit);
 			}
+			color = solid->material->getEmission(intersection.local(), normal, ray.d.normalize());
 
 		}
 
