@@ -82,6 +82,8 @@
     <ClInclude Include="core\float4.h" />
     <ClInclude Include="core\image.h" />
     <ClInclude Include="core\ImageDrawing.h" />
+    <ClInclude Include="core\interpolate-impl.h" />
+    <ClInclude Include="core\interpolate.h" />
     <ClInclude Include="core\julia.h" />
     <ClInclude Include="core\macros.h" />
     <ClInclude Include="core\matrix.h" />
@@ -94,6 +96,12 @@
     <ClInclude Include="rt\cameras\fisheye.h" />
     <ClInclude Include="rt\cameras\orthographic.h" />
     <ClInclude Include="rt\cameras\perspective.h" />
+    <ClInclude Include="rt\coordmappers\coordmapper.h" />
+    <ClInclude Include="rt\coordmappers\cylindrical.h" />
+    <ClInclude Include="rt\coordmappers\plane.h" />
+    <ClInclude Include="rt\coordmappers\spherical.h" />
+    <ClInclude Include="rt\coordmappers\tmapper.h" />
+    <ClInclude Include="rt\coordmappers\world.h" />
     <ClInclude Include="rt\groups\bvh.h" />
     <ClInclude Include="rt\groups\group.h" />
     <ClInclude Include="rt\groups\kdtree.h" />
@@ -113,6 +121,7 @@
     <ClInclude Include="rt\materials\combine.h" />
     <ClInclude Include="rt\materials\cookTorrance.h" />
     <ClInclude Include="rt\materials\dummy.h" />
+    <ClInclude Include="rt\materials\flatmaterial.h" />
     <ClInclude Include="rt\materials\lambertian.h" />
     <ClInclude Include="rt\materials\material.h" />
     <ClInclude Include="rt\materials\mirror.h" />
@@ -130,7 +139,10 @@
     <ClInclude Include="rt\solids\sphere.h" />
     <ClInclude Include="rt\solids\striangle.h" />
     <ClInclude Include="rt\solids\triangle.h" />
+    <ClInclude Include="rt\textures\checkerboard.h" />
     <ClInclude Include="rt\textures\constant.h" />
+    <ClInclude Include="rt\textures\imagetex.h" />
+    <ClInclude Include="rt\textures\perlin.h" />
     <ClInclude Include="rt\textures\texture.h" />
     <ClInclude Include="rt\world.h" />
   </ItemGroup>
@@ -139,6 +151,7 @@
     <ClCompile Include="core\float4.cpp" />
     <ClCompile Include="core\image.cpp" />
     <ClCompile Include="core\ImageDrawing.cpp" />
+    <ClCompile Include="core\interpolate.cpp" />
     <ClCompile Include="core\julia.cpp" />
     <ClCompile Include="core\matrix.cpp" />
     <ClCompile Include="core\point.cpp" />
@@ -149,8 +162,10 @@
     <ClCompile Include="main\a_julia.cpp" />
     <ClCompile Include="main\a_cameras.cpp" />
     <ClCompile Include="main\a_lighting.cpp" />
+    <ClCompile Include="main\a_mappers.cpp" />
     <ClCompile Include="main\a_materials.cpp" />
     <ClCompile Include="main\a_solids.cpp" />
+    <ClCompile Include="main\a_textures.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="rt\bbox.cpp" />
     <ClCompile Include="rt\cameras\environment.cpp" />
@@ -173,6 +188,7 @@
     <ClCompile Include="rt\materials\combine.cpp" />
     <ClCompile Include="rt\materials\cookTorrance.cpp" />
     <ClCompile Include="rt\materials\dummy.cpp" />
+    <ClCompile Include="rt\materials\flatmaterial.cpp" />
     <ClCompile Include="rt\materials\lambertian.cpp" />
     <ClCompile Include="rt\materials\mirror.cpp" />
     <ClCompile Include="rt\materials\phong.cpp" />
@@ -190,6 +206,7 @@
     <ClCompile Include="rt\solids\striangle.cpp" />
     <ClCompile Include="rt\solids\triangle.cpp" />
     <ClCompile Include="rt\textures\constant.cpp" />
+    <ClCompile Include="rt\textures\perlin.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

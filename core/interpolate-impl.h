@@ -11,7 +11,7 @@ namespace rt {
 
     template <typename T>
     T lerpbar(const T& a, const T& b, const T& c, float aWeight, float bWeight) {
-		return (a * aWeight + b * bWeight + c * (1 - (aWeight + bWeight));
+		return (a * aWeight + b * bWeight + c * (1 - (aWeight + bWeight)));
     }
 
     template <typename T>
