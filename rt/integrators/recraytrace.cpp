@@ -82,6 +82,6 @@ namespace rt
 			}
 		}
 
-		return color.clamp();
+		return color;
 	}
 }
