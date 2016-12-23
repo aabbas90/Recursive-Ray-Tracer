@@ -6,18 +6,17 @@ namespace rt {
     template <typename T>
     T lerp(const T& px0, const T& px1, float xPoint) {
         //T *float is allowed
-		return ( px0 * (1 - xPoint)  + px1 * xPoint );
+		return  px0 * (1 - xPoint)  + px1 * xPoint ;
     }
 
     template <typename T>
     T lerpbar(const T& a, const T& b, const T& c, float aWeight, float bWeight) {
-		return (a * aWeight + b * bWeight + c * (1 - (aWeight + bWeight));
+		return a * aWeight + b * bWeight + c * (1 - (aWeight + bWeight));
     }
 
     template <typename T>
     T lerp2d(const T& px0y0, const T& px1y0, const T& px0y1, const T& px1y1, float xWeight, float yWeight) {
-        //TODO
-        NOT_IMPLEMENTED;
+        return lerp(lerp(px0y0, px1y0, xWeight), lerp(px0y1, px1y1, xWeight),  yWeight);
     }
 
     template <typename T>
