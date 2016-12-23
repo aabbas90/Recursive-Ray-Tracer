@@ -17,9 +17,10 @@ namespace rt
         //compute parity
         int parity = (lx + ly + lz) % 2;
         if(parity == 0)
-            return RGBColor::black();    
+            return black;    
         else
-            return RGBColor::white();    
+            return white;  
+
     }
     RGBColor CheckerboardTexture::getColorDX(const Point& coord)
     {
