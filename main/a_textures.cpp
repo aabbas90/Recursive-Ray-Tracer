@@ -22,38 +22,38 @@ using namespace rt;
 
 namespace {
 
-    Group* imageTexturesBorder() {
+    // Group* imageTexturesBorder() {
 
-        SimpleGroup* scene = new SimpleGroup();      
+    //     SimpleGroup* scene = new SimpleGroup();      
 
-        ImageTexture* clampTex = new ImageTexture("models/stones_diffuse.png", ImageTexture::CLAMP, ImageTexture::NEAREST);
-        FlatMaterial* clamp = new FlatMaterial(clampTex);
+    //     ImageTexture* clampTex = new ImageTexture("models/stones_diffuse.png", ImageTexture::CLAMP, ImageTexture::NEAREST);
+    //     FlatMaterial* clamp = new FlatMaterial(clampTex);
 
-        ImageTexture* mirrorTex = new ImageTexture("models/stones_diffuse.png", ImageTexture::MIRROR, ImageTexture::BILINEAR);
-        FlatMaterial* mirror = new FlatMaterial(mirrorTex);
+    //     ImageTexture* mirrorTex = new ImageTexture("models/stones_diffuse.png", ImageTexture::MIRROR, ImageTexture::BILINEAR);
+    //     FlatMaterial* mirror = new FlatMaterial(mirrorTex);
 
-        scene->add(new InfinitePlane(Point(0.0f,0.0f,-0.004f), Vector(-0.02f, -0.02f, 1.0f), nullptr, clamp));
-        scene->add(new InfinitePlane(Point(0.0f,0.0f,-0.001f), Vector(0.02f, -0.02f, 1.0f), nullptr, mirror));
+    //     scene->add(new InfinitePlane(Point(0.0f,0.0f,-0.004f), Vector(-0.02f, -0.02f, 1.0f), nullptr, clamp));
+    //     scene->add(new InfinitePlane(Point(0.0f,0.0f,-0.001f), Vector(0.02f, -0.02f, 1.0f), nullptr, mirror));
 
 
-        return scene;
-    }
+    //     return scene;
+    // }
 
-    Group* imageTexturesInterpolate() {
+    // Group* imageTexturesInterpolate() {
 
-        SimpleGroup* scene = new SimpleGroup();      
+    //     SimpleGroup* scene = new SimpleGroup();      
 
-        ImageTexture* nearTex = new ImageTexture("models/stones_diffuse.png", ImageTexture::REPEAT, ImageTexture::NEAREST);
-        FlatMaterial* near = new FlatMaterial(nearTex);
+    //     ImageTexture* nearTex = new ImageTexture("models/stones_diffuse.png", ImageTexture::REPEAT, ImageTexture::NEAREST);
+    //     FlatMaterial* near = new FlatMaterial(nearTex);
 
-        ImageTexture* interTex = new ImageTexture("models/stones_diffuse.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
-        FlatMaterial* inter = new FlatMaterial(interTex);
+    //     ImageTexture* interTex = new ImageTexture("models/stones_diffuse.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
+    //     FlatMaterial* inter = new FlatMaterial(interTex);
 
-        scene->add(new InfinitePlane(Point(0.1f, -1.5f,0.15f), Vector(0.1f, 0.0f, 1.0f), nullptr, near));
-        scene->add(new InfinitePlane(Point(0.1f, -1.5f,0.15f), Vector(-0.1f, 0.0f, 1.0f), nullptr, inter));
+    //     scene->add(new InfinitePlane(Point(0.1f, -1.5f,0.15f), Vector(0.1f, 0.0f, 1.0f), nullptr, near));
+    //     scene->add(new InfinitePlane(Point(0.1f, -1.5f,0.15f), Vector(-0.1f, 0.0f, 1.0f), nullptr, inter));
 
-        return scene;
-    }
+    //     return scene;
+    // }
 
 
     Group* proceduralTextures() {
@@ -89,13 +89,13 @@ void a_textures() {
     engine.render(img);
     img.writePNG("tx-1.png");
 
-    world.scene = imageTexturesBorder();
-    engine.render(img);
-    img.writePNG("tx-2.png");
+    // world.scene = imageTexturesBorder();
+    // engine.render(img);
+    // img.writePNG("tx-2.png");
 
-    world.scene = imageTexturesInterpolate();
-    engine.render(img);
-    img.writePNG("tx-3.png");
+    // world.scene = imageTexturesInterpolate();
+    // engine.render(img);
+    // img.writePNG("tx-3.png");
 
 }
 
