@@ -11,7 +11,7 @@ namespace rt
 		lScale = longitudinalAxis.length();
 		pScale = polarAxis.length();
 		thirdZ = cross(this->polarAxis, this->longitudinalAxis).normalize();
-		transformation = Matrix::system(longitudinalAxis.normalize(), polarAxis.normalize(), thirdZ).invert();
+		transformation = Matrix::system(polarAxis.normalize(), longitudinalAxis.normalize(), thirdZ).invert();
 		transformation = product(transformation.transpose(), translation(Point(-origin.x, -origin.y, -origin.z)));
 	
 	}

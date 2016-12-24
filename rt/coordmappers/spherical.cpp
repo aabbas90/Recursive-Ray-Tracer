@@ -12,7 +12,7 @@ namespace rt
 		zScale = zenith.length();
 		aScale = azimuthRef.length();
 		thirdZ = cross(this->azimuthRef, this->zenith).normalize();
-		transformation = Matrix::system(zenith.normalize(), azimuthRef.normalize(), thirdZ).invert();
+		transformation = Matrix::system(azimuthRef.normalize(), zenith.normalize(), thirdZ).invert();
 		transformation = product(transformation.transpose(), translation(Point(-origin.x, -origin.y, -origin.z)));
 	}
 	Point SphericalCoordMapper::getCoords(const Intersection & hit) const
