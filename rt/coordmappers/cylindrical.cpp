@@ -12,14 +12,13 @@ namespace rt
 		pScale = polarAxis.length();
 		thirdZ = cross(this->polarAxis, this->longitudinalAxis).normalize();
 		transformation = Matrix::system(longitudinalAxis.normalize(), polarAxis.normalize(), thirdZ).invert();
-		transformation = product(transformation, translation(Point(-origin.x, -origin.y, -origin.z)));	
+		transformation = product(transformation.transpose(), translation(Point(-origin.x, -origin.y, -origin.z)));
+	
 	}
 	Point CylindricalCoordMapper::getCoords(const Intersection & hit) const
 	{
 		Point translatedPoint = transformation * hit.local();
-		float x = translatedPoint.x;
-		float y = translatedPoint.y;
-		float phi = atan2(y,x);
+		float phi = atan2(translatedPoint.y,translatedPoint.x);
 		return Point (phi / (2 * pi * pScale), translatedPoint.z / lScale, 0);
 	}
 }
