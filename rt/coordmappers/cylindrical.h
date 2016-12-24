@@ -12,6 +12,12 @@ class CylindricalCoordMapper : public CoordMapper {
 public:
     CylindricalCoordMapper(const Point& origin, const Vector& longitudinalAxis, const Vector& polarAxis);
     virtual Point getCoords(const Intersection& hit) const;
+private:
+    Point origin;
+    Vector longitudinalAxis;
+    Vector polarAxis;
+    float lScale, pScale;
+    Vector thirdZ;
 };
 
 }
