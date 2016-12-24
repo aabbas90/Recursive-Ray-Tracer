@@ -6,6 +6,7 @@
 #include <rt/textures/texture.h>
 #include <core/color.h>
 #include <core/scalar.h>
+#include <vector>
 
 
 namespace rt {
@@ -19,6 +20,7 @@ namespace rt {
         virtual RGBColor getColorDY(const Point& coord);
     private:
         RGBColor black, white;
+        std::vector<float> amplitudes, frequencies;
     };
     
 
