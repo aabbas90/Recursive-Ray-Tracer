@@ -9,7 +9,7 @@ namespace rt
 	{
 		lScale = longitudinalAxis.length();
 		pScale = polarAxis.length();
-		thirdZ = cross(this->polarAxis, this->longitudinalAxis);
+		thirdZ = cross(this->polarAxis, this->longitudinalAxis).normalize();
 		this->longitudinalAxis = cross(thirdZ, this->polarAxis).normalize();
 	}
 	Point CylindricalCoordMapper::getCoords(const Intersection & hit) const
