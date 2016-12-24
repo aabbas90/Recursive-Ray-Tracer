@@ -38,11 +38,13 @@ namespace rt
 		float fullArea = normalVector.length() / 2;
 
 		InfinitePlane plane = InfinitePlane(v1, normalVector.normalize(), texMapper, material);
-		Intersection intersectionObject = plane.intersect(ray, previousBestDistance);
+		Intersection planeInt = plane.intersect(ray, previousBestDistance);
+		Intersection intObject;
 
-		if (intersectionObject)
+		if (planeInt)
 		{
-			Point p = intersectionObject.hitPoint();
+			
+			Point p = planeInt.hitPoint();
 
 			Vector v3v2 = v3 - v2;
 			Vector pv2 = p - v2;
@@ -63,10 +65,11 @@ namespace rt
 			if (w < 0 || w > 1)
 				return Intersection();
 
-			intersectionObject.SetLocalIntersectingPoint(u * v1 + v * v2 + w * v3);
+			intObject = Intersection(planeInt.distance, ray, this, normalVector);
+			intObject.SetLocalIntersectingPoint(u * v1 + v * v2 + w * v3);
 		}
 
-		return intersectionObject;
+		return intObject;
 	}
 
 	Point Triangle::sample() const
