@@ -13,6 +13,8 @@ public:
     TriangleMapper(Point ntv[3]);
     virtual Point getCoords(const Intersection& hit) const;
 
+private:
+	Point p0, p1, p2;
 };
 
 }
