@@ -10,6 +10,6 @@ namespace rt
     Point TriangleMapper::getCoords(const Intersection& hit) const
     {
         Point hitPoint = hit.local();
-        return Point (tv0 * (1 - (hitPoint.x + hitPoint.y)) + tv1 * hitPoint.x + tv2 * hitPoint.y);
+        return Point (tv0 * hitPoint.z + tv1 * hitPoint.x + tv2 * hitPoint.y);
     }
 }
