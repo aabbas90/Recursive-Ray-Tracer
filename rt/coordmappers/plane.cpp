@@ -13,6 +13,6 @@ namespace rt
     Point PlaneCoordMapper::getCoords(const Intersection& hit) const 
     {
         //Point hitPoint = hit.hitPoint();
-        return transformation * hit.local();
+        return transformation.transpose() * hit.local();
     } 
 }
