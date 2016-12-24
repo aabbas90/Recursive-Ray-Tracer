@@ -12,7 +12,8 @@ namespace rt
 		pScale = polarAxis.length();
 		thirdZ = cross(this->polarAxis, this->longitudinalAxis).normalize();
 		transformation = Matrix::system(polarAxis.normalize(), longitudinalAxis.normalize(), thirdZ).invert();
-		transformation = product(transformation.transpose(), translation(Point(-origin.x, -origin.y, -origin.z)));
+		Point nOrigin = Point(-origin.x, -origin.y, -origin.z);
+		transformation = product(transformation.transpose(), translation(nOrigin));
 	
 	}
 	Point CylindricalCoordMapper::getCoords(const Intersection & hit) const
