@@ -4,6 +4,8 @@
 #include <core/point.h>
 #include <core/vector.h>
 #include <rt/coordmappers/coordmapper.h>
+#include <core/matrix.h>
+
 namespace rt {
 
 class Intersection;
@@ -18,6 +20,7 @@ private:
     Vector polarAxis;
     float lScale, pScale;
     Vector thirdZ;
+    Matrix transformation;
 };
 
 }

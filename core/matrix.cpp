@@ -193,5 +193,13 @@ namespace rt {
 		return a * scalar;
 	}
 
+	Matrix translation(Point t)
+	{
+		return Matrix(Float4(1.0f, 0.0f, 0.0f, t.x),
+				Float4(0.0f, 1.0f, 0.0f, t.y),
+				Float4(0.0f, 0.0f, 1.0f, t.z),
+				Float4(0.0f, 0.0f, 0.0f, 1.0f));
+	}
+
 }
 

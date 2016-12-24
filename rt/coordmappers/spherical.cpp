@@ -12,16 +12,15 @@ namespace rt
 		zScale = zenith.length();
 		aScale = azimuthRef.length();
 		thirdZ = cross(this->azimuthRef, this->zenith).normalize();
-		this->zenith = cross(thirdZ, this->azimuthRef).normalize();
+		transformation = Matrix::system(zenith.normalize(), azimuthRef.normalize(), thirdZ).invert();
+		transformation = product(transformation, translation(Point(-origin.x, -origin.y, -origin.z)));
 	}
 	Point SphericalCoordMapper::getCoords(const Intersection & hit) const
 	{
-		Point local = hit.local();
-		Vector v = local - origin;
-		v = Vector(dot(v, azimuthRef), dot(v, zenith), dot(v, thirdZ));
-		float phi = atan2(v.y, v.x);
-		float r = v.length();
-		float theta = acos(v.z / r);
+		Point translatedPoint = transformation * hit.local();
+		float phi = atan2(translatedPoint.y, translatedPoint.x);
+		float r = sqrt(translatedPoint.x * translatedPoint.x + translatedPoint.y * translatedPoint.y+ translatedPoint.z * translatedPoint.z);
+		float theta = acos(translatedPoint.z / r);
 		return Point (phi / (2 * pi * aScale), theta / (pi * zScale), 0);
 	}
 }

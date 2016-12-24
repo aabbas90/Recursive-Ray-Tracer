@@ -40,6 +40,7 @@ public:
 Matrix product(const Matrix& a, const Matrix& b);
 Matrix operator*(const Matrix& a, float scalar);
 Matrix operator*(float scalar, const Matrix& a);
+Matrix translation(Point t);
 
 }
 

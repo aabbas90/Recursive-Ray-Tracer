@@ -4,6 +4,7 @@
 #include <core/point.h>
 #include <core/vector.h>
 #include <rt/coordmappers/coordmapper.h>
+#include <core/matrix.h>
 
 namespace rt {
 
@@ -17,8 +18,9 @@ private:
     Point origin;
     Vector zenith; //Y
     Vector azimuthRef; //X
-    Vector thirdZ; //Z
+    Vector thirdZ; //z
     float aScale, zScale;
+    Matrix transformation;
 };
 
 }
