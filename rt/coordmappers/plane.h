@@ -4,6 +4,7 @@
 #include <core/vector.h>
 #include <rt/coordmappers/coordmapper.h>
 #include <core/point.h>
+#include <core/matrix.h>
 
 namespace rt {
 
@@ -15,6 +16,7 @@ public:
     virtual Point getCoords(const Intersection& hit) const;
 private:
     Vector e1, e2;
+    Matrix transformation;
 };
 
 }

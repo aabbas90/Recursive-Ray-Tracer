@@ -10,13 +10,13 @@ void oldassignment3();
 void light();
 void a_textures();
 void a_smooth();
-// void a_mappers();
-// void a_bumpmappers();
-// void objTextured();
+void a_mappers();
+void a_bumpmappers();
+void objTextured();
 
 int main(int argc, char* argv[])
 {
-    // a_mappers();
+    a_mappers();
     a_textures();
     return 0;
 }

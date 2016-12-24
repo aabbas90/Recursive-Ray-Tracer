@@ -163,7 +163,11 @@ namespace rt {
 
 	Matrix Matrix::system(const Vector & e1, const Vector & e2, const Vector & e3)
 	{
-		NOT_IMPLEMENTED;
+		Float4 row1 (e1.x, e2.x, e3.x, 0);
+		Float4 row2 (e1.y, e2.y, e3.y, 0);
+		Float4 row3 (e1.z, e2.z, e3.z, 0);
+		Float4 row4 (0, 0, 0, 1);
+		return Matrix(row1, row2, row3, row4);
 	}
 
 	Matrix product(const Matrix & a, const Matrix & b)
