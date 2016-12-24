@@ -54,7 +54,7 @@ namespace rt
         float noiseColor = 0.0f; 
         for(int i = 0; i < frequencies.size(); ++i)
         {
-            noiseColor += getNoiseAtCubeCenter(coord * frequencies[i]) * amplitudes[i];
+            noiseColor += fabs(getNoiseAtCubeCenter(coord * frequencies[i]) * amplitudes[i]);
         }
         return lerp(black, white, noiseColor);
     }
