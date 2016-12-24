@@ -1,5 +1,6 @@
 #include "solid.h"
 #include <core/assert.h>
+#include <rt/coordmappers/world.h>
 
 namespace rt
 {
@@ -12,5 +13,5 @@ namespace rt
 	Point Solid::sample() const
 	{
 		NOT_IMPLEMENTED;
-	}
 }
+	}

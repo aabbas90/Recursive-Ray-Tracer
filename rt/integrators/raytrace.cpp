@@ -1,8 +1,10 @@
 #include "raytrace.h"
+#include <rt/coordmappers/world.h>
 #include <core/vector.h>
 #include <rt/lights/light.h>
 #include <rt/intersection.h>
 #include <rt/solids/solid.h>
+#include <rt/coordmappers/coordmapper.h>
 #include <rt/materials/material.h>
 
 namespace rt
@@ -34,7 +36,14 @@ namespace rt
 				RGBColor reflected = solid->material->getReflectance(intersection.local(), normal, ray.d.normalize(), lightHit.direction);
 				color = color + reflected * lightSource->getIntensity(lightHit);
 			}
-			color = solid->material->getEmission(intersection.local(), normal, ray.d.normalize());
+			
+			auto texMap = intersection.solid->texMapper;
+			if (texMap == nullptr)
+				texMap = new WorldMapper();
+
+
+			Point texturePoint = texMap->getCoords(intersection);;
+			color = color + solid->material->getEmission(texturePoint, normal, ray.d.normalize());
 
 		}
 

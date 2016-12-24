@@ -1,4 +1,5 @@
 #include "recraytrace.h"
+#include <rt/coordmappers/world.h>
 #include <core/color.h>
 #include <core/vector.h>
 #include <rt/lights/light.h>
@@ -6,6 +7,7 @@
 #include <rt/solids/solid.h>
 #include <rt/materials/material.h>
 #include <rt/materials/combine.h>
+#include <rt/coordmappers/coordmapper.h>
 
 namespace rt
 {
@@ -20,6 +22,7 @@ namespace rt
 		if (intersection)
 		{
 			Vector normal = intersection.normal().normalize();
+
 			if (dot(normal, ray.d.normalize()) > 0)
 				normal = -1.0f * normal;
 
@@ -80,6 +83,12 @@ namespace rt
 				 RGBColor incomingLightColor = this->getRadiance(shadowRay, depth + 1);
 				 color = color + incomingLightColor * reflectance.reflectance;
 			}
+			auto texMap = intersection.solid->texMapper;
+			if (texMap == nullptr)
+				texMap = new WorldMapper();
+
+			Point texturePoint = texMap->getCoords(intersection);
+			color = color + intersection.solid->material->getEmission(texturePoint, normal, ray.d.normalize());
 		}
 
 		return color;

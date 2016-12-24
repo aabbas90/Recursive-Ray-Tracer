@@ -446,5 +446,11 @@
     <ClCompile Include="rt\textures\imagetex.cpp">
       <Filter>rt\textures</Filter>
     </ClCompile>
+    <ClCompile Include="rt\coordmappers\cylindrical.cpp">
+      <Filter>rt\coordmappers</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\coordmappers\spherical.cpp">
+      <Filter>rt\coordmappers</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

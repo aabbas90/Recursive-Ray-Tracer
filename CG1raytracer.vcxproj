@@ -172,7 +172,9 @@
     <ClCompile Include="rt\cameras\fisheye.cpp" />
     <ClCompile Include="rt\cameras\orthographic.cpp" />
     <ClCompile Include="rt\cameras\perspective.cpp" />
+    <ClCompile Include="rt\coordmappers\cylindrical.cpp" />
     <ClCompile Include="rt\coordmappers\plane.cpp" />
+    <ClCompile Include="rt\coordmappers\spherical.cpp" />
     <ClCompile Include="rt\coordmappers\tmapper.cpp" />
     <ClCompile Include="rt\coordmappers\world.cpp" />
     <ClCompile Include="rt\groups\bvh.cpp" />
