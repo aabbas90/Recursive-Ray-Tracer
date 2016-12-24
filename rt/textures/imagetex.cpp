@@ -88,9 +88,9 @@ namespace rt
                         fu = u - floor(u);
                         fv = v - floor(v);
                         return (   (1 - fu) * (1 - fv) * image(floor(u), floor(v))
-                                + ((1 - fu) * (    fv) * image(floor(u), floor(v) + 1 ))
-                                + ((    fu) * (1 - fv) * image(floor(u) + 1, floor(v) ))
-                                + ((    fu) * (    fv) * image(floor(u) + 1, floor(v) + 1 )));
+                                + ((1 - fu) * (    fv) * image(floor(u), std::fmin(floor(v) + 1, image.height() - 1)))
+                                + ((    fu) * (1 - fv) * image(std::fmin(floor(u) + 1, image.width() - 1), floor(v) ))
+                                + ((    fu) * (    fv) * image(std::fmin(floor(u) + 1, image.width() - 1), std::fmin(floor(v) + 1, image.height() - 1))));
         }
     }
     RGBColor ImageTexture::getColorDX(const Point& coord)

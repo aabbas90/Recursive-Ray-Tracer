@@ -13,9 +13,6 @@
     <Filter Include="rt\cameras">
       <UniqueIdentifier>{cace52b3-55b0-4e94-9656-29f7b9af3863}</UniqueIdentifier>
     </Filter>
-    <Filter Include="rt\groups">
-      <UniqueIdentifier>{892069ff-c228-446c-9c66-7533500c496b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="rt\integrators">
       <UniqueIdentifier>{3c176889-12d4-4c88-b634-ddcbfdabc655}</UniqueIdentifier>
     </Filter>
@@ -39,6 +36,9 @@
     </Filter>
     <Filter Include="rt\coordmappers">
       <UniqueIdentifier>{660ceb43-93a7-4472-921a-209cab165e86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rt\groups">
+      <UniqueIdentifier>{892069ff-c228-446c-9c66-7533500c496b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

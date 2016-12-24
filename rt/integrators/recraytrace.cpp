@@ -26,6 +26,12 @@ namespace rt
 			if (dot(normal, ray.d.normalize()) > 0)
 				normal = -1.0f * normal;
 
+			auto texMap = intersection.solid->texMapper;
+			if (texMap == nullptr)
+				texMap = new WorldMapper();
+
+			Point texturePoint = texMap->getCoords(intersection);
+
 			auto currentMaterial = intersection.solid->material;
 			auto outDir = ray.d.normalize();
 
@@ -43,14 +49,14 @@ namespace rt
 					if (shadowRayIntersection)
 						continue;
 
-					RGBColor reflected = currentMaterial->getReflectance(intersection.local(), normal, outDir, inDir);
+					RGBColor reflected = currentMaterial->getReflectance(texturePoint, normal, outDir, inDir);
 					color = color + reflected * lightSource->getIntensity(lightHit);
 				}
 			}
 
 			else if (currentMaterial->useSampling() == Material::Sampling::SAMPLING_ALL)
 			{
-				auto reflectance = currentMaterial->getSampleReflectance(intersection.local(), normal, outDir);
+				auto reflectance = currentMaterial->getSampleReflectance(texturePoint, normal, outDir);
 				Vector inDir = reflectance.direction.normalize();
 				Ray shadowRay = Ray(intersection.hitPoint() + displacement * normal, inDir);
 
@@ -72,22 +78,18 @@ namespace rt
 					if (shadowRayIntersection)
 						continue;
 
-					RGBColor reflected = currentMaterial->getReflectance(intersection.local(), normal, outDir, inDir);
+					RGBColor reflected = currentMaterial->getReflectance(texturePoint, normal, outDir, inDir);
 					color = color + reflected * lightSource->getIntensity(lightHit);
 				}
 				
-				 auto reflectance = currentMaterial->getSampleReflectance(intersection.local(), normal, outDir);
+				 auto reflectance = currentMaterial->getSampleReflectance(texturePoint, normal, outDir);
 				 Vector inDir = reflectance.direction.normalize();
 				 Ray shadowRay = Ray(intersection.hitPoint() + displacement * inDir, inDir);
 
 				 RGBColor incomingLightColor = this->getRadiance(shadowRay, depth + 1);
 				 color = color + incomingLightColor * reflectance.reflectance;
 			}
-			auto texMap = intersection.solid->texMapper;
-			if (texMap == nullptr)
-				texMap = new WorldMapper();
-
-			Point texturePoint = texMap->getCoords(intersection);
+			
 			color = color + intersection.solid->material->getEmission(texturePoint, normal, ray.d.normalize());
 		}
 

@@ -19,6 +19,14 @@ namespace rt
 			if (dot(normal, ray.d.normalize()) > 0)
 				normal = -1.0f * normal;
 
+
+			auto texMap = intersection.solid->texMapper;
+			if (texMap == nullptr)
+				texMap = new WorldMapper();
+
+
+			Point texturePoint = texMap->getCoords(intersection);
+
 			auto solid = intersection.solid;
 			
 			for (auto lightSource : this->world->light)
@@ -33,16 +41,10 @@ namespace rt
 				if (shadowRayIntersection)
 					continue;
 
-				RGBColor reflected = solid->material->getReflectance(intersection.local(), normal, ray.d.normalize(), lightHit.direction);
+				RGBColor reflected = solid->material->getReflectance(texturePoint, normal, ray.d.normalize(), lightHit.direction);
 				color = color + reflected * lightSource->getIntensity(lightHit);
 			}
 			
-			auto texMap = intersection.solid->texMapper;
-			if (texMap == nullptr)
-				texMap = new WorldMapper();
-
-
-			Point texturePoint = texMap->getCoords(intersection);;
 			color = color + solid->material->getEmission(texturePoint, normal, ray.d.normalize());
 
 		}
