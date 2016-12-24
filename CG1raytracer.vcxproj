@@ -172,6 +172,9 @@
     <ClCompile Include="rt\cameras\fisheye.cpp" />
     <ClCompile Include="rt\cameras\orthographic.cpp" />
     <ClCompile Include="rt\cameras\perspective.cpp" />
+    <ClCompile Include="rt\coordmappers\plane.cpp" />
+    <ClCompile Include="rt\coordmappers\tmapper.cpp" />
+    <ClCompile Include="rt\coordmappers\world.cpp" />
     <ClCompile Include="rt\groups\bvh.cpp" />
     <ClCompile Include="rt\groups\group.cpp" />
     <ClCompile Include="rt\groups\Node.cpp" />
@@ -207,6 +210,7 @@
     <ClCompile Include="rt\solids\triangle.cpp" />
     <ClCompile Include="rt\textures\checkerboard.cpp" />
     <ClCompile Include="rt\textures\constant.cpp" />
+    <ClCompile Include="rt\textures\imagetex.cpp" />
     <ClCompile Include="rt\textures\perlin.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

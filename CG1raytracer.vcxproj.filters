@@ -434,5 +434,17 @@
     <ClCompile Include="rt\textures\checkerboard.cpp">
       <Filter>rt\textures</Filter>
     </ClCompile>
+    <ClCompile Include="rt\coordmappers\plane.cpp">
+      <Filter>rt\coordmappers</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\coordmappers\tmapper.cpp">
+      <Filter>rt\coordmappers</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\coordmappers\world.cpp">
+      <Filter>rt\coordmappers</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\textures\imagetex.cpp">
+      <Filter>rt\textures</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
