@@ -13,6 +13,12 @@ public:
     SphericalCoordMapper();
     SphericalCoordMapper(const Point& origin, const Vector& zenith, const Vector& azimuthRef);
     virtual Point getCoords(const Intersection& hit) const;
+private:
+    Point origin;
+    Vector zenith; //Y
+    Vector azimuthRef; //X
+    Vector thirdZ; //Z
+    float aScale, zScale;
 };
 
 }
