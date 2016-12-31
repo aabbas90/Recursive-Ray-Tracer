@@ -1,3 +1,4 @@
+
 void a_julia();
 void a_cameras();
 void a_solids();
@@ -16,7 +17,6 @@ void objTextured();
 
 int main(int argc, char* argv[])
 {
-    a_mappers();
-    a_textures();
+    a_distributed();
     return 0;
 }
