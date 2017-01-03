@@ -39,10 +39,6 @@ void Renderer::render(Image & img)
 					Ray currentRay = cam->getPrimaryRay(ii, jj);
 					color = color + integrator->getRadiance(currentRay);
 				}
-				if (i == 270 && j == 298)
-				{
-					j = j;  //TODO: What is this for?
-				}
 				//Regular super-sampling Averaging of N samples per pixel
 				img(i, j) = color / samples;
 			}

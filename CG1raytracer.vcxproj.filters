@@ -249,6 +249,15 @@
     <ClInclude Include="rt\coordmappers\world.h">
       <Filter>rt\coordmappers</Filter>
     </ClInclude>
+    <ClInclude Include="rt\lights\arealight.h">
+      <Filter>rt\lights</Filter>
+    </ClInclude>
+    <ClInclude Include="core\random.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\CImg.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -451,6 +460,15 @@
     </ClCompile>
     <ClCompile Include="rt\coordmappers\spherical.cpp">
       <Filter>rt\coordmappers</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\lights\arealight.cpp">
+      <Filter>rt\lights</Filter>
+    </ClCompile>
+    <ClCompile Include="main\a_distributed.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="core\random.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

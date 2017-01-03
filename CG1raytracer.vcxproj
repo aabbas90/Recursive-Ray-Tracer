@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClInclude Include="CImg-1.7.9_pre102716\CImg.h" />
     <ClInclude Include="core\assert.h" />
+    <ClInclude Include="core\CImg.h" />
     <ClInclude Include="core\color.h" />
     <ClInclude Include="core\float4.h" />
     <ClInclude Include="core\image.h" />
@@ -88,6 +89,7 @@
     <ClInclude Include="core\macros.h" />
     <ClInclude Include="core\matrix.h" />
     <ClInclude Include="core\point.h" />
+    <ClInclude Include="core\random.h" />
     <ClInclude Include="core\scalar.h" />
     <ClInclude Include="core\vector.h" />
     <ClInclude Include="rt\bbox.h" />
@@ -113,6 +115,7 @@
     <ClInclude Include="rt\integrators\raytrace.h" />
     <ClInclude Include="rt\integrators\recraytrace.h" />
     <ClInclude Include="rt\intersection.h" />
+    <ClInclude Include="rt\lights\arealight.h" />
     <ClInclude Include="rt\lights\directional.h" />
     <ClInclude Include="rt\lights\light.h" />
     <ClInclude Include="rt\lights\pointlight.h" />
@@ -155,8 +158,10 @@
     <ClCompile Include="core\julia.cpp" />
     <ClCompile Include="core\matrix.cpp" />
     <ClCompile Include="core\point.cpp" />
+    <ClCompile Include="core\random.cpp" />
     <ClCompile Include="core\scalar.cpp" />
     <ClCompile Include="core\vector.cpp" />
+    <ClCompile Include="main\a_distributed.cpp" />
     <ClCompile Include="main\a_indexing.cpp" />
     <ClCompile Include="main\a_instancing.cpp" />
     <ClCompile Include="main\a_julia.cpp" />
@@ -186,6 +191,7 @@
     <ClCompile Include="rt\integrators\raytrace.cpp" />
     <ClCompile Include="rt\integrators\recraytrace.cpp" />
     <ClCompile Include="rt\intersection.cpp" />
+    <ClCompile Include="rt\lights\arealight.cpp" />
     <ClCompile Include="rt\lights\directional.cpp" />
     <ClCompile Include="rt\lights\pointlight.cpp" />
     <ClCompile Include="rt\lights\spotlight.cpp" />
