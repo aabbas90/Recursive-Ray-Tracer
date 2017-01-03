@@ -1,7 +1,8 @@
-#include "renderer.h"
-#include "ray.h"
-#include "cameras/orthographic.h"
-#include "integrators/integrator.h"
+#include <rt/renderer.h>
+#include <rt/ray.h>
+#include <rt/cameras/orthographic.h>
+#include <rt/integrators/integrator.h>
+#include <core/random.h>
 
 using namespace rt;
 
@@ -12,6 +13,7 @@ Renderer::Renderer(Camera * cam, Integrator * integrator)
 {
 	this->cam = cam;
 	this->integrator = integrator;
+	this->samples = 1;
 }
 
 void Renderer::setSamples(uint samples)
@@ -21,19 +23,47 @@ void Renderer::setSamples(uint samples)
 
 void Renderer::render(Image & img)
 {
-	for (uint i = 0; i < img.width(); ++i)
+	if(samples > 1)
 	{
-		float ii = 2.0 * i / img.width() - 1;
-		for (uint j = 0; j < img.height(); ++j)
+		for (uint i = 0; i < img.width(); ++i)
 		{
-			float jj = 2.0 * j / img.height() - 1;
-			Ray currentRay = cam->getPrimaryRay(ii, jj);
-
-			if (i == 270 && j == 298)
+			
+			for (uint j = 0; j < img.height(); ++j)
 			{
-				j = j;
+				RGBColor color = RGBColor::black();
+				for(uint s = 0; s < samples; ++s)
+				{
+
+					float ii = 2.0 * (i + random()) / img.width() - 1;
+					float jj = 2.0 * (j + random()) / img.height() - 1;
+					Ray currentRay = cam->getPrimaryRay(ii, jj);
+					color = color + integrator->getRadiance(currentRay);
+				}
+				if (i == 270 && j == 298)
+				{
+					j = j;  //TODO: What is this for?
+				}
+				//Regular super-sampling Averaging of N samples per pixel
+				img(i, j) = color / samples;
 			}
-			img(i, j) = integrator->getRadiance(currentRay);
+		}
+	}
+	else
+	{
+		for (uint i = 0; i < img.width(); ++i)
+		{
+			float ii = 2.0 * (i + 0.5) / img.width() - 1;
+			for (uint j = 0; j < img.height(); ++j)
+			{
+				float jj = 2.0 * (j + 0.5) / img.height() - 1;
+				Ray currentRay = cam->getPrimaryRay(ii, jj);
+
+				if (i == 270 && j == 298)
+				{
+					j = j;
+				}
+				img(i, j) = integrator->getRadiance(currentRay);
+			}
 		}
 	}
 }

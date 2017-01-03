@@ -2,6 +2,7 @@
 #include "infiniteplane.h"
 #include<core/assert.h>
 #include<rt/bbox.h>
+#include <core/random.h>
 
 namespace rt
 {
@@ -74,7 +75,12 @@ namespace rt
 
 	Point Triangle::sample() const
 	{
-		NOT_IMPLEMENTED;
+		// http://math.stackexchange.com/questions/18686/uniform-random-point-in-triangle
+		float r1 = random();
+		float r2 = random();
+		float r3 = random();
+		float r1Root = std::sqrt(r1);
+		return (1 - r1Root) * v1 + (r1Root * (1 - r2)) * v2 + (r2 * r1Root) * v3;
 	}
 
 	float Triangle::getArea() const

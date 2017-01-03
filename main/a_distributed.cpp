@@ -35,6 +35,7 @@ void makeBox(Group* scene, const Point& aaa, const Vector& forward, const Vector
 
 
 void a9renderCornellbox(float scale, const char* filename, Camera* cam, Material* sphereMaterial, Material* floorMaterial, int numSamples=1) {
+    std::cout << "here\n";
     Image img(400, 400);
     World world;
     SimpleGroup* scene = new SimpleGroup();
@@ -93,18 +94,18 @@ void a9renderCornellbox(float scale, const char* filename, Camera* cam, Material
 
 void a_distributed() {
     PerspectiveCamera* cam = new PerspectiveCamera(Point(0.278f, 0.273f, -0.800f), Vector(0, 0, 1), Vector(0, 1, 0), 0.686f, 0.686f);
-    DOFPerspectiveCamera* dofcam = new DOFPerspectiveCamera(Point(0.278f, 0.273f, -0.8f), Vector(0, 0, 1), Vector(0, 1, 0), 0.686f, 0.686f, 1.025f, 0.045f);
+    // DOFPerspectiveCamera* dofcam = new DOFPerspectiveCamera(Point(0.278f, 0.273f, -0.8f), Vector(0, 0, 1), Vector(0, 1, 0), 0.686f, 0.686f, 1.025f, 0.045f);
 
     Texture* blacktex = new ConstantTexture(RGBColor::rep(0.0f));
     Texture* whitetex = new ConstantTexture(RGBColor::rep(1.0f));
     Material* floorMaterial1 = new LambertianMaterial(blacktex, whitetex);
-    Material* floorMaterial2 = new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f);
+    // Material* floorMaterial2 = new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f);
 
     Material* sphereMaterial1 = floorMaterial1;
-    Material* sphereMaterial2 = new GlassMaterial(2.0f);
+    // Material* sphereMaterial2 = new GlassMaterial(2.0f);
 
     a9renderCornellbox(0.001f, "a9-1.png", cam, sphereMaterial1, floorMaterial1, 30);
-    a9renderCornellbox(0.001f, "a9-2.png", cam, sphereMaterial2, floorMaterial2, 30);
-    a9renderCornellbox(0.001f, "a9-3.png", dofcam, sphereMaterial2, floorMaterial2, 30);
-    a9renderCornellbox(0.001f, "a9-4.png", dofcam, sphereMaterial2, floorMaterial2, 1000);
+    // a9renderCornellbox(0.001f, "a9-2.png", cam, sphereMaterial2, floorMaterial2, 30);
+    // a9renderCornellbox(0.001f, "a9-3.png", dofcam, sphereMaterial2, floorMaterial2, 30);
+    // a9renderCornellbox(0.001f, "a9-4.png", dofcam, sphereMaterial2, floorMaterial2, 1000);
 }

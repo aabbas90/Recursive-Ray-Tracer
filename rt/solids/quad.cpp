@@ -3,6 +3,7 @@
 #include <rt/intersection.h>
 #include <core/assert.h>
 #include<rt/bbox.h>
+#include<core/random.h>
 
 namespace rt
 {
@@ -56,7 +57,8 @@ namespace rt
 
 	Point Quad::sample() const
 	{
-		NOT_IMPLEMENTED;
+		// http://stackoverflow.com/questions/240778/random-points-inside-a-polygon
+		return p1 + random() * span1 + random() * span2;
 	}
 
 	float Quad::getArea() const
