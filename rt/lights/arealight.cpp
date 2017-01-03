@@ -10,7 +10,7 @@ namespace rt
 	LightHit AreaLight::getLightHit(const Point & p) const
 	{
 		LightHit hit;
-       		Point position = source->sample();
+       	Point position = source->sample();
 		hit.direction = (position - p);
 		hit.distance = hit.direction.length();
 		hit.direction = hit.direction.normalize();
@@ -20,6 +20,6 @@ namespace rt
 	RGBColor AreaLight::getIntensity(const LightHit & irr) const
 	{
         //dummy value TODO
-        return RGBColor::black();
+        return RGBColor::white();
 	}
 }

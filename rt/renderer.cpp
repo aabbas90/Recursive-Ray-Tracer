@@ -31,6 +31,11 @@ void Renderer::render(Image & img)
 			for (uint j = 0; j < img.height(); ++j)
 			{
 				RGBColor color = RGBColor::black();
+				if (i == 200 && j == 153)
+				{
+					i = i;
+				}
+
 				for(uint s = 0; s < samples; ++s)
 				{
 
@@ -54,10 +59,6 @@ void Renderer::render(Image & img)
 				float jj = 2.0 * (j + 0.5) / img.height() - 1;
 				Ray currentRay = cam->getPrimaryRay(ii, jj);
 
-				if (i == 270 && j == 298)
-				{
-					j = j;
-				}
 				img(i, j) = integrator->getRadiance(currentRay);
 			}
 		}

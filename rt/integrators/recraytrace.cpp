@@ -45,7 +45,7 @@ namespace rt
 						continue;
 
 					Ray shadowRay = Ray(intersection.hitPoint() + displacement * inDir, inDir);
-					Intersection shadowRayIntersection = this->world->scene->intersect(shadowRay, lightHit.distance);
+					Intersection shadowRayIntersection = this->world->scene->intersect(shadowRay, lightHit.distance - 1.1 * displacement);
 					if (shadowRayIntersection)
 						continue;
 
