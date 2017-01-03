@@ -123,8 +123,9 @@ namespace rt
 		if (minT < 0 && maxT < 0)
 			return std::tuple<float, float, bool>(minT, maxT, false);
 
-		if (minT < 0)
-			minT = maxT;
+		// TO DO: What to do when the ray origin is inside the box? then one intersection is -ive and one +ive
+		// if (minT < 0)
+		//	minT = maxT;
 
 		return std::tuple<float, float, bool>(minT, maxT, true);
 	}

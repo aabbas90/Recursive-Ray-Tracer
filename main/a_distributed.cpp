@@ -39,8 +39,8 @@ void a9renderCornellbox(float scale, const char* filename, Camera* cam, Material
     std::cout << "here\n";
     Image img(400, 400);
     World world;
-    SimpleGroup* scene = new SimpleGroup();
-	// BVH* scene = new BVH();
+    // SimpleGroup* scene = new SimpleGroup();
+	BVH* scene = new BVH();
     world.scene = scene;
 
     Texture* redtex = new ConstantTexture(RGBColor(.7f,0.f,0.f));
@@ -81,7 +81,7 @@ void a9renderCornellbox(float scale, const char* filename, Camera* cam, Material
 	//point light
     world.light.push_back(new PointLight(Point(490*scale,159.99f*scale,279.5f*scale),RGBColor(40000.0f*scale*scale,0,0)));
     world.light.push_back(new PointLight(Point(40*scale,159.99f*scale,249.5f*scale),RGBColor(5000.0f*scale*scale,30000.0f*scale*scale,5000.0f*scale*scale)));
-	// scene->rebuildIndex();
+	scene->rebuildIndex();
 
     RecursiveRayTracingIntegrator integrator(&world);
 
