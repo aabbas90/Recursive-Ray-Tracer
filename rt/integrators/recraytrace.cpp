@@ -23,9 +23,6 @@ namespace rt
 		{
 			Vector normal = intersection.normal().normalize();
 
-			if (dot(normal, ray.d.normalize()) > 0)
-				normal = -1.0f * normal;
-
 			auto texMap = intersection.solid->texMapper;
 			if (texMap == nullptr)
 				texMap = new WorldMapper();
@@ -60,7 +57,15 @@ namespace rt
 			{
 				auto reflectance = currentMaterial->getSampleReflectance(texturePoint, normal, outDirFlipped);
 				Vector inDir = reflectance.direction.normalize();
-				Ray shadowRay = Ray(intersection.hitPoint() + displacement * normal, inDir);
+				float dot1 = dot(ray.d, inDir);
+				float dot2 = dot(ray.d, normal);
+
+				int signOfEpsilon = 1;
+				if (dot1 > 0 && dot2 < 0)
+				{
+					signOfEpsilon = -1;
+				}
+				Ray shadowRay = Ray(intersection.hitPoint() + signOfEpsilon * displacement * normal, inDir);
 
 				RGBColor incomingLightColor = this->getRadiance(shadowRay, depth + 1);
 				color = incomingLightColor * reflectance.reflectance;

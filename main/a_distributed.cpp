@@ -104,9 +104,9 @@ void a_distributed() {
     // Material* floorMaterial2 = new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f);
 
     Material* sphereMaterial1 = floorMaterial1;
-    // Material* sphereMaterial2 = new GlassMaterial(2.0f);
+    Material* sphereMaterial2 = new GlassMaterial(2.0f);
 
-    a9renderCornellbox(0.001f, "a9-1.png", cam, sphereMaterial1, floorMaterial1, 30);
+    a9renderCornellbox(0.001f, "a9-1.png", cam, sphereMaterial2, floorMaterial1, 300);
     // a9renderCornellbox(0.001f, "a9-2.png", cam, sphereMaterial2, floorMaterial2, 30);
     // a9renderCornellbox(0.001f, "a9-3.png", dofcam, sphereMaterial2, floorMaterial2, 30);
     // a9renderCornellbox(0.001f, "a9-4.png", dofcam, sphereMaterial2, floorMaterial2, 1000);

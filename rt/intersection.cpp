@@ -22,10 +22,6 @@ namespace rt
 
 		// Changing the direction of normal vector towards the ray.
 		Vector normalVector = normal;
-		if (dot(normal, ray.d) < 0)
-		{
-			normalVector = -1 * normal;
-		}
 
 		this->ray = ray;
 		this->solid = solid;

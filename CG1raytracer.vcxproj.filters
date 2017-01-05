@@ -258,6 +258,15 @@
     <ClInclude Include="core\CImg.h">
       <Filter>core</Filter>
     </ClInclude>
+    <ClInclude Include="rt\materials\fuzzymirror.h">
+      <Filter>rt\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\materials\glass.h">
+      <Filter>rt\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\cameras\dofperspective.h">
+      <Filter>rt\cameras</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -470,5 +479,9 @@
     <ClCompile Include="core\random.cpp">
       <Filter>core</Filter>
     </ClCompile>
+    <ClCompile Include="rt\loaders\objmat.cpp">
+      <Filter>rt\loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\materials\glass.cpp" />
   </ItemGroup>
 </Project>

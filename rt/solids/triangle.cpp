@@ -66,6 +66,9 @@ namespace rt
 			if (w < 0 || w > 1)
 				return Intersection();
 
+			if (dot(normalVector, ray.d.normalize()) > 0)
+				normalVector = -1.0f * normalVector;
+
 			intObject = Intersection(planeInt.distance, ray, this, normalVector);
 			intObject.SetLocalIntersectingPoint(u * v1 + v * v2 + w * v3);
 		}
