@@ -14,6 +14,7 @@ private:
 	Vector forward;
 	Vector up;
 	Vector right;
+    Vector spanningH, spanningV;
 	float verticalOpeningAngle, horizonalOpeningAngle;
 
 public:
