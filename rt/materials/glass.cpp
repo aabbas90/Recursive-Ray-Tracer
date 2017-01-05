@@ -27,7 +27,7 @@ namespace rt
 		float cosThetaIn = dot(normal.normalize(), inDir.normalize());
 		float rParallel = etaTransmitted * cosThetaIn - etaIncident * cosThetaOut;
 		float rPerpendicular = etaTransmitted * cosThetaIn + etaIncident * cosThetaOut;        
-		float Fr = 0.5f * (rParallel + rPerpendicular);
+		float Fr = 0.5f * (rParallel * rParallel+ rPerpendicular * rPerpendicular);
         return RGBColor(Fr, Fr, Fr); //grayscale
 	}
 	RGBColor GlassMaterial::getEmission(const Point & texPoint, const Vector & normal, const Vector & outDir) const
