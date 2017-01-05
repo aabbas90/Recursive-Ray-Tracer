@@ -4,10 +4,20 @@
 #include <rt/cameras/camera.h>
 #include <core/vector.h>
 #include <core/point.h>
+#include <rt/ray.h>
 
 namespace rt {
 
 class DOFPerspectiveCamera : public Camera {
+    private:
+	Point center;
+	Vector forward;
+	Vector up;
+	Vector right;
+    Vector spanningH, spanningV;
+	float verticalOpeningAngle, horizonalOpeningAngle;
+    float focalDistance, apertureRadius;
+
 public:
     DOFPerspectiveCamera(
         const Point& center,
