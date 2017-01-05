@@ -107,7 +107,7 @@ void a_distributed() {
     Material* sphereMaterial2 = new GlassMaterial(2.0f);
 
 
-    a9renderCornellbox(0.001f, "a9-1.png", cam, sphereMaterial1, floorMaterial1, 30);
+    //a9renderCornellbox(0.001f, "a9-1.png", cam, sphereMaterial1, floorMaterial1, 30);
     // /a9renderCornellbox(0.001f, "a9-2.png", cam, sphereMaterial2, floorMaterial2, 30);
     a9renderCornellbox(0.001f, "a9-3.png", dofcam, sphereMaterial1, floorMaterial1, 30);
 

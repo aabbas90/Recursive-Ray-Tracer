@@ -26,11 +26,13 @@ namespace rt
 		Vector direction = forward.normalize() + x * spanningH + y * spanningV;
         Point focalPoint = Ray(center,direction.normalize()).getPoint(focalDistance); //h
         //get some vector randomly in a circle of radius apertureRadius
+        
         float theta = random() * 2 * pi; //random theta btw [0,2pi]
-        float r = random() * apertureRadius;
+        float r = random() * apertureRadius * 0.5f;
 		float x_polar = std::cos(theta) * r;
 		float y_polar = std::sin(theta) * r;
-        Point shiftedCenter = center + x_polar * apertureRadius * spanningH + y_polar * apertureRadius * spanningV;
+
+        Point shiftedCenter = center + x_polar * spanningH.normalize() + y_polar * spanningV.normalize();
         Vector shiftedDirection = focalPoint - shiftedCenter;
         return Ray(shiftedCenter, shiftedDirection.normalize());
     }

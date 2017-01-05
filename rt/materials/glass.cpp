@@ -1,5 +1,6 @@
 #include "glass.h"
 #include<core/random.h>
+#include <math.h>
 
 namespace rt
 {
