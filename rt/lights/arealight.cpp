@@ -19,7 +19,8 @@ namespace rt
 
 	RGBColor AreaLight::getIntensity(const LightHit & irr) const
 	{
-        //dummy value TODO
-        return RGBColor::white();
+        //dummy value
+		//TODO add normal vector for a material which uses normal 
+		return source->getArea() * source->material->getEmission(source->sample(), Vector(0.0f, 0.0f, 0.0f), irr.direction) / (irr.distance * irr.distance) ;
 	}
 }

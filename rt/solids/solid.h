@@ -3,6 +3,7 @@
 
 #include <rt/primitive.h>
 #include <core/point.h>
+#include <rt/materials/material.h>
 
 namespace rt {
 
