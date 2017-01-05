@@ -10,7 +10,25 @@ namespace rt
 	}
 	RGBColor GlassMaterial::getReflectance(const Point & texPoint, const Vector & normal, const Vector & outDir, const Vector & inDir) const
 	{
-		return RGBColor(1, 1, 1);
+		float cosThetaOut = dot(normal, -outDir);
+		bool comingFromAir = cosThetaOut > 0 ? true : false;
+		Vector currentNormal = normal;
+		float currentEta = eta;
+
+		if (!comingFromAir)
+		{
+			currentEta = 1 / eta;
+			currentNormal = -1 * normal;
+			cosThetaOut = -1 * cosThetaOut;
+		}
+		float etaTransmitted = currentEta;
+		float etaIncident = 1 / currentEta;
+
+		float cosThetaIn = dot(normal.normalize(), inDir.normalize());
+		float rParallel = etaTransmitted * cosThetaIn - etaIncident * cosThetaOut;
+		float rPerpendicular = etaTransmitted * cosThetaIn + etaIncident * cosThetaOut;        
+		float Fr = 0.5f * (rParallel + rPerpendicular);
+        return RGBColor(Fr, Fr, Fr); //grayscale
 	}
 	RGBColor GlassMaterial::getEmission(const Point & texPoint, const Vector & normal, const Vector & outDir) const
 	{
@@ -52,6 +70,9 @@ namespace rt
 			Vector B = -cos(theta2) * currentNormal;
 			finalDirection = (A + B).normalize();
 		}
-		return SampleReflectance(finalDirection, RGBColor(1, 1, 1));
+		float dotP = dot(outDir, normal);
+        Vector inDir = (outDir - 2 * dotP * normal).normalize();
+		
+		return SampleReflectance(finalDirection, getReflectance(texPoint, normal, outDir, inDir));
 	}
 }
