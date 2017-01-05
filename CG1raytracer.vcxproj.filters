@@ -483,5 +483,8 @@
       <Filter>rt\loaders</Filter>
     </ClCompile>
     <ClCompile Include="rt\materials\glass.cpp" />
+    <ClCompile Include="rt\cameras\dofperspective.cpp">
+      <Filter>rt\cameras</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

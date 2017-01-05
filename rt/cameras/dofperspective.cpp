@@ -24,13 +24,8 @@ namespace rt
     Ray DOFPerspectiveCamera::getPrimaryRay(float x, float y) const
     {
 		Vector direction = forward.normalize() + x * spanningH + y * spanningV;
-        Point focalPoint = Ray(center,direction.normalize()).getPoint(focalDistance); //h
-        //get some vector randomly in a circle of radius apertureRadius
-        float theta = random() * 2 * pi; //random theta btw [0,2pi]
-        float r = random() * apertureRadius;
-		float x_polar = std::cos(theta) * r;
-		float y_polar = std::sin(theta) * r;
-        Point shiftedCenter = center + x_polar * apertureRadius * spanningH + y_polar * apertureRadius * spanningV;
+        Point focalPoint = Ray(center,direction.normalize()).getPoint(focalDistance); 
+        Point shiftedCenter = center + (random() - 0.5f) * apertureRadius * spanningH + (random() - 0.5f) * apertureRadius * spanningV;
         Vector shiftedDirection = focalPoint - shiftedCenter;
         return Ray(shiftedCenter, shiftedDirection.normalize());
     }
