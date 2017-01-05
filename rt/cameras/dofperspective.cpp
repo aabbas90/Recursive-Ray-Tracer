@@ -34,7 +34,7 @@ namespace rt
 
         Point shiftedCenter = center + x_polar * spanningH.normalize() + y_polar * spanningV.normalize();
 
-        Vector shiftedDirection = focalPoint - shiftedCenter;
+        Vector shiftedDirection = focalPoint - shiftedCenter; 
         return Ray(shiftedCenter, shiftedDirection.normalize());
     }
 

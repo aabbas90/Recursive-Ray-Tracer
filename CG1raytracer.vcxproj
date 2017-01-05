@@ -269,6 +269,7 @@
     <ClCompile Include="rt\materials\cookTorrance.cpp" />
     <ClCompile Include="rt\materials\dummy.cpp" />
     <ClCompile Include="rt\materials\flatmaterial.cpp" />
+    <ClCompile Include="rt\materials\fuzzymirror.cpp" />
     <ClCompile Include="rt\materials\glass.cpp" />
     <ClCompile Include="rt\materials\lambertian.cpp" />
     <ClCompile Include="rt\materials\mirror.cpp" />
