@@ -4,6 +4,7 @@
 
 #include <rt/world.h>
 #include <rt/groups/simplegroup.h>
+#include <rt/groups/bvh.h>
 #include <rt/cameras/perspective.h>
 #include <rt/cameras/dofperspective.h>
 #include <rt/textures/constant.h>
@@ -37,7 +38,10 @@ namespace {
 	void a9renderCornellbox(float scale, const char* filename, Camera* cam, Material* sphereMaterial, Material* floorMaterial, int numSamples = 1) {
 		Image img(400, 400);
 		World world;
-		SimpleGroup* scene = new SimpleGroup();
+
+		// SimpleGroup* scene = new SimpleGroup();
+		BVH* scene = new BVH();
+
 		world.scene = scene;
 
 		Texture* redtex = new ConstantTexture(RGBColor(.7f, 0.f, 0.f));
@@ -75,6 +79,7 @@ namespace {
 		AreaLight als(light);
 		world.light.push_back(&als);
 		scene->add(light);
+		scene->rebuildIndex();
 
 		//point light
 		world.light.push_back(new PointLight(Point(490 * scale, 159.99f*scale, 279.5f*scale), RGBColor(40000.0f*scale*scale, 0, 0)));

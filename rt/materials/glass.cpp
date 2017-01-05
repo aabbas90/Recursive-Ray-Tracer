@@ -18,6 +18,7 @@ namespace rt
 	}
 	SampleReflectance GlassMaterial::getSampleReflectance(const Point & texPoint, const Vector & normal, const Vector & outDir) const
 	{
+		// adapted from: https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel
 		Vector finalDirection;
 
 		float cosThetaOut = dot(normal, -outDir);
