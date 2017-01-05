@@ -33,7 +33,9 @@ namespace rt
 			Point texturePoint = texMap->getCoords(intersection);
 
 			auto currentMaterial = intersection.solid->material;
-			auto outDir = ray.d.normalize();
+			auto outDirFlipped = ray.d.normalize();
+			// This vector should ideally be directed towards the other way but 
+			// due to risk of regression it might stay flipped forever :)
 
 			if (currentMaterial->useSampling() == Material::Sampling::SAMPLING_NOT_NEEDED)
 			{
@@ -49,14 +51,14 @@ namespace rt
 					if (shadowRayIntersection)
 						continue;
 
-					RGBColor reflected = currentMaterial->getReflectance(texturePoint, normal, outDir, inDir);
+					RGBColor reflected = currentMaterial->getReflectance(texturePoint, normal, outDirFlipped, inDir);
 					color = color + reflected * lightSource->getIntensity(lightHit);
 				}
 			}
 
 			else if (currentMaterial->useSampling() == Material::Sampling::SAMPLING_ALL)
 			{
-				auto reflectance = currentMaterial->getSampleReflectance(texturePoint, normal, outDir);
+				auto reflectance = currentMaterial->getSampleReflectance(texturePoint, normal, outDirFlipped);
 				Vector inDir = reflectance.direction.normalize();
 				Ray shadowRay = Ray(intersection.hitPoint() + displacement * normal, inDir);
 
@@ -78,11 +80,11 @@ namespace rt
 					if (shadowRayIntersection)
 						continue;
 
-					RGBColor reflected = currentMaterial->getReflectance(texturePoint, normal, outDir, inDir);
+					RGBColor reflected = currentMaterial->getReflectance(texturePoint, normal, outDirFlipped, inDir);
 					color = color + reflected * lightSource->getIntensity(lightHit);
 				}
 				
-				 auto reflectance = currentMaterial->getSampleReflectance(texturePoint, normal, outDir);
+				 auto reflectance = currentMaterial->getSampleReflectance(texturePoint, normal, outDirFlipped);
 				 Vector inDir = reflectance.direction.normalize();
 				 Ray shadowRay = Ray(intersection.hitPoint() + displacement * inDir, inDir);
 
