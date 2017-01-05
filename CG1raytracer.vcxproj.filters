@@ -486,5 +486,6 @@
     <ClCompile Include="rt\cameras\dofperspective.cpp">
       <Filter>rt\cameras</Filter>
     </ClCompile>
+    <ClCompile Include="rt\materials\fuzzymirror.cpp" />
   </ItemGroup>
 </Project>

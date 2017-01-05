@@ -57,11 +57,11 @@ namespace rt
 			{
 				auto reflectance = currentMaterial->getSampleReflectance(texturePoint, normal, outDirFlipped);
 				Vector inDir = reflectance.direction.normalize();
-				float dot1 = dot(ray.d, inDir);
-				float dot2 = dot(ray.d, normal);
 
+
+				float dotP = dot(normal, inDir);
 				int signOfEpsilon = 1;
-				if (dot1 > 0 && dot2 < 0)
+				if (dotP < 0)
 				{
 					signOfEpsilon = -1;
 				}
