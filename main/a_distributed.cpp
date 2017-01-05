@@ -36,7 +36,6 @@ void makeBox(Group* scene, const Point& aaa, const Vector& forward, const Vector
 
 
 void a9renderCornellbox(float scale, const char* filename, Camera* cam, Material* sphereMaterial, Material* floorMaterial, int numSamples=1) {
-    std::cout << "here\n";
     //Image img(400, 400);
     Image img(400, 400);
     World world;
@@ -94,9 +93,7 @@ void a9renderCornellbox(float scale, const char* filename, Camera* cam, Material
 
 void a_distributed() {
     PerspectiveCamera* cam = new PerspectiveCamera(Point(0.278f, 0.273f, -0.800f), Vector(0, 0, 1), Vector(0, 1, 0), 0.686f, 0.686f);
-    // DOFPerspectiveCamera* dofcam = new DOFPerspectiveCamera(Point(0.278f, 0.273f, -0.8f), Vector(0, 0, 1), Vector(0, 1, 0), 0.686f, 0.686f, 1.025f, 0.045f);
-    DOFPerspectiveCamera* dofcam = new DOFPerspectiveCamera(Point(0.278f, 0.273f, -0.8f), Vector(0, 0, 1), Vector(0, 1, 0), 0.686f, 0.686f, 1.025f, 0.1f);
-
+    DOFPerspectiveCamera* dofcam = new DOFPerspectiveCamera(Point(0.278f, 0.273f, -0.8f), Vector(0, 0, 1), Vector(0, 1, 0), 0.686f, 0.686f, 1.025f, 0.045f);
 
     Texture* blacktex = new ConstantTexture(RGBColor::rep(0.0f));
     Texture* whitetex = new ConstantTexture(RGBColor::rep(1.0f));

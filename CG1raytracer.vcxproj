@@ -240,6 +240,7 @@
     <ClCompile Include="main\a_textures.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="rt\bbox.cpp" />
+    <ClCompile Include="rt\cameras\dofperspective.cpp" />
     <ClCompile Include="rt\cameras\environment.cpp" />
     <ClCompile Include="rt\cameras\fisheye.cpp" />
     <ClCompile Include="rt\cameras\orthographic.cpp" />
