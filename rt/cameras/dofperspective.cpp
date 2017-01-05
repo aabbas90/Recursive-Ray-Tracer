@@ -28,7 +28,7 @@ namespace rt
         //get some vector randomly in a circle of radius apertureRadius
         
         float theta = random() * 2 * pi; //random theta btw [0,2pi]
-        float r = random() * apertureRadius * 0.5f;
+        float r = random() * apertureRadius;
 		float x_polar = std::cos(theta) * r;
 		float y_polar = std::sin(theta) * r;
 
