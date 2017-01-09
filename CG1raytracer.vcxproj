@@ -282,6 +282,7 @@
     <ClCompile Include="rt\materials\mirror.cpp" />
     <ClCompile Include="rt\materials\phong.cpp" />
     <ClCompile Include="rt\primitive.cpp" />
+    <ClCompile Include="rt\primmod\bmap.cpp" />
     <ClCompile Include="rt\primmod\instance.cpp" />
     <ClCompile Include="rt\ray.cpp" />
     <ClCompile Include="rt\renderer.cpp" />

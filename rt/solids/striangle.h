@@ -15,6 +15,8 @@ public:
         CoordMapper* texMapper, Material* material);
 
     virtual Intersection intersect(const Ray& ray, float previousBestDistance=FLT_MAX) const;
+private:
+	Vector nv1, nv2, nv3;
 };
 
 }

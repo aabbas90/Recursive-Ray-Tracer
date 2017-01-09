@@ -4,6 +4,8 @@
 #include <vector>
 #include <rt/primitive.h>
 #include <core/point.h>
+#include <rt/solids/triangle.h>
+#include <rt/textures/texture.h>
 
 namespace rt {
 
@@ -17,6 +19,12 @@ public:
     virtual Intersection intersect(const Ray& ray, float previousBestDistance=FLT_MAX) const;
     virtual void setMaterial(Material* m);
     virtual void setCoordMapper(CoordMapper* cm);
+
+private:
+	Triangle* baseT;
+	Texture* bMap;
+	Point bv1, bv2, bv3;
+	float vScale;
 };
 
 }

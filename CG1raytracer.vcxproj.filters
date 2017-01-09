@@ -508,5 +508,6 @@
     <ClCompile Include="main\main1st.cpp">
       <Filter>main</Filter>
     </ClCompile>
+    <ClCompile Include="rt\primmod\bmap.cpp" />
   </ItemGroup>
 </Project>

@@ -18,7 +18,7 @@ public:
 	virtual Point sample() const;
 	virtual float getArea() const;
 
-private:
+protected:
 	Point v1, v2, v3;
 	BBox bbox;
 };
