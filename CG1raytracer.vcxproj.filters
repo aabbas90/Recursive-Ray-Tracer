@@ -10,9 +10,6 @@
     <Filter Include="main">
       <UniqueIdentifier>{75961c76-1da5-4f6d-82bb-cd87c1449a7e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="rt\cameras">
-      <UniqueIdentifier>{cace52b3-55b0-4e94-9656-29f7b9af3863}</UniqueIdentifier>
-    </Filter>
     <Filter Include="rt\integrators">
       <UniqueIdentifier>{3c176889-12d4-4c88-b634-ddcbfdabc655}</UniqueIdentifier>
     </Filter>
@@ -39,6 +36,9 @@
     </Filter>
     <Filter Include="rt\groups">
       <UniqueIdentifier>{892069ff-c228-446c-9c66-7533500c496b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rt\cameras">
+      <UniqueIdentifier>{cace52b3-55b0-4e94-9656-29f7b9af3863}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -267,6 +267,9 @@
     <ClInclude Include="rt\cameras\dofperspective.h">
       <Filter>rt\cameras</Filter>
     </ClInclude>
+    <ClInclude Include="rt\primmod\bmap.h">
+      <Filter>rt\primod</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -487,5 +490,23 @@
       <Filter>rt\cameras</Filter>
     </ClCompile>
     <ClCompile Include="rt\materials\fuzzymirror.cpp" />
+    <ClCompile Include="main\a_smooth.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="main\a_bump.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="main\main7th.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="main\main6th.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="main\main5th.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="main\main1st.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

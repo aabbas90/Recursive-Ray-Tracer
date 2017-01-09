@@ -197,6 +197,7 @@
     <ClInclude Include="rt\materials\mirror.h" />
     <ClInclude Include="rt\materials\phong.h" />
     <ClInclude Include="rt\primitive.h" />
+    <ClInclude Include="rt\primmod\bmap.h" />
     <ClInclude Include="rt\primmod\instance.h" />
     <ClInclude Include="rt\ray.h" />
     <ClInclude Include="rt\renderer.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="core\random.cpp" />
     <ClCompile Include="core\scalar.cpp" />
     <ClCompile Include="core\vector.cpp" />
+    <ClCompile Include="main\a_bump.cpp" />
     <ClCompile Include="main\a_distributed.cpp" />
     <ClCompile Include="main\a_indexing.cpp" />
     <ClCompile Include="main\a_instancing.cpp" />
@@ -236,9 +238,14 @@
     <ClCompile Include="main\a_lighting.cpp" />
     <ClCompile Include="main\a_mappers.cpp" />
     <ClCompile Include="main\a_materials.cpp" />
+    <ClCompile Include="main\a_smooth.cpp" />
     <ClCompile Include="main\a_solids.cpp" />
     <ClCompile Include="main\a_textures.cpp" />
     <ClCompile Include="main\main.cpp" />
+    <ClCompile Include="main\main1st.cpp" />
+    <ClCompile Include="main\main5th.cpp" />
+    <ClCompile Include="main\main6th.cpp" />
+    <ClCompile Include="main\main7th.cpp" />
     <ClCompile Include="rt\bbox.cpp" />
     <ClCompile Include="rt\cameras\dofperspective.cpp" />
     <ClCompile Include="rt\cameras\environment.cpp" />
