@@ -70,7 +70,7 @@ namespace rt
 				normalVector = -1.0f * normalVector;
 
 			intObject = Intersection(planeInt.distance, ray, this, normalVector);
-			intObject.SetLocalIntersectingPoint(u * v1 + v * v2 + w * v3);
+			intObject.SetLocalIntersectingPoint(Point(u, v, w));
 		}
 
 		return intObject;

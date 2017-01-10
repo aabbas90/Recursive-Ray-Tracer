@@ -1,6 +1,6 @@
 #include <rt/coordmappers/tmapper.h>
 #include <rt/intersection.h>
-
+#include <core/interpolate.h>
 namespace rt
 {
     TriangleMapper::TriangleMapper(const Point& tv0, const Point& tv1, const Point& tv2)
@@ -10,6 +10,7 @@ namespace rt
     Point TriangleMapper::getCoords(const Intersection& hit) const
     {
         Point hitPoint = hit.local();
-        return Point (tv0 * hitPoint.z + tv1 * hitPoint.x + tv2 * hitPoint.y);
+        // return Point (tv0 * hitPoint.z + tv1 * hitPoint.x + tv2 * hitPoint.y);
+        return lerpbar(tv0, tv1, tv2, hitPoint.x, hitPoint.z);
     }
 }
