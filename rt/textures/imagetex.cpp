@@ -49,15 +49,16 @@ namespace rt
         }
         return std::pair <float,float>(fu, fv);
     }
-    RGBColor ImageTexture::getColor(const Point& coord)
+    RGBColor ImageTexture::getColorAtXY(const float x, const float y) const
     {
+        Point coord = Point(x, y, 0.0f);
         auto tutv = getTextureCoordinates(coord);
         float tu = tutv.first;
         float tv = tutv.second;
 
         // Interpolation 
         float resU = image.width();
-        float resV = image.width();
+        float resV = image.height();
 
         //Local Coordinates 
         float u, v;
@@ -93,12 +94,22 @@ namespace rt
                                 + ((    fu) * (    fv) * image(std::fmin(floor(u) + 1, image.width() - 1), std::fmin(floor(v) + 1, image.height() - 1))));
         }
     }
+
+    RGBColor ImageTexture::getColor(const Point& coord)
+    {
+       return getColorAtXY(coord.x, coord.y);
+    }
     RGBColor ImageTexture::getColorDX(const Point& coord)
     {
-        return RGBColor(0.0f, 0.0f, 0.0f);
+		RGBColor first = getColorAtXY(coord.x, coord.y);
+		RGBColor second = getColorAtXY(coord.x + 1, coord.y);
+        return first - second; //TODO: check is this right?
+        
     }
     RGBColor ImageTexture::getColorDY(const Point& coord)
     {
-        return RGBColor(0.0f, 0.0f, 0.0f);
+		RGBColor first = getColorAtXY(coord.x, coord.y);
+		RGBColor second = getColorAtXY(coord.x, coord.y + 1);
+        return first - second; //TODO: check is this right?
     }
 }

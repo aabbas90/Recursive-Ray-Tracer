@@ -27,6 +27,7 @@ public:
 
     RGBColor clamp() const;
     RGBColor gamma(float gam) const;
+    float grayscale() const;
     float luminance() const;
     static RGBColor white();
     static RGBColor black();

@@ -56,6 +56,10 @@ namespace rt
 	    os << "COLOR R:" << c.r << " G:" << c.g << " B:" << c.b;
 	    return os;
 	}
+	float RGBColor::grayscale() const
+	{
+		return (this->r + this->g + this->b) / 3;
+	}
 
 	RGBColor RGBColor::white()
 	{

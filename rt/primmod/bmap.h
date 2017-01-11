@@ -7,6 +7,7 @@
 #include <rt/solids/triangle.h>
 #include <rt/textures/texture.h>
 
+
 namespace rt {
 
 class Triangle;
@@ -23,8 +24,11 @@ public:
 private:
 	Triangle* baseT;
 	Texture* bMap;
-	Point bv1, bv2, bv3;
 	float vScale;
+    Point bv1, bv2, bv3;
+
+    //world space vectors
+    //Vector worldX, worldY;
 };
 
 }
