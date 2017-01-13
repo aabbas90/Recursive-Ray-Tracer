@@ -28,14 +28,18 @@ namespace rt
 		if (triangleInt)
 		{
 			Point texturePoint = baseT->texMapper->getCoords(triangleInt);
+			// std::cout << texturePoint << std::endl;
 			// gradient at the given texture coordinates
-			float DX = bMap->getColorDX(texturePoint).grayscale();
+			float DX = bMap->getColorDX(texturePoint).grayscale();	
 			
 			float DY = bMap->getColorDY(texturePoint).grayscale();
 			
 			//perturb the normal in world space
-			Vector newNormal = Vector(DX * triangleInt.normal().x, DY * triangleInt.normal().y, triangleInt.normal().z);
-
+			//JUGAAD :/
+			Vector newNormal = Vector(DX * triangleInt.normal().x * 100.0f, DY * triangleInt.normal().y * 100.0f, triangleInt.normal().z * 100.0f);
+			// std::cout << triangleInt.normal() << std::endl;
+			// std::cout << newNormal << std::endl;
+			// std::cout << std::endl;
 			triangleInt.setNormal(newNormal);	
 		}
 		return triangleInt;

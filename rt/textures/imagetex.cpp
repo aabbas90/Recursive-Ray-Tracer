@@ -49,9 +49,10 @@ namespace rt
         }
         return std::pair <float,float>(fu, fv);
     }
-    RGBColor ImageTexture::getColorAtXY(const float x, const float y) const
+
+
+    RGBColor ImageTexture::getColor(const Point& coord)
     {
-        Point coord = Point(x, y, 0.0f);
         auto tutv = getTextureCoordinates(coord);
         float tu = tutv.first;
         float tv = tutv.second;
@@ -94,22 +95,20 @@ namespace rt
                                 + ((    fu) * (    fv) * image(std::fmin(floor(u) + 1, image.width() - 1), std::fmin(floor(v) + 1, image.height() - 1))));
         }
     }
-
-    RGBColor ImageTexture::getColor(const Point& coord)
-    {
-       return getColorAtXY(coord.x, coord.y);
-    }
     RGBColor ImageTexture::getColorDX(const Point& coord)
     {
-		RGBColor first = getColorAtXY(coord.x, coord.y);
-		RGBColor second = getColorAtXY(coord.x + 1, coord.y);
+        Point p1 = Point(coord.x, coord.y, 0.0f);
+        Point p2 = Point(coord.x + (1.0f/ image.width()), coord.y, 0.0f);
+        RGBColor first = getColor(p1);
+        RGBColor second = getColor(p2);
+        // std::cout << p1 << std::endl <<  p2 << std::endl;
         return first - second; //TODO: check is this right?
         
     }
     RGBColor ImageTexture::getColorDY(const Point& coord)
     {
-		RGBColor first = getColorAtXY(coord.x, coord.y);
-		RGBColor second = getColorAtXY(coord.x, coord.y + 1);
+        RGBColor first = getColor(Point(coord.x, coord.y, 0.0f));
+        RGBColor second = getColor(Point(coord.x , coord.y + (1.0f/ image.height()), 0.0f));
         return first - second; //TODO: check is this right?
     }
 }
