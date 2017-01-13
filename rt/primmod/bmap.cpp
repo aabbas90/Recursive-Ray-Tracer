@@ -16,10 +16,6 @@ namespace rt
 		this->bv2 = bv2;
 		this->bv3 = bv3;
 
-		
-		//Compute how the texture base vectors ex,ey map to world space wx,wy.
-		//worldX = //TODO
-
 	}
 	BBox BumpMapper::getBounds() const
 	{
@@ -37,12 +33,10 @@ namespace rt
 			
 			float DY = bMap->getColorDY(texturePoint).grayscale();
 			
-			//TODO, initialized to dummy values
-			Vector worldX = Vector(1.0f, 0.0f, 0.0f);
-			Vector worldY = Vector(0.0f, 1.0f, 0.0f);
-			
 			//perturb the normal in world space
-			triangleInt.setNormal(triangleInt.normal() + DX * worldX + DY * worldY);	
+			Vector newNormal = Vector(DX * triangleInt.normal().x, DY * triangleInt.normal().y, triangleInt.normal().z);
+
+			triangleInt.setNormal(newNormal);	
 		}
 		return triangleInt;
 	}
