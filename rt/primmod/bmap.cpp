@@ -31,16 +31,30 @@ namespace rt
 			// std::cout << texturePoint << std::endl;
 			// gradient at the given texture coordinates
 			float DX = bMap->getColorDX(texturePoint).grayscale();	
-			
 			float DY = bMap->getColorDY(texturePoint).grayscale();
 			
+			Vector origNormal = triangleInt.normal().normalize();
+			Vector xSpanningVector = Vector(1, 0, 0);
+			Vector ySpanningVector = Vector(0, 1, 0);
+			if (std::abs(dot(xSpanningVector, origNormal)) != 1)
+			{
+				ySpanningVector = cross(origNormal, xSpanningVector).normalize();
+				xSpanningVector = cross(ySpanningVector, origNormal).normalize();
+			}
+			else
+			{
+				xSpanningVector = cross(ySpanningVector, origNormal).normalize();
+				ySpanningVector = cross(origNormal, xSpanningVector).normalize();
+			}
+
 			//perturb the normal in world space
 			//JUGAAD :/
-			Vector newNormal = Vector(DX * triangleInt.normal().x * 100.0f, DY * triangleInt.normal().y * 100.0f, triangleInt.normal().z * 100.0f);
+			// Vector newNormal = Vector(DX * triangleInt.normal().x * 100.0f, DY * triangleInt.normal().y * 100.0f, triangleInt.normal().z * 100.0f);
+			Vector newNormal = origNormal + DX * cross(origNormal, xSpanningVector) + DY * cross(origNormal, ySpanningVector);
 			// std::cout << triangleInt.normal() << std::endl;
 			// std::cout << newNormal << std::endl;
 			// std::cout << std::endl;
-			triangleInt.setNormal(newNormal);	
+			triangleInt.setNormal(newNormal.normalize());	
 		}
 		return triangleInt;
 	}
