@@ -22,7 +22,7 @@ public:
 
 	Point hitPoint() const;
 	Vector normal() const;
-	Vector setNormal(Vector normal);
+	void setNormal(Vector normal);
 	Point local() const;
 	void SetLocalIntersectingPoint(const Point& point);
 

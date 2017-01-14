@@ -39,7 +39,7 @@ namespace rt
 	{
 		return normalVector;
 	}
-	Vector Intersection::setNormal(Vector normal)
+	void Intersection::setNormal(Vector normal)
 	{
 		this->normalVector = normal;
 	}
