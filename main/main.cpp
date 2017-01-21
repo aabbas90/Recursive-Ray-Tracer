@@ -17,7 +17,6 @@ void objTextured();
 
 int main(int argc, char* argv[])
 {
-    a_bumpmappers();
-    a_smooth();
+
     return 0;
 }
