@@ -14,9 +14,11 @@ void a_smooth();
 void a_mappers();
 void a_bumpmappers();
 void objTextured();
+void a_rendering();
+
 
 int main(int argc, char* argv[])
 {
-
+    a_rendering();
     return 0;
 }
