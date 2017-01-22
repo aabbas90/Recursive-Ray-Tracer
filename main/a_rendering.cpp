@@ -24,7 +24,7 @@ void a_rendering()
 	world.scene = scene;
 
 
-	PerspectiveCamera cam1(Point(0.0f, 2.0f, 20.0f), Vector(0.0f, 0.0f, -1.0f), Vector(0.0f, 1.0f, 0.0f), pi / 4, pi / 3);
+	PerspectiveCamera cam1(Point(0.0f, 5.0f, 30.0f), Vector(0.0f, 0.0f, -1.0f), Vector(0.0f, 1.0f, 0.0f), pi / 4, pi / 3);
 
     RayCastingIntegrator integrator(&world);
     Renderer engine1(&cam1, &integrator);
