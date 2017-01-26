@@ -19,20 +19,20 @@ using namespace rt;
 void a_rendering()
 {
     Image img(800, 600);
-    float xRotation = -15.0f;
-    float yRotation = 0.0f;
-    float zRotation = 0.0f;
-    Point cameraPostion = Point(4.0f, 14.0f, 85.0f);
+	float xRotation = 10;
+    float yRotation = 30;
+    float zRotation = 40;
+    Point cameraPostion = Point(35, 10, 55);
     Vector upVector = Vector(0.0f, 1.0f, 0.0f);
     Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
 
-    // Matrix rotationMatrix = applyRotationMatrix(Vector vector, -15.0f, 0.0f, 0.0f);
-    upVector = upVector * getRotationMatrix(xRotation, yRotation, zRotation);
-    forwardVector = forwardVector * getRotationMatrix(xRotation, yRotation, zRotation);
+	Matrix rotationMatrix = getRotationMatrix(xRotation, yRotation, zRotation);
+    upVector = rotationMatrix * upVector;
+    forwardVector = rotationMatrix * forwardVector;
 
 
     BVH* scene = new BVH(false);
-    loadOBJ(scene, "models/", "z1.obj");
+    loadOBJ(scene, "models/", "zz.obj");
     scene->rebuildIndex();
     World world;
 	world.scene = scene;
@@ -42,7 +42,7 @@ void a_rendering()
     world.light.push_back(&dirl);
 
 	// PerspectiveCamera cam1(Point(0.0f, 5.0f, 30.0f), Vector(0.0f, 0.0f, -1.0f), Vector(0.0f, 1.0f, 0.0f), pi / 4, pi / 3);
-    PerspectiveCamera cam1(Point(0.0f, 93.0f, 150.0f), forwardVector, upVector, pi / 4, pi / 3);
+    PerspectiveCamera cam1(cameraPostion, forwardVector, upVector, pi / 4, pi / 3);
 
     RayCastingIntegrator integrator(&world);
     Renderer engine1(&cam1, &integrator);

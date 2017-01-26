@@ -1,6 +1,7 @@
 #include <core/matrix.h>
 #include<core/assert.h>
 #include<math.h>
+#include<core/scalar.h>
 
 namespace rt {
 	Matrix::Matrix(const Float4 & r1, const Float4 & r2, const Float4 & r3, const Float4 & r4)
@@ -103,9 +104,9 @@ namespace rt {
 	bool Matrix::operator==(const Matrix & b) const
 	{
 		return this->r1 == b.r1 &&
-			   this->r2 == b.r2 &&
-			   this->r3 == b.r3 &&
-			   this->r4 == b.r4;
+			this->r2 == b.r2 &&
+			this->r3 == b.r3 &&
+			this->r4 == b.r4;
 	}
 
 	bool Matrix::operator!=(const Matrix & b) const
@@ -116,9 +117,9 @@ namespace rt {
 	Float4 Matrix::operator*(const Float4 & b) const
 	{
 		return Float4(dot(this->r1, b),
-					  dot(this->r2, b),
-					  dot(this->r3, b),
-					  dot(this->r4, b));
+			dot(this->r2, b),
+			dot(this->r3, b),
+			dot(this->r4, b));
 
 	}
 
@@ -148,26 +149,26 @@ namespace rt {
 
 	Matrix Matrix::zero()
 	{
-		return Matrix(Float4(0.0f, 0.0f, 0.0f, 0.0f), 
-			  		  Float4(0.0f, 0.0f, 0.0f, 0.0f), 
-					  Float4(0.0f, 0.0f, 0.0f, 0.0f), 
-					  Float4(0.0f, 0.0f, 0.0f, 0.0f));
+		return Matrix(Float4(0.0f, 0.0f, 0.0f, 0.0f),
+			Float4(0.0f, 0.0f, 0.0f, 0.0f),
+			Float4(0.0f, 0.0f, 0.0f, 0.0f),
+			Float4(0.0f, 0.0f, 0.0f, 0.0f));
 	}
 
 	Matrix Matrix::identity()
 	{
 		return Matrix(Float4(1.0f, 0.0f, 0.0f, 0.0f),
-					  Float4(0.0f, 1.0f, 0.0f, 0.0f),
-					  Float4(0.0f, 0.0f, 1.0f, 0.0f),
-					  Float4(0.0f, 0.0f, 0.0f, 1.0f));
+			Float4(0.0f, 1.0f, 0.0f, 0.0f),
+			Float4(0.0f, 0.0f, 1.0f, 0.0f),
+			Float4(0.0f, 0.0f, 0.0f, 1.0f));
 	}
 
 	Matrix Matrix::system(const Vector & e1, const Vector & e2, const Vector & e3)
 	{
-		Float4 row1 (e1.x, e2.x, e3.x, 0);
-		Float4 row2 (e1.y, e2.y, e3.y, 0);
-		Float4 row3 (e1.z, e2.z, e3.z, 0);
-		Float4 row4 (0, 0, 0, 1);
+		Float4 row1(e1.x, e2.x, e3.x, 0);
+		Float4 row2(e1.y, e2.y, e3.y, 0);
+		Float4 row3(e1.z, e2.z, e3.z, 0);
+		Float4 row4(0, 0, 0, 1);
 		return Matrix(row1, row2, row3, row4);
 	}
 
@@ -197,39 +198,43 @@ namespace rt {
 	Matrix translation(Point& t)
 	{
 		return Matrix(Float4(1.0f, 0.0f, 0.0f, t.x),
-				Float4(0.0f, 1.0f, 0.0f, t.y),
-				Float4(0.0f, 0.0f, 1.0f, t.z),
-				Float4(0.0f, 0.0f, 0.0f, 1.0f));
+			Float4(0.0f, 1.0f, 0.0f, t.y),
+			Float4(0.0f, 0.0f, 1.0f, t.z),
+			Float4(0.0f, 0.0f, 0.0f, 1.0f));
 	}
 
 
 	Matrix getRotationAboutX(float angle)
 	{
-		Matrix rotation = Matrix(
-			Float4(1.0f , 0.0f, 0.0f, 0.0f),
-			Float4(0.0f , cos(angle), -sin(angle), 0.0f),
-			Float4(0.0f , sin(angle), cos(angle), 0.0f),
-			Float4(0.0f , 0.0f, 0.0f, 1.0f));
+		return Matrix(
+			Float4(1.0f, 0.0f, 0.0f, 0.0f),
+			Float4(0.0f, cos(angle), -sin(angle), 0.0f),
+			Float4(0.0f, sin(angle), cos(angle), 0.0f),
+			Float4(0.0f, 0.0f, 0.0f, 1.0f));
 	}
 	Matrix getRotationAboutY(float angle)
 	{
-		Matrix rotation = Matrix(
-			Float4(cos(angle), 0.0f ,-sin(angle), 0.0f),
-			Float4(0.0f , 1.0f, 0.0f, 0.0f),
-			Float4(sin(angle), 0.0f, cos(angle), 0.0f),
-			Float4(0.0f , 0.0f, 0.0f, 1.0f));
+		return Matrix(
+			Float4(cos(angle), 0.0f, sin(angle), 0.0f),
+			Float4(0.0f, 1.0f, 0.0f, 0.0f),
+			Float4(-sin(angle), 0.0f, cos(angle), 0.0f),
+			Float4(0.0f, 0.0f, 0.0f, 1.0f));
 	}
 	Matrix getRotationAboutZ(float angle)
 	{
-		Matrix rotation = Matrix(
-			Float4(cos(angle), -sin(angle),0.0f , 0.0f),
-			Float4(sin(angle), cos(angle),0.0f , 0.0f),
-			Float4(0.0f , 0.0f, 1.0f, 0.0f),
-			Float4(0.0f , 0.0f, 0.0f, 1.0f));
+		return Matrix(
+			Float4(cos(angle), -sin(angle), 0.0f, 0.0f),
+			Float4(sin(angle), cos(angle), 0.0f, 0.0f),
+			Float4(0.0f, 0.0f, 1.0f, 0.0f),
+			Float4(0.0f, 0.0f, 0.0f, 1.0f));
 	}
 	Matrix getRotationMatrix(float angleX, float angleY, float angleZ)
 	{
-		return product(product(getRotationAboutX(angleX), getRotationAboutY(angleY)), getRotationAboutZ(angleZ) );
+		Matrix xMatrix = getRotationAboutX(angleX * 2 * pi / 360);
+		Matrix yMatrix = getRotationAboutY(-angleY * 2 * pi / 360);
+		Matrix zMatrix = getRotationAboutZ(-angleZ * 2 * pi / 360);
+
+		return product(product(xMatrix, yMatrix), zMatrix);
 	}
 
 }
