@@ -18,13 +18,13 @@
 using namespace rt;
 void a_rendering()
 {
-    Image img(80, 60);
-	float xRotation = -110;
-    float yRotation = 290;
+    Image img(800, 600);
+	float xRotation = -15;
+    float yRotation = -40;
     float zRotation = 0;
-    Point cameraPostion = Point(-460, 95, 150);
-    Vector upVector = Vector(1.0f, 0.0f, 0.0f);
-    Vector forwardVector = Vector(1.0f, 0.0f, 0.0f);
+    Point cameraPostion = Point(-500, 200, 400);
+    Vector upVector = Vector(0.0f, 1.0f, 0.0f);
+    Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
 
     // float xRotation = 10;
     // float yRotation = 30;
