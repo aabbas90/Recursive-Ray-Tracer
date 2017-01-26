@@ -509,5 +509,8 @@
       <Filter>main</Filter>
     </ClCompile>
     <ClCompile Include="rt\primmod\bmap.cpp" />
+    <ClCompile Include="main\a_rendering.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

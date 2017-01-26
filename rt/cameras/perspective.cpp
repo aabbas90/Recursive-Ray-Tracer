@@ -11,7 +11,7 @@ namespace rt
 		) : center(center), forward(forward), up(up), verticalOpeningAngle(verticalOpeningAngle), horizonalOpeningAngle(horizonalOpeningAngle)
 	{
 		this->right = cross(forward, up).normalize();
-		this->up = cross(forward, right).normalize(); // Ensuring that all three vectors are perpendicular
+		this->up = cross(right, forward).normalize(); // Ensuring that all three vectors are perpendicular
 		spanningH = this->right * tan(horizonalOpeningAngle / 2.0f);
 		spanningV = this->up  * tan(verticalOpeningAngle / 2.0f);
 	}
@@ -19,7 +19,7 @@ namespace rt
 
 	Ray PerspectiveCamera::getPrimaryRay(float x, float y) const
 	{
-		Vector direction = forward.normalize() + x * spanningH + y * spanningV;
+		Vector direction = forward.normalize() + x * spanningH - y * spanningV;
 		return Ray(center, direction.normalize());
 	}
 }
