@@ -1,5 +1,6 @@
 #include <core/matrix.h>
 #include<core/assert.h>
+#include<math.h>
 
 namespace rt {
 	Matrix::Matrix(const Float4 & r1, const Float4 & r2, const Float4 & r3, const Float4 & r4)
@@ -199,6 +200,36 @@ namespace rt {
 				Float4(0.0f, 1.0f, 0.0f, t.y),
 				Float4(0.0f, 0.0f, 1.0f, t.z),
 				Float4(0.0f, 0.0f, 0.0f, 1.0f));
+	}
+
+
+	Matrix getRotationAboutX(float angle)
+	{
+		Matrix rotation = Matrix(
+			Float4(1.0f , 0.0f, 0.0f, 0.0f),
+			Float4(0.0f , cos(angle), -sin(angle), 0.0f),
+			Float4(0.0f , sin(angle), cos(angle), 0.0f),
+			Float4(0.0f , 0.0f, 0.0f, 1.0f));
+	}
+	Matrix getRotationAboutY(float angle)
+	{
+		Matrix rotation = Matrix(
+			Float4(cos(angle), 0.0f ,-sin(angle), 0.0f),
+			Float4(0.0f , 1.0f, 0.0f, 0.0f),
+			Float4(sin(angle), 0.0f, cos(angle), 0.0f),
+			Float4(0.0f , 0.0f, 0.0f, 1.0f));
+	}
+	Matrix getRotationAboutZ(float angle)
+	{
+		Matrix rotation = Matrix(
+			Float4(cos(angle), -sin(angle),0.0f , 0.0f),
+			Float4(sin(angle), cos(angle),0.0f , 0.0f),
+			Float4(0.0f , 0.0f, 1.0f, 0.0f),
+			Float4(0.0f , 0.0f, 0.0f, 1.0f));
+	}
+	Matrix getRotationMatrix(float angleX, float angleY, float angleZ)
+	{
+		return product(product(getRotationAboutX(angleX), getRotationAboutY(angleY)), getRotationAboutZ(angleZ) );
 	}
 
 }

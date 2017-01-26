@@ -42,6 +42,11 @@ Matrix operator*(const Matrix& a, float scalar);
 Matrix operator*(float scalar, const Matrix& a);
 Matrix translation(Point& t);
 
+Matrix getRotationAboutX(float angle);
+Matrix getRotationAboutY(float angle);
+Matrix getRotationAboutZ(float angle);
+Matrix getRotationMatrix(float angleX, float angleY, float angleZ);
+
 }
 
 
