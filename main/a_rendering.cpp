@@ -18,13 +18,20 @@
 using namespace rt;
 void a_rendering()
 {
-    Image img(800, 600);
-	float xRotation = 10;
-    float yRotation = 30;
-    float zRotation = 40;
-    Point cameraPostion = Point(35, 10, 55);
-    Vector upVector = Vector(0.0f, 1.0f, 0.0f);
-    Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
+    Image img(80, 60);
+	float xRotation = -110;
+    float yRotation = 290;
+    float zRotation = 0;
+    Point cameraPostion = Point(-460, 95, 150);
+    Vector upVector = Vector(1.0f, 0.0f, 0.0f);
+    Vector forwardVector = Vector(1.0f, 0.0f, 0.0f);
+
+    // float xRotation = 10;
+    // float yRotation = 30;
+    // float zRotation = 40;
+    // Point cameraPostion = Point(35, 10, 55);
+    // Vector upVector = Vector(0.0f, 1.0f, 0.0f);
+    // Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
 
 	Matrix rotationMatrix = getRotationMatrix(xRotation, yRotation, zRotation);
     upVector = rotationMatrix * upVector;
@@ -32,7 +39,7 @@ void a_rendering()
 
 
     BVH* scene = new BVH(false);
-    loadOBJ(scene, "models/", "zz.obj");
+    loadOBJ(scene, "models/", "scene1.obj");
     scene->rebuildIndex();
     World world;
 	world.scene = scene;
@@ -47,5 +54,5 @@ void a_rendering()
     RayCastingIntegrator integrator(&world);
     Renderer engine1(&cam1, &integrator);
     engine1.render(img);
-    img.writePNG("1_box1.png");
+    img.writePNG("scene1.png");
 }
