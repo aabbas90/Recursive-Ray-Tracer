@@ -79,6 +79,7 @@ void a_rendering()
 	Material* lamp_mat = new LambertianMaterial(bluetex, bluetex);
     // Material* lamp_mat = new GlassMaterial(2.0f);
     Material* other_mat = new LambertianMaterial(greentex, bluetex);
+    Material* wall_mat = new LambertianMaterial(bluetex, bluetex);
     Material* gold_mat = new LambertianMaterial(goldtex, goldtex);
     Material* white_mat = new LambertianMaterial(whitetex, whitetex);
     Material* black_mat = new LambertianMaterial(blacktex, blacktex);
@@ -90,7 +91,10 @@ void a_rendering()
     // Material* mat_stones = new MirrorMaterial(0.0f, 0.0f);
 
     MatLib* matlib = new MatLib;
-    matlib->insert(std::pair<std::string, Material*>("stage_floor_mat", woodtex_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("stage_floor_mat1", woodtex_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("stage_floor_mat2", woodtex_mat)); 
+
+
     matlib->insert(std::pair<std::string, Material*>("initialShadingGroup", other_mat)); 
     matlib->insert(std::pair<std::string, Material*>("hemisphere_mat", lamp_mat)); 
     matlib->insert(std::pair<std::string, Material*>("Piano1:Wood", woodtex_mat)); 
@@ -99,11 +103,13 @@ void a_rendering()
     matlib->insert(std::pair<std::string, Material*>("Piano1:Material_004", black_mat));
     matlib->insert(std::pair<std::string, Material*>("Piano1:Black", black_mat));
 
-
+    matlib->insert(std::pair<std::string, Material*>("wall_mat", wall_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("celing_wall_mat", wall_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("ground_mat", wall_mat)); 
 
     BVH* scene = new BVH(false);
     // loadOBJ(scene, "models/", "1_sph.obj", matlib);
-    loadOBJ(scene, "models/", "3_scene.obj", matlib);
+    loadOBJ(scene, "models/", "4_scene.obj", matlib);
 
 
     // BVH* stageTopLight = new BVH(false);
