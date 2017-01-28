@@ -61,20 +61,32 @@ void a_rendering()
 
     Texture* greentex = new ConstantTexture(RGBColor(0.f,.7f,0.f));
     Texture* bluetex = new ConstantTexture(RGBColor(0.f,0.f,0.7f));
+    Texture* goldtex = new ConstantTexture(RGBColor(0.9f,0.9f,0.0f));
+    Texture* whitetex = new ConstantTexture(RGBColor(1.0f,1.0f,1.0f));
+    Texture* blacktex = new ConstantTexture(RGBColor(0.0f,0.0f,0.0f));
 
 	// Material* lamp_mat = new PhongMaterial(greentex, 20.0f);
 	Material* lamp_mat = new LambertianMaterial(bluetex, bluetex);
     Material* other_mat = new LambertianMaterial(greentex, bluetex);
-    ImageTexture* nearTex = new ImageTexture("models/wood1.png", ImageTexture::REPEAT, ImageTexture::NEAREST);
-    FlatMaterial* near = new FlatMaterial(nearTex);
+    Material* gold_mat = new LambertianMaterial(goldtex, goldtex);
+    Material* white_mat = new LambertianMaterial(whitetex, whitetex);
+    Material* black_mat = new LambertianMaterial(blacktex, blacktex);
+    ImageTexture* woodtex = new ImageTexture("models/wood1.png", ImageTexture::REPEAT, ImageTexture::NEAREST);
+    FlatMaterial* woodtex_mat = new FlatMaterial(woodtex);
 
 
     // Material* mat_stones = new MirrorMaterial(0.0f, 0.0f);
 
     MatLib* matlib = new MatLib;
-    matlib->insert(std::pair<std::string, Material*>("stage_floor_mat", near)); 
+    matlib->insert(std::pair<std::string, Material*>("stage_floor_mat", woodtex_mat)); 
     matlib->insert(std::pair<std::string, Material*>("initialShadingGroup", other_mat)); 
     matlib->insert(std::pair<std::string, Material*>("hemisphere_mat", lamp_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Wood", woodtex_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Gold", gold_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Material_002", white_mat));
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Material_004", black_mat));
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Black", black_mat));
+
 
 
     BVH* scene = new BVH(false);
