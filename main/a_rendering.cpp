@@ -65,7 +65,7 @@ void a_rendering()
 	// Material* lamp_mat = new PhongMaterial(greentex, 20.0f);
 	Material* lamp_mat = new LambertianMaterial(bluetex, bluetex);
     Material* other_mat = new LambertianMaterial(greentex, bluetex);
-    ImageTexture* nearTex = new ImageTexture("models/wood1.png", ImageTexture::REPEAT, ImageTexture::NEAREST);
+    ImageTexture* nearTex = new ImageTexture("models/wood1.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
     FlatMaterial* near = new FlatMaterial(nearTex);
 
 
@@ -102,6 +102,7 @@ void a_rendering()
     // RayCastingIntegrator integrator(&world);
     RecursiveRayTracingIntegrator integrator(&world);
     Renderer engine1(&cam1, &integrator);
+	engine1.setSamples(20);
     engine1.render(img);
     img.writePNG("3_scene.png");
 }
