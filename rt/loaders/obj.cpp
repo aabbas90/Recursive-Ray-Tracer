@@ -1,5 +1,5 @@
 #define DISABLE_COORDMAPPERS
-#define DISABLE_SMOOTH_TRIANGLE  //Commenting this gives a seg fault
+// #define DISABLE_SMOOTH_TRIANGLE  //Commenting this gives a seg fault
 // #define DISABLE_MATERIALS
 
 #include <rt/loaders/obj.h>

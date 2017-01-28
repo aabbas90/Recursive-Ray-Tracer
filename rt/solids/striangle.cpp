@@ -15,6 +15,10 @@ namespace rt
 		nv1 = normals[0];
 		nv2 = normals[1];
 		nv3 = normals[2];
+		
+		this->bbox = BBox(min(v1, v2), max(v1, v2));
+		this->bbox.extend(v3);
+
 		this->texMapper = texMapper;
 		this->material = material;
 	}
@@ -28,6 +32,9 @@ namespace rt
 		nv1 = n1;
 		nv2 = n2;
 		nv3 = n3;
+
+		this->bbox = BBox(min(v1, v2), max(v1, v2));
+		this->bbox.extend(v3);
 
 		this->texMapper = texMapper;
 		this->material = material;
