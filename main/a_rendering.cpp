@@ -12,6 +12,7 @@
 #include <rt/cameras/perspective.h>
 #include <rt/integrators/casting.h>
 #include <rt/lights/directional.h>
+#include <rt/lights/spotlight.h>
 #include <rt/primmod/instance.h>
 #include <core/matrix.h>
 
@@ -20,6 +21,7 @@
 
 #include <rt/materials/lambertian.h>
 #include <rt/materials/flatmaterial.h>
+#include <rt/materials/glass.h>
 #include <rt/materials/phong.h>
 #include <rt/materials/mirror.h>
 #include <rt/materials/combine.h>
@@ -48,10 +50,18 @@ void a_rendering()
     // Vector upVector = Vector(0.0f, 1.0f, 0.0f);
     // Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
 
-    float xRotation = -15; //2_scene
+    // float xRotation = -15; //2_scene
+    // float yRotation = -40;
+    // float zRotation = 0;
+    // Point cameraPostion = Point(-500, 200, 400);
+    // Vector upVector = Vector(0.0f, 1.0f, 0.0f);
+    // Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
+
+
+    float xRotation = -15; //2_scene zoom
     float yRotation = -40;
     float zRotation = 0;
-    Point cameraPostion = Point(-500, 200, 400);
+    Point cameraPostion = Point(-130, 85, 100);
     Vector upVector = Vector(0.0f, 1.0f, 0.0f);
     Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
 
@@ -67,6 +77,7 @@ void a_rendering()
 
 	// Material* lamp_mat = new PhongMaterial(greentex, 20.0f);
 	Material* lamp_mat = new LambertianMaterial(bluetex, bluetex);
+    // Material* lamp_mat = new GlassMaterial(2.0f);
     Material* other_mat = new LambertianMaterial(greentex, bluetex);
     Material* gold_mat = new LambertianMaterial(goldtex, goldtex);
     Material* white_mat = new LambertianMaterial(whitetex, whitetex);
@@ -106,6 +117,7 @@ void a_rendering()
     //directional light
     DirectionalLight dirl(Vector(0.2f,-0.5f,0.5f).normalize(), RGBColor(0.25f,0.25f,0.5f));
     world.light.push_back(&dirl);
+    world.light.push_back(new SpotLight(Point(0.0f, 100.f, 0.f), Vector(0.2f, -1.0f, 0.0f).normalize(),  pi/4, 8.0f, RGBColor(0.0f,0.0f,1.0f)));
 
 	// PerspectiveCamera cam1(Point(0.0f, 5.0f, 30.0f), Vector(0.0f, 0.0f, -1.0f), Vector(0.0f, 1.0f, 0.0f), pi / 4, pi / 3);
     // PerspectiveCamera cam1(cameraPostion, forwardVector, upVector, pi / 4, pi / 3);
