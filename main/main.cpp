@@ -15,10 +15,11 @@ void a_mappers();
 void a_bumpmappers();
 void objTextured();
 void a_rendering();
-
+void a_glasslight();
 
 int main(int argc, char* argv[])
 {
-    a_rendering();
+    //a_rendering();
+    a_glasslight();
     return 0;
 }

@@ -14,10 +14,11 @@
 #include <rt/lights/directional.h>
 #include <rt/primmod/instance.h>
 #include <core/matrix.h>
-#include <rt/materials/lambertian.h>
+
 #include <rt/textures/constant.h>
 #include <rt/textures/imagetex.h>
 
+#include <rt/materials/lambertian.h>
 #include <rt/materials/flatmaterial.h>
 #include <rt/materials/phong.h>
 #include <rt/materials/mirror.h>
