@@ -82,8 +82,9 @@ void a_rendering()
     Material* gold_mat = new LambertianMaterial(goldtex, goldtex);
     Material* white_mat = new LambertianMaterial(whitetex, whitetex);
     Material* black_mat = new LambertianMaterial(blacktex, blacktex);
-    ImageTexture* woodtex = new ImageTexture("models/wood1.png", ImageTexture::REPEAT, ImageTexture::NEAREST);
+    ImageTexture* woodtex = new ImageTexture("models/wood1.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
     FlatMaterial* woodtex_mat = new FlatMaterial(woodtex);
+
 
 
     // Material* mat_stones = new MirrorMaterial(0.0f, 0.0f);
@@ -126,6 +127,7 @@ void a_rendering()
     // RayCastingIntegrator integrator(&world);
     RecursiveRayTracingIntegrator integrator(&world);
     Renderer engine1(&cam1, &integrator);
+	engine1.setSamples(20);
     engine1.render(img);
     img.writePNG("3_scene.png");
 }
