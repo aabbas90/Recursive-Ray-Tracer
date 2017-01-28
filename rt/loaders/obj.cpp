@@ -1,6 +1,6 @@
 #define DISABLE_COORDMAPPERS
-// #define DISABLE_SMOOTH_TRIANGLE  //Commenting this gives a seg fault
-// #define DISABLE_MATERIALS
+//#define DISABLE_SMOOTH_TRIANGLE
+//#define DISABLE_MATERIALS
 
 #include <rt/loaders/obj.h>
 #include <rt/groups/group.h>
@@ -18,6 +18,10 @@
 #ifndef DISABLE_SMOOTH_TRIANGLE
 #include <rt/solids/striangle.h>
 #endif
+
+
+
+#include <iostream>
 
 namespace rt {
 
@@ -382,7 +386,7 @@ void loadOBJ( Group* dest, const std::string& path, const std::string& filename,
             case Obj_MaterialLibrary: {
 #ifndef DISABLE_MATERIALS
                 std::string libname = fileline.fetchString();
-                loadOBJMat(matlib, path, libname);
+                //loadOBJMat(matlib, path, libname);
 #endif
                 break;
             }
@@ -390,10 +394,15 @@ void loadOBJ( Group* dest, const std::string& path, const std::string& filename,
 #ifndef DISABLE_MATERIALS
                 std::string matname = fileline.fetchString();
                 MatLib::iterator i = matlib->find(matname);
-                if (i != matlib->end())
+                if (i != matlib->end()){
                     material = i->second;
+                    std::cout<<"using material "<<matname<<std::endl;
+                }
                 else
+                {
                     material = nullptr;
+                    std::cout<<"missing material "<<matname<<std::endl;
+                }
 #endif
                 break;
             }

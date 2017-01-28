@@ -19,7 +19,7 @@ void a_glasslight();
 
 int main(int argc, char* argv[])
 {
-    //a_rendering();
-    a_glasslight();
+    a_rendering();
+    // a_glasslight();
     return 0;
 }

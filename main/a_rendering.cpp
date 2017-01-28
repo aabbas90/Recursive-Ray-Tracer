@@ -32,27 +32,28 @@ using namespace rt;
 void a_rendering()
 {
     Image img(800, 600);
-	// float xRotation = -6;
-    // float yRotation = -70;
+
+	// float xRotation = -27; //sphere
+    // float yRotation = 8;
     // float zRotation = 0;
-    // Point cameraPostion = Point(-400, 90, 100);
+    // Point cameraPostion = Point(1, 6, 13);
     // Vector upVector = Vector(0.0f, 1.0f, 0.0f);
     // Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
 
 
-    float xRotation = 0;
-    float yRotation = 0;
+    // float xRotation = 0; //1_light_wall
+    // float yRotation = 67;
+    // float zRotation = 0;
+    // Point cameraPostion = Point(35, 7.5f, 13);
+    // Vector upVector = Vector(0.0f, 1.0f, 0.0f);
+    // Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
+
+    float xRotation = -15; //2_scene
+    float yRotation = -40;
     float zRotation = 0;
-    Point cameraPostion = Point(0, 0, 12);
+    Point cameraPostion = Point(-500, 200, 400);
     Vector upVector = Vector(0.0f, 1.0f, 0.0f);
     Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
-
-    // float xRotation = 10;
-    // float yRotation = 30;
-    // float zRotation = 40;
-    // Point cameraPostion = Point(35, 10, 55);
-    // Vector upVector = Vector(0.0f, 1.0f, 0.0f);
-    // Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
 
 	Matrix rotationMatrix = getRotationMatrix(xRotation, yRotation, zRotation);
     upVector = rotationMatrix * upVector;
@@ -61,17 +62,24 @@ void a_rendering()
     Texture* greentex = new ConstantTexture(RGBColor(0.f,.7f,0.f));
     Texture* bluetex = new ConstantTexture(RGBColor(0.f,0.f,0.7f));
 
-	Material* mat_stones = new PhongMaterial(greentex, 20.0f);
-    // Material* mat_stones = new LambertianMaterial(greentex, bluetex);
+	// Material* lamp_mat = new PhongMaterial(greentex, 20.0f);
+	Material* lamp_mat = new LambertianMaterial(bluetex, bluetex);
+    Material* other_mat = new LambertianMaterial(greentex, bluetex);
+    ImageTexture* nearTex = new ImageTexture("models/wood1.png", ImageTexture::REPEAT, ImageTexture::NEAREST);
+    FlatMaterial* near = new FlatMaterial(nearTex);
+
+
     // Material* mat_stones = new MirrorMaterial(0.0f, 0.0f);
 
     MatLib* matlib = new MatLib;
-    matlib->insert(std::pair<std::string, Material*>("sph_mat", mat_stones)); 
-    // matlib->insert(std::pair<std::string, Material*>("blinn1SG", mat_stones)); 
+    matlib->insert(std::pair<std::string, Material*>("stage_floor_mat", near)); 
+    matlib->insert(std::pair<std::string, Material*>("initialShadingGroup", other_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("hemisphere_mat", lamp_mat)); 
 
 
     BVH* scene = new BVH(false);
-    loadOBJ(scene, "models/", "1_sph.obj", matlib);
+    // loadOBJ(scene, "models/", "1_sph.obj", matlib);
+    loadOBJ(scene, "models/", "3_scene.obj", matlib);
 
 
     // BVH* stageTopLight = new BVH(false);
@@ -91,8 +99,9 @@ void a_rendering()
     // PerspectiveCamera cam1(cameraPostion, forwardVector, upVector, pi / 4, pi / 3);
     PerspectiveCamera cam1(cameraPostion, forwardVector, upVector, pi / 4, pi / 3);
 
+    // RayCastingIntegrator integrator(&world);
     RecursiveRayTracingIntegrator integrator(&world);
     Renderer engine1(&cam1, &integrator);
     engine1.render(img);
-    img.writePNG("1_sph.png");
+    img.writePNG("3_scene.png");
 }
