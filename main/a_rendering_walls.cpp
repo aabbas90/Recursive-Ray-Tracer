@@ -133,21 +133,22 @@ void a_rendering_walls()
 
     TriangleMapper* bottomleft = new TriangleMapper(Point(0,0,0), Point(3,0,0), Point(0,3,0));
     TriangleMapper* topright = new TriangleMapper(Point(3,3,0), Point(3,0,0), Point(0,3,0));
-    // //ceiling
-    // scene->add(new Triangle(&f1, &b2, &b1), bottomleft, &white)); 
-    // scene->add(new Triangle(&f1, &f2, &b2), topright, &white)); 
+    
+    //ceiling
+    scene->add(new Triangle(b1, b2, f1), bottomleft, &white)); 
+    scene->add(new Triangle(f2, b2, f1), topright, &white)); 
 
-    // //right wall
-    // scene->add(new Triangle(&b2, &f2, &f4), bottomleft, &white)); 
-    // scene->add(new Triangle(&b2, &f4, &b4), topright, &white)); 
+    //right wall
+    scene->add(new Triangle(b4, f4, b2), bottomleft, &white)); 
+    scene->add(new Triangle(f2, f4, b2), topright, &white)); 
 
-    // //left wall
-    // scene->add(new Triangle(&b1, &b3, &f3), bottomleft, &white)); 
-    // scene->add(new Triangle(&b1, &f3, &f1), topright, &white)); 
+    //left wall
+    scene->add(new Triangle(f3, b3, f1), bottomleft, &white)); 
+    scene->add(new Triangle(b1, b3, f1), topright, &white)); 
 
-    // //ground
-    // scene->add(new Triangle(&b4, &f3, &b3), bottomleft, &white)); 
-    // scene->add(new Triangle(&b4, &f4, &f3), topright, &white)); 
+    //ground
+    scene->add(new Triangle(f3, f4, b3, bottomleft, &white)); 
+    scene->add(new Triangle(b4, f4, b3, topright, &white)); 
 
     //back wall
     scene->add(new Triangle(b3, b4, b1, bottomleft, &white)); 
