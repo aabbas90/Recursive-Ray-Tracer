@@ -38,6 +38,8 @@
 #include <rt/coordmappers/tmapper.h>
 
 #include <rt/integrators/recraytrace.h>
+#include <rt/lights/arealight.h>
+#include <core/random.h>
 
 
 using namespace rt;
@@ -125,15 +127,6 @@ void a_rendering_walls()
     // loadOBJ(scene, "models/", "1_sph.obj", matlib);
     loadOBJ(scene, "models/", "1_piano.obj", matlib);
 
-
-    // BVH* stageTopLight = new BVH(false);
-    // loadOBJ(stageTopLight, "models/", "1_light.obj");
-    // stageTopLight->translate(Vector(85.0f,0.0f,-27));
-    // scene->add(stageTopLight);
-
-
-
-
     Point b1(120, 145, -180);
     Point b2(120, 145, 180);
     Point b3(120, 0, -180);
@@ -190,9 +183,19 @@ void a_rendering_walls()
     scene->add(new Triangle(f3, f4, b3, bottomleft, &woodMaterial)); 
     scene->add(new Triangle(b4, f4, b3, topright, &woodMaterial)); 
 
-    scene->rebuildIndex();
+	ConstantTexture* lightsrctex = new ConstantTexture(RGBColor(50, 50, 50));
+	Material* lightsource = new LambertianMaterial(lightsrctex, blacktex);
+
+	Vector rightQuadVector = cross(forwardVector, upVector) * 10;
+	Vector forwardQuadVector = forwardVector * 10;
+	Quad* light = new Quad((b1 + b2 + f1 + f2) * 0.25 - rightQuadVector / 2 - forwardQuadVector / 2, rightQuadVector, forwardQuadVector, nullptr, lightsource);
+	AreaLight als(light);
+	scene->add(light);
+
     World world;
+	world.light.push_back(&als);
 	world.scene = scene;
+	scene->rebuildIndex();
 
     //directional light
     // DirectionalLight dirl(Vector(0.2f,-0.5f,0.5f).normalize(), RGBColor(RGBColor::rep(100)));
@@ -200,6 +203,29 @@ void a_rendering_walls()
 
     world.light.push_back(&dirl);
     world.light.push_back(new SpotLight(Point(-70, 70, 5), forwardVector.normalize(),  pi, 10.0f, RGBColor(RGBColor::rep(100000))));
+
+	Point pianoCentre = Point(-15, 0, 2 - 70);
+	int channel = 0;
+	int direction = 0;
+	for (int i = 0; i < 9; i++)
+	{
+		Point currentSpotLightPoint = Point(23, 100, -70 + 16 * i);
+		Point currentPianoPoint = pianoCentre + Vector(0, 0, 20 * i);
+		RGBColor color = RGBColor(0, 0, 0);
+		float rand = random();
+		
+		if (rand < 0.33f)
+			color = color + RGBColor(1, 0, 0);
+		else if (rand < 0.66f)
+			color = color + RGBColor(0, 1, 0);
+		else
+			color = color + RGBColor(0, 0, 1);
+
+		world.light.push_back(new SpotLight(currentSpotLightPoint, (currentPianoPoint - currentSpotLightPoint).normalize(), pi / 6, 30.0f, 100000 * color));
+		channel = (channel + 1) % 3;
+	}
+
+
 
 	// PerspectiveCamera cam1(Point(0.0f, 5.0f, 30.0f), Vector(0.0f, 0.0f, -1.0f), Vector(0.0f, 1.0f, 0.0f), pi / 4, pi / 3);
     // PerspectiveCamera cam1(cameraPostion, forwardVector, upVector, pi / 4, pi / 3);
