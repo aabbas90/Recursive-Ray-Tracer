@@ -40,9 +40,6 @@
     <Filter Include="rt\cameras">
       <UniqueIdentifier>{cace52b3-55b0-4e94-9656-29f7b9af3863}</UniqueIdentifier>
     </Filter>
-    <Filter Include="rt\fog">
-      <UniqueIdentifier>{7898e33a-f103-486e-aaab-87b732238fa7}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\macros.h">
@@ -272,21 +269,6 @@
     </ClInclude>
     <ClInclude Include="rt\primmod\bmap.h">
       <Filter>rt\primod</Filter>
-    </ClInclude>
-    <ClInclude Include="rt\fog\fog.h">
-      <Filter>rt\fog</Filter>
-    </ClInclude>
-    <ClInclude Include="rt\fog\heterogeneous.h">
-      <Filter>rt\fog</Filter>
-    </ClInclude>
-    <ClInclude Include="rt\fog\homogeneous.h">
-      <Filter>rt\fog</Filter>
-    </ClInclude>
-    <ClInclude Include="rt\integrators\fogtrace.h">
-      <Filter>rt\integrators</Filter>
-    </ClInclude>
-    <ClInclude Include="rt\lights\ambient.h">
-      <Filter>rt\lights</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -532,21 +514,6 @@
     </ClCompile>
     <ClCompile Include="main\a_rendering_walls.cpp">
       <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Desktop\mappers.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="rt\fog\heterogeneous.cpp">
-      <Filter>rt\fog</Filter>
-    </ClCompile>
-    <ClCompile Include="rt\fog\homogeneous.cpp">
-      <Filter>rt\fog</Filter>
-    </ClCompile>
-    <ClCompile Include="rt\integrators\fogtrace.cpp">
-      <Filter>rt\integrators</Filter>
-    </ClCompile>
-    <ClCompile Include="rt\lights\ambient.cpp">
-      <Filter>rt\lights</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
