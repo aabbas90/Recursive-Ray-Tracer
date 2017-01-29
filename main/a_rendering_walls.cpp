@@ -171,7 +171,7 @@ void a_rendering_walls()
     //directional light
     DirectionalLight dirl(Vector(0.2f,-0.5f,0.5f).normalize(), RGBColor(10,10,10));
     world.light.push_back(&dirl);
-    world.light.push_back(new SpotLight(cameraPostion, Vector(0, -1.0f, 0.0f).normalize(),  pi/4, 8.0f, RGBColor(100, 100, 100)));
+    world.light.push_back(new SpotLight(Point(-70, 70, 5), forwardVector.normalize(),  pi/4, 10.0f, RGBColor(RGBColor::rep(100000))));
 
 	// PerspectiveCamera cam1(Point(0.0f, 5.0f, 30.0f), Vector(0.0f, 0.0f, -1.0f), Vector(0.0f, 1.0f, 0.0f), pi / 4, pi / 3);
     // PerspectiveCamera cam1(cameraPostion, forwardVector, upVector, pi / 4, pi / 3);
