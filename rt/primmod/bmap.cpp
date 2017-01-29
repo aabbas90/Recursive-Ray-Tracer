@@ -50,11 +50,11 @@ namespace rt
 			//perturb the normal in world space
 			//JUGAAD :/
 			// Vector newNormal = Vector(DX * triangleInt.normal().x * 100.0f, DY * triangleInt.normal().y * 100.0f, triangleInt.normal().z * 100.0f);
-			Vector newNormal = origNormal + DX * cross(origNormal, xSpanningVector) + DY * cross(origNormal, ySpanningVector);
+			Vector newNormal = (origNormal + DX * cross(origNormal, xSpanningVector) + DY * cross(origNormal, ySpanningVector)).normalize();
 			// std::cout << triangleInt.normal() << std::endl;
 			// std::cout << newNormal << std::endl;
 			// std::cout << std::endl;
-			triangleInt.setNormal(newNormal.normalize());	
+			triangleInt.setNormal(newNormal);	
 		}
 		return triangleInt;
 	}
