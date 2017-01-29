@@ -171,6 +171,9 @@
     <ClInclude Include="rt\coordmappers\spherical.h" />
     <ClInclude Include="rt\coordmappers\tmapper.h" />
     <ClInclude Include="rt\coordmappers\world.h" />
+    <ClInclude Include="rt\fog\fog.h" />
+    <ClInclude Include="rt\fog\heterogeneous.h" />
+    <ClInclude Include="rt\fog\homogeneous.h" />
     <ClInclude Include="rt\groups\bvh.h" />
     <ClInclude Include="rt\groups\group.h" />
     <ClInclude Include="rt\groups\kdtree.h" />
@@ -178,10 +181,12 @@
     <ClInclude Include="rt\groups\simplegroup.h" />
     <ClInclude Include="rt\integrators\casting.h" />
     <ClInclude Include="rt\integrators\castingdist.h" />
+    <ClInclude Include="rt\integrators\fogtrace.h" />
     <ClInclude Include="rt\integrators\integrator.h" />
     <ClInclude Include="rt\integrators\raytrace.h" />
     <ClInclude Include="rt\integrators\recraytrace.h" />
     <ClInclude Include="rt\intersection.h" />
+    <ClInclude Include="rt\lights\ambient.h" />
     <ClInclude Include="rt\lights\arealight.h" />
     <ClInclude Include="rt\lights\directional.h" />
     <ClInclude Include="rt\lights\light.h" />
@@ -220,6 +225,7 @@
     <ClInclude Include="rt\world.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Desktop\mappers.cpp" />
     <ClCompile Include="core\color.cpp" />
     <ClCompile Include="core\float4.cpp" />
     <ClCompile Include="core\image.cpp" />
@@ -261,15 +267,19 @@
     <ClCompile Include="rt\coordmappers\spherical.cpp" />
     <ClCompile Include="rt\coordmappers\tmapper.cpp" />
     <ClCompile Include="rt\coordmappers\world.cpp" />
+    <ClCompile Include="rt\fog\heterogeneous.cpp" />
+    <ClCompile Include="rt\fog\homogeneous.cpp" />
     <ClCompile Include="rt\groups\bvh.cpp" />
     <ClCompile Include="rt\groups\group.cpp" />
     <ClCompile Include="rt\groups\Node.cpp" />
     <ClCompile Include="rt\groups\simplegroup.cpp" />
     <ClCompile Include="rt\integrators\casting.cpp" />
     <ClCompile Include="rt\integrators\castingdist.cpp" />
+    <ClCompile Include="rt\integrators\fogtrace.cpp" />
     <ClCompile Include="rt\integrators\raytrace.cpp" />
     <ClCompile Include="rt\integrators\recraytrace.cpp" />
     <ClCompile Include="rt\intersection.cpp" />
+    <ClCompile Include="rt\lights\ambient.cpp" />
     <ClCompile Include="rt\lights\arealight.cpp" />
     <ClCompile Include="rt\lights\directional.cpp" />
     <ClCompile Include="rt\lights\pointlight.cpp" />

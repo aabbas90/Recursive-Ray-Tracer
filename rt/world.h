@@ -4,11 +4,13 @@
 #include <rt/primitive.h>
 namespace rt {
 class Light;
+class Fog;
 class World {
 public:
     Primitive* scene;
 	typedef std::vector<Light*> LightVector;
     LightVector light;
+	Fog *fog;
 
 };
 }
