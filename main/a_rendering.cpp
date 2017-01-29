@@ -55,7 +55,7 @@ void a_rendering()
     Texture* bluetex = new ConstantTexture(RGBColor(0.f,0.f,0.7f));
     Texture* goldtex = new ConstantTexture(RGBColor(0.9f,0.9f,0.0f));
     Texture* whitetex = new ConstantTexture(RGBColor(1.0f,1.0f,1.0f));
-    Texture* blacktex = new ConstantTexture(RGBColor(0.5f,0.5f,0.5f));
+    Texture* blacktex = new ConstantTexture(RGBColor(0,0,0));
 
 	// Material* lamp_mat = new PhongMaterial(greentex, 20.0f);
 	CombineMaterial* lamp_mat = new CombineMaterial();

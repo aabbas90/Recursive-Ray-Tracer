@@ -512,5 +512,8 @@
     <ClCompile Include="main\a_rendering.cpp">
       <Filter>main</Filter>
     </ClCompile>
+    <ClCompile Include="main\a_rendering_walls.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

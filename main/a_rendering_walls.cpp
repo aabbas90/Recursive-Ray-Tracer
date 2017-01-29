@@ -21,6 +21,7 @@
 
 #include <rt/materials/lambertian.h>
 #include <rt/materials/flatmaterial.h>
+#include <rt/materials/fuzzymirror.h>
 #include <rt/materials/glass.h>
 #include <rt/materials/phong.h>
 #include <rt/materials/mirror.h>
@@ -44,6 +45,10 @@ void a_rendering_walls()
 {
     Image img(800, 600);
 
+	// Texture* greentex = new ConstantTexture(RGBColor(0.f, .7f, 0.f));
+	// Texture* bluetex = new ConstantTexture(RGBColor(0.f, 0.f, 0.7f));
+	// Texture* goldtex = new ConstantTexture(RGBColor(0.9f, 0.9f, 0.0f));
+	// Texture* whitetex = new ConstantTexture(RGBColor(1.0f, 1.0f, 1.0f));
 
     // float xRotation = -15; //2_scene
     // float yRotation = -40;
@@ -55,58 +60,70 @@ void a_rendering_walls()
 
 
 
-    float xRotation = -15; //2_scene zoom
-    float yRotation = -40;
+	float xRotation = 0; // -15; //2_scene zoom //front view
+	float yRotation = -451; // -40;
     float zRotation = 0;
-    Point cameraPostion = Point(-130, 85, 100);
+    // Point cameraPostion = Point(-130, 85, 100);
+	Point cameraPostion = Point(-450, 80, 0);
     Vector upVector = Vector(0.0f, 1.0f, 0.0f);
     Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
+
+
+
+	// float xRotation = 0;  //opposite view
+	// float yRotation = -270; // -40;
+    // float zRotation = 0;
+    
+	// Point cameraPostion = Point(25, 110, 0);
+    // Vector upVector = Vector(0.0f, 1.0f, 0.0f);
+    // Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
+
 
 	Matrix rotationMatrix = getRotationMatrix(xRotation, yRotation, zRotation);
     upVector = rotationMatrix * upVector;
     forwardVector = rotationMatrix * forwardVector;
 
-    // Texture* greentex = new ConstantTexture(RGBColor(0.f,.7f,0.f));
-    // Texture* bluetex = new ConstantTexture(RGBColor(0.f,0.f,0.7f));
-    // Texture* goldtex = new ConstantTexture(RGBColor(0.9f,0.9f,0.0f));
-    // Texture* whitetex = new ConstantTexture(RGBColor(1.0f,1.0f,1.0f));
-    // Texture* blacktex = new ConstantTexture(RGBColor(0.0f,0.0f,0.0f));
+    Texture* greentex = new ConstantTexture(RGBColor(0.f,.7f,0.f));
+    Texture* bluetex = new ConstantTexture(RGBColor(0.f,0.f,0.7f));
+    Texture* goldtex = new ConstantTexture(RGBColor(0.9f,0.9f,0.0f));
+    Texture* whitetex = new ConstantTexture(RGBColor(1.0f,1.0f,1.0f));
+    Texture* blacktex1 = new ConstantTexture(RGBColor(0.0f,0.0f,0.0f));
 
-	// // Material* lamp_mat = new PhongMaterial(greentex, 20.0f);
-	// Material* lamp_mat = new LambertianMaterial(bluetex, bluetex);
-    // // Material* lamp_mat = new GlassMaterial(2.0f);
-    // Material* other_mat = new LambertianMaterial(greentex, bluetex);
-    // Material* wall_mat = new LambertianMaterial(bluetex, bluetex);
-    // Material* gold_mat = new LambertianMaterial(goldtex, goldtex);
-    // Material* white_mat = new LambertianMaterial(whitetex, whitetex);
-    // Material* black_mat = new LambertianMaterial(blacktex, blacktex);
-    // ImageTexture* woodtex = new ImageTexture("models/wood1.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
-    // FlatMaterial* woodtex_mat = new FlatMaterial(woodtex);
+	// Material* lamp_mat = new PhongMaterial(greentex, 20.0f);
+	Material* lamp_mat = new LambertianMaterial(bluetex, bluetex);
+    // Material* lamp_mat = new GlassMaterial(2.0f);
+    Material* other_mat = new LambertianMaterial(greentex, bluetex);
+    Material* wall_mat = new LambertianMaterial(bluetex, bluetex);
+    Material* gold_mat = new LambertianMaterial(goldtex, goldtex);
+    Material* white_mat = new LambertianMaterial(whitetex, whitetex);
+    Material* black_mat = new LambertianMaterial(blacktex1, blacktex1);
+    ImageTexture* woodtex = new ImageTexture("models/wood1.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
+    FlatMaterial* woodtex_mat = new FlatMaterial(woodtex);
 
 
 
     // Material* mat_stones = new MirrorMaterial(0.0f, 0.0f);
 
-    // MatLib* matlib = new MatLib;
-    // matlib->insert(std::pair<std::string, Material*>("stage_floor_mat1", woodtex_mat)); 
-    // matlib->insert(std::pair<std::string, Material*>("stage_floor_mat2", woodtex_mat)); 
+    MatLib* matlib = new MatLib;
+    matlib->insert(std::pair<std::string, Material*>("stage_floor_mat1", woodtex_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("stage_floor_mat2", woodtex_mat)); 
 
 
-    // matlib->insert(std::pair<std::string, Material*>("initialShadingGroup", other_mat)); 
-    // matlib->insert(std::pair<std::string, Material*>("hemisphere_mat", lamp_mat)); 
-    // matlib->insert(std::pair<std::string, Material*>("Piano1:Wood", woodtex_mat)); 
-    // matlib->insert(std::pair<std::string, Material*>("Piano1:Gold", gold_mat)); 
-    // matlib->insert(std::pair<std::string, Material*>("Piano1:Material_002", white_mat));
-    // matlib->insert(std::pair<std::string, Material*>("Piano1:Material_004", black_mat));
-    // matlib->insert(std::pair<std::string, Material*>("Piano1:Black", black_mat));
+    matlib->insert(std::pair<std::string, Material*>("initialShadingGroup", other_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("hemisphere_mat", lamp_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Wood", woodtex_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Gold", gold_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Material_002", white_mat));
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Material_004", black_mat));
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Black", black_mat));
 
-    // matlib->insert(std::pair<std::string, Material*>("wall_mat", wall_mat)); 
-    // matlib->insert(std::pair<std::string, Material*>("celing_wall_mat", wall_mat)); 
-    // matlib->insert(std::pair<std::string, Material*>("ground_mat", wall_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("wall_mat", wall_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("celing_wall_mat", wall_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("ground_mat", wall_mat)); 
 
     BVH* scene = new BVH(false);
     // loadOBJ(scene, "models/", "1_sph.obj", matlib);
-    // loadOBJ(scene, "models/", "4_scene.obj", matlib);
+    loadOBJ(scene, "models/", "1_piano.obj", matlib);
 
 
     // BVH* stageTopLight = new BVH(false);
@@ -127,41 +144,62 @@ void a_rendering_walls()
     Point f3(-360, 0, -180);
     Point f4(-360, 0, 180);
 
-    ImageTexture* whitetex = new ImageTexture("models/stones_diffuse.png");
+    ImageTexture* woodTex = new ImageTexture("models/wood1.png");
     ConstantTexture* blacktex = new ConstantTexture(RGBColor::rep(0.0f));
-    LambertianMaterial white(blacktex, whitetex);
+    LambertianMaterial woodMaterial(blacktex, woodTex);
 
-    TriangleMapper* bottomleft = new TriangleMapper(Point(0,0,0), Point(3,0,0), Point(0,3,0));
-    TriangleMapper* topright = new TriangleMapper(Point(3,3,0), Point(3,0,0), Point(0,3,0));
+    ImageTexture* stoneTex = new ImageTexture("models/stones_diffuse.png");
+    LambertianMaterial stoneMaterial(blacktex, stoneTex);
+
+    TriangleMapper* bottomleft = new TriangleMapper(Point(0,0,0), Point(1,0,0), Point(0,1,0));
+    TriangleMapper* topright = new TriangleMapper(Point(1,1,0), Point(1,0,0), Point(0,1,0));
+
     
-    //ceiling
-    scene->add(new Triangle(b1, b2, f1), bottomleft, &white)); 
-    scene->add(new Triangle(f2, b2, f1), topright, &white)); 
+	CombineMaterial* black_mat2 = new CombineMaterial();
+	black_mat2->add(new PhongMaterial(whitetex, 1), 0.5);
+	black_mat2->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.25);
+	black_mat2->add(new LambertianMaterial(blacktex, greentex), 0.25);
 
-    //right wall
-    scene->add(new Triangle(b4, f4, b2), bottomleft, &white)); 
-    scene->add(new Triangle(f2, f4, b2), topright, &white)); 
-
-    //left wall
-    scene->add(new Triangle(f3, b3, f1), bottomleft, &white)); 
-    scene->add(new Triangle(b1, b3, f1), topright, &white)); 
-
-    //ground
-    scene->add(new Triangle(f3, f4, b3, bottomleft, &white)); 
-    scene->add(new Triangle(b4, f4, b3, topright, &white)); 
+    CombineMaterial* specs_mat = new CombineMaterial();
+	specs_mat->add(new PhongMaterial(whitetex, 10), 0.2);
+	specs_mat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.8);
 
     //back wall
-    scene->add(new Triangle(b3, b4, b1, bottomleft, &white)); 
-    scene->add(new Triangle(b2, b4, b1, topright, &white)); 
+    scene->add(new Triangle(b3, b4, b1, bottomleft, &woodMaterial));
+    scene->add(new Triangle(b2, b4, b1, topright, &woodMaterial));
+
+
+    // MirrorMaterial mirror(0.0f, 0.0f);
+    // //front wall
+    // scene->add(new Triangle(f3, f4, f1, bottomleft, &mirror));
+    // scene->add(new Triangle(f2, f4, f1, topright, &mirror));
+
+    //ceiling
+    scene->add(new Triangle(b1, b2, f1, bottomleft, &woodMaterial)); 
+    scene->add(new Triangle(f2, b2, f1, topright, &woodMaterial)); 
+
+    //right wall
+    scene->add(new Triangle(b4, f4, b2, bottomleft, &woodMaterial)); 
+    scene->add(new Triangle(f2, f4, b2, topright, &woodMaterial)); 
+
+    //left wall
+    scene->add(new Triangle(f3, b3, f1, bottomleft, &woodMaterial)); 
+    scene->add(new Triangle(b1, b3, f1, topright, &woodMaterial)); 
+
+    //ground
+    scene->add(new Triangle(f3, f4, b3, bottomleft, &woodMaterial)); 
+    scene->add(new Triangle(b4, f4, b3, topright, &woodMaterial)); 
 
     scene->rebuildIndex();
     World world;
 	world.scene = scene;
 
     //directional light
-    DirectionalLight dirl(Vector(0.2f,-0.5f,0.5f).normalize(), RGBColor(0.25f,0.25f,0.5f));
+    // DirectionalLight dirl(Vector(0.2f,-0.5f,0.5f).normalize(), RGBColor(RGBColor::rep(100)));
+    DirectionalLight dirl(forwardVector.normalize(), RGBColor(RGBColor::rep(1)));
+
     world.light.push_back(&dirl);
-    world.light.push_back(new SpotLight(Point(0.0f, 100.f, 0.f), Vector(0.2f, -1.0f, 0.0f).normalize(),  pi/4, 8.0f, RGBColor(0.0f,0.0f,1.0f)));
+    world.light.push_back(new SpotLight(Point(-70, 70, 5), forwardVector.normalize(),  pi, 10.0f, RGBColor(RGBColor::rep(100000))));
 
 	// PerspectiveCamera cam1(Point(0.0f, 5.0f, 30.0f), Vector(0.0f, 0.0f, -1.0f), Vector(0.0f, 1.0f, 0.0f), pi / 4, pi / 3);
     // PerspectiveCamera cam1(cameraPostion, forwardVector, upVector, pi / 4, pi / 3);
@@ -170,7 +208,7 @@ void a_rendering_walls()
     // RayCastingIntegrator integrator(&world);
     RecursiveRayTracingIntegrator integrator(&world);
     Renderer engine1(&cam1, &integrator);
-	engine1.setSamples(20);
+	engine1.setSamples(1);
     engine1.render(img);
     img.writePNG("1_walls.png");
 }

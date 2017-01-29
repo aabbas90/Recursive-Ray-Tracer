@@ -49,7 +49,8 @@ namespace rt
 						continue;
 
 					RGBColor reflected = currentMaterial->getReflectance(texturePoint, normal, outDirFlipped, inDir);
-					color = color + reflected * lightSource->getIntensity(lightHit);
+					RGBColor lightIntensity = lightSource->getIntensity(lightHit);
+					color = color + reflected * lightIntensity;
 				}
 			}
 
