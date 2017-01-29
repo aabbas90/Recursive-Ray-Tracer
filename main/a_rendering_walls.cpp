@@ -21,6 +21,7 @@
 
 #include <rt/materials/lambertian.h>
 #include <rt/materials/flatmaterial.h>
+#include <rt/materials/fuzzymirror.h>
 #include <rt/materials/glass.h>
 #include <rt/materials/phong.h>
 #include <rt/materials/mirror.h>
@@ -44,6 +45,10 @@ void a_rendering_walls()
 {
     Image img(800, 600);
 
+	Texture* greentex = new ConstantTexture(RGBColor(0.f, .7f, 0.f));
+	Texture* bluetex = new ConstantTexture(RGBColor(0.f, 0.f, 0.7f));
+	Texture* goldtex = new ConstantTexture(RGBColor(0.9f, 0.9f, 0.0f));
+	Texture* whitetex = new ConstantTexture(RGBColor(1.0f, 1.0f, 1.0f));
 
     // float xRotation = -15; //2_scene
     // float yRotation = -40;
@@ -55,10 +60,11 @@ void a_rendering_walls()
 
 
 
-    float xRotation = -15; //2_scene zoom
-    float yRotation = -40;
+	float xRotation = 0; // -15; //2_scene zoom
+	float yRotation = -451; // -40;
     float zRotation = 0;
-    Point cameraPostion = Point(-130, 85, 100);
+    // Point cameraPostion = Point(-130, 85, 100);
+	Point cameraPostion = Point(-450, 80, 0);
     Vector upVector = Vector(0.0f, 1.0f, 0.0f);
     Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
 
@@ -127,12 +133,12 @@ void a_rendering_walls()
     Point f3(-360, 0, -180);
     Point f4(-360, 0, 180);
 
-    ImageTexture* whitetex = new ImageTexture("models/stones_diffuse.png");
+    ImageTexture* woodTex = new ImageTexture("models/wood1.png");
     ConstantTexture* blacktex = new ConstantTexture(RGBColor::rep(0.0f));
-    LambertianMaterial white(blacktex, whitetex);
+    LambertianMaterial woodMaterial(blacktex, woodTex);
 
-    TriangleMapper* bottomleft = new TriangleMapper(Point(0,0,0), Point(3,0,0), Point(0,3,0));
-    TriangleMapper* topright = new TriangleMapper(Point(3,3,0), Point(3,0,0), Point(0,3,0));
+    TriangleMapper* bottomleft = new TriangleMapper(Point(0,0,0), Point(1,0,0), Point(0,1,0));
+    TriangleMapper* topright = new TriangleMapper(Point(1,1,0), Point(1,0,0), Point(0,1,0));
     // //ceiling
     // scene->add(new Triangle(&f1, &b2, &b1), bottomleft, &white)); 
     // scene->add(new Triangle(&f1, &f2, &b2), topright, &white)); 
@@ -150,17 +156,22 @@ void a_rendering_walls()
     // scene->add(new Triangle(&b4, &f4, &f3), topright, &white)); 
 
     //back wall
-    scene->add(new Triangle(b3, b4, b1, bottomleft, &white)); 
-    scene->add(new Triangle(b2, b4, b1, topright, &white)); 
+	CombineMaterial* black_mat = new CombineMaterial();
+	black_mat->add(new PhongMaterial(whitetex, 1), 0.5);
+	black_mat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.25);
+	black_mat->add(new LambertianMaterial(blacktex, greentex), 0.25);
+
+    scene->add(new Triangle(b3, b4, b1, bottomleft, &woodMaterial));
+    scene->add(new Triangle(b2, b4, b1, topright, &woodMaterial));
 
     scene->rebuildIndex();
     World world;
 	world.scene = scene;
 
     //directional light
-    DirectionalLight dirl(Vector(0.2f,-0.5f,0.5f).normalize(), RGBColor(0.25f,0.25f,0.5f));
+    DirectionalLight dirl(Vector(0.2f,-0.5f,0.5f).normalize(), RGBColor(10,10,10));
     world.light.push_back(&dirl);
-    world.light.push_back(new SpotLight(Point(0.0f, 100.f, 0.f), Vector(0.2f, -1.0f, 0.0f).normalize(),  pi/4, 8.0f, RGBColor(0.0f,0.0f,1.0f)));
+    world.light.push_back(new SpotLight(cameraPostion, Vector(0, -1.0f, 0.0f).normalize(),  pi/4, 8.0f, RGBColor(100, 100, 100)));
 
 	// PerspectiveCamera cam1(Point(0.0f, 5.0f, 30.0f), Vector(0.0f, 0.0f, -1.0f), Vector(0.0f, 1.0f, 0.0f), pi / 4, pi / 3);
     // PerspectiveCamera cam1(cameraPostion, forwardVector, upVector, pi / 4, pi / 3);
@@ -169,7 +180,7 @@ void a_rendering_walls()
     // RayCastingIntegrator integrator(&world);
     RecursiveRayTracingIntegrator integrator(&world);
     Renderer engine1(&cam1, &integrator);
-	engine1.setSamples(20);
+	engine1.setSamples(1);
     engine1.render(img);
     img.writePNG("1_walls.png");
 }
