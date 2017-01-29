@@ -2,6 +2,7 @@
 #include "infiniteplane.h"
 #include<core/assert.h>
 #include<rt/bbox.h>
+#include <core/random.h>
 
 namespace rt
 {
@@ -63,7 +64,25 @@ namespace rt
 
 	Point Disc::sample() const
 	{
-		NOT_IMPLEMENTED;
+		float theta = random() * 2 * pi; //random theta btw [0,2pi]
+		float r = random() * radius;
+		float x_polar = std::cos(theta) * r;
+		float y_polar = std::sin(theta) * r;
+
+		Vector normalizedNormal = normal.normalize();
+		Vector xSpanningVector = Vector(1, 0, 0);
+		Vector ySpanningVector = Vector(0, 1, 0);
+		if (std::abs(dot(xSpanningVector, normalizedNormal)) != 1)
+		{
+			ySpanningVector = cross(normalizedNormal, xSpanningVector).normalize();
+			xSpanningVector = cross(ySpanningVector, normalizedNormal).normalize();
+		}
+		else
+		{
+			xSpanningVector = cross(ySpanningVector, normalizedNormal).normalize();
+			ySpanningVector = cross(normalizedNormal, xSpanningVector).normalize();
+		}
+		return center + x_polar * xSpanningVector.normalize() * radius + y_polar * ySpanningVector.normalize() * radius;
 	}
 
 	float Disc::getArea() const
