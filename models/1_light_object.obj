@@ -1,5 +1,6 @@
 # This file uses centimeters as units for non-parametric coordinates.
 
+mtllib 1_light_object.mtl
 g default
 v -59.825500 105.481003 -46.091999
 v -60.376900 105.538200 -46.411999
@@ -9223,6 +9224,7 @@ vn 0.000000 -0.000100 1.000000
 vn 0.000000 -0.000100 1.000000
 s off
 g stage_cgtrader:Cylinder042
+usemtl initialShadingGroup
 f 1/1/1 2/2/2 3/3/3 4/4/4
 f 5/5/5 1/1/6 4/4/7 6/6/8
 f 1/1/9 5/5/10 7/7/11 8/8/12
