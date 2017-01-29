@@ -124,8 +124,15 @@ void a_rendering_walls()
     matlib->insert(std::pair<std::string, Material*>("ground_mat", wall_mat)); 
 
     BVH* scene = new BVH(false);
+    // BVH* lightObj = new BVH(false);
     // loadOBJ(scene, "models/", "1_sph.obj", matlib);
+    
     loadOBJ(scene, "models/", "1_piano.obj", matlib);
+    loadOBJ(scene, "models/", "1_light_object.obj");
+    
+    // make instance etc
+
+    // scene->add(lightObj);
 
     Point b1(120, 145, -180);
     Point b2(120, 145, 180);
