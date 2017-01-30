@@ -14,6 +14,7 @@
 #include <rt/lights/directional.h>
 #include <rt/lights/spotlight.h>
 #include <rt/primmod/instance.h>
+#include <rt/primmod/bmap.h>
 #include <core/matrix.h>
 
 #include <rt/textures/constant.h>
@@ -27,6 +28,7 @@
 #include <rt/materials/mirror.h>
 #include <rt/materials/combine.h>
 #include <rt/materials/cookTorrance.h>
+#include <rt/materials/mirror.h>
 
 #include <rt/solids/quad.h>
 #include <rt/solids/triangle.h>
@@ -76,7 +78,7 @@ void a_rendering_walls()
 	// float yRotation = -270; // -40;
     // float zRotation = 0;
     
-	// Point cameraPostion = Point(25, 110, 0);
+	// Point cameraPostion = Point(0, 110, 0);
     // Vector upVector = Vector(0.0f, 1.0f, 0.0f);
     // Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
 
@@ -104,6 +106,12 @@ void a_rendering_walls()
 	ImageTexture* woodtex = new ImageTexture("models/wood1.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
     FlatMaterial* woodtex_mat = new FlatMaterial(woodtex);
 
+    CombineMaterial* curtainMixedMat = new CombineMaterial();
+	ImageTexture* curtaintex = new ImageTexture("models/curtain_tex.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
+    FlatMaterial* curtaintex_mat = new FlatMaterial(curtaintex);
+    curtainMixedMat->add(new FlatMaterial(curtaintex), .05);
+    curtainMixedMat->add(lamp_mat, .95);
+
 
 
     // Material* mat_stones = new MirrorMaterial(0.0f, 0.0f);
@@ -121,6 +129,8 @@ void a_rendering_walls()
 	pianoWhiteMat->add(new LambertianMaterial(blacktex1, whitetex), 0.5);
 	pianoWhiteMat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.5);
 
+    MirrorMaterial specsMirror(0.0f, 0.0f);
+
     matlib->insert(std::pair<std::string, Material*>("initialShadingGroup", other_mat)); 
     matlib->insert(std::pair<std::string, Material*>("hemisphere_mat", lamp_mat)); 
     matlib->insert(std::pair<std::string, Material*>("Piano1:Wood", gold_mat)); 
@@ -133,18 +143,89 @@ void a_rendering_walls()
     matlib->insert(std::pair<std::string, Material*>("celing_wall_mat", wall_mat)); 
     matlib->insert(std::pair<std::string, Material*>("ground_mat", wall_mat)); 
 	matlib->insert(std::pair<std::string, Material*>("light_mat", gray_mat));
+    matlib->insert(std::pair<std::string, Material*>("specs_mat", &specsMirror));
+    matlib->insert(std::pair<std::string, Material*>("curtain_mat", curtainMixedMat));
 
     BVH* scene = new BVH(false);
     BVH* lightObj = new BVH(false);
-    // loadOBJ(scene, "models/", "1_sph.obj", matlib);
+    BVH* specs = new BVH(false);
     
     loadOBJ(scene, "models/", "1_piano.obj", matlib);
+    //loadOBJ(scene, "models/", "1_piano_curtain.obj", matlib);
     loadOBJ(lightObj, "models/", "1_light_object.obj", matlib);
+    loadOBJ(specs, "models/", "1_specs_mirror.obj", matlib);
 	lightObj->rebuildIndex();
+    specs->rebuildIndex();
+    // scene->add(specs); //uncomment for specs
     // make instance etc
 
     // scene->add(lightObj);
 
+  
+
+    ImageTexture* woodTex = new ImageTexture("models/wood1.png");
+    ConstantTexture* blacktex = new ConstantTexture(RGBColor::rep(0.0f));
+    LambertianMaterial woodMaterial(blacktex, woodTex);
+
+    ImageTexture* stoneTex = new ImageTexture("models/stones_diffuse.png");
+    LambertianMaterial stoneMaterial(blacktex, stoneTex);
+
+    ImageTexture* claddingTex = new ImageTexture("models/a_cladding_tex.png");
+    ImageTexture* claddingTexBump = new ImageTexture("models/a_cladding_tex_gray.png");
+    LambertianMaterial claddingMat(blacktex, claddingTex);
+ 
+	CombineMaterial* black_mat2 = new CombineMaterial();
+	black_mat2->add(new PhongMaterial(whitetex, 1), 0.5);
+	black_mat2->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.25);
+	black_mat2->add(new LambertianMaterial(blacktex, greentex), 0.25);
+
+    CombineMaterial* specs_mat = new CombineMaterial();
+	specs_mat->add(new PhongMaterial(whitetex, 10), 0.2);
+	specs_mat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.8);
+
+    Point lowerLeft(0,0,0);
+    Point lowerRight(1,0,0);
+    Point upperLeft(0,1,0);
+    Point upperRight(1,1,0);
+    TriangleMapper* bottomleft = new TriangleMapper(lowerLeft, lowerRight, upperLeft);
+    TriangleMapper* topright = new TriangleMapper(upperRight, lowerRight, upperLeft);
+
+    //stage cube
+    Point bs1(32, 7, -80);
+    Point bs2(32, 7, 80);
+    Point bs3(32, 0, -80);
+    Point bs4(32, 0, 80);
+
+    Point fs1(-60, 7, -80);
+    Point fs2(-60, 7, 80);
+    Point fs3(-60, 0, -80);
+    Point fs4(-60, 0, 80);
+
+    //back stage wall
+    Point w1(32, 113, -80);
+    Point w2(32, 113, 80);
+
+    //back stage wall TODO uncomment this later
+    // scene->add(new Triangle(bs1, bs2, w1, bottomleft, &woodMaterial));
+    // scene->add(new Triangle(w2, bs2, w1, topright, &woodMaterial));
+
+    //stage front 
+    scene->add(new Triangle(fs3, fs4, fs1, bottomleft, &woodMaterial));
+    scene->add(new Triangle(fs2, fs4, fs1, topright, &woodMaterial));
+
+    //stage ground 
+    scene->add(new Triangle(fs1, fs2, bs1, bottomleft, &woodMaterial));
+    scene->add(new Triangle(bs2, fs2, bs1, topright, &woodMaterial));
+
+    //stage left 
+    scene->add(new Triangle(bs3, fs3, bs1, bottomleft, &woodMaterial));
+    scene->add(new Triangle(fs1, fs3, bs1, topright, &woodMaterial));
+
+    //stage right 
+    scene->add(new Triangle(fs4, bs4, fs2, bottomleft, &woodMaterial));
+    scene->add(new Triangle(bs2, bs4, fs2, topright, &woodMaterial));
+
+      //room cube
     Point b1(120, 145, -180);
     Point b2(120, 145, 180);
     Point b3(120, 0, -180);
@@ -155,29 +236,19 @@ void a_rendering_walls()
     Point f3(-360, 0, -180);
     Point f4(-360, 0, 180);
 
-    ImageTexture* woodTex = new ImageTexture("models/wood1.png");
-    ConstantTexture* blacktex = new ConstantTexture(RGBColor::rep(0.0f));
-    LambertianMaterial woodMaterial(blacktex, woodTex);
-
-    ImageTexture* stoneTex = new ImageTexture("models/stones_diffuse.png");
-    LambertianMaterial stoneMaterial(blacktex, stoneTex);
-
-    TriangleMapper* bottomleft = new TriangleMapper(Point(0,0,0), Point(1,0,0), Point(0,1,0));
-    TriangleMapper* topright = new TriangleMapper(Point(1,1,0), Point(1,0,0), Point(0,1,0));
-
-    
-	CombineMaterial* black_mat2 = new CombineMaterial();
-	black_mat2->add(new PhongMaterial(whitetex, 1), 0.5);
-	black_mat2->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.25);
-	black_mat2->add(new LambertianMaterial(blacktex, greentex), 0.25);
-
-    CombineMaterial* specs_mat = new CombineMaterial();
-	specs_mat->add(new PhongMaterial(whitetex, 10), 0.2);
-	specs_mat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.8);
-
+    float bumbscale = 0.9f;
     //back wall
-    scene->add(new Triangle(b3, b4, b1, bottomleft, &woodMaterial));
-    scene->add(new Triangle(b2, b4, b1, topright, &woodMaterial));
+
+    // scene->add(new Triangle(b3, b4, b1, bottomleft, &claddingMat));
+    // scene->add(new Triangle(b2, b4, b1, topright, &claddingMat));
+
+    scene->add(new BumpMapper(
+            new Triangle(b3, b4, b1, bottomleft, &claddingMat), 
+    claddingTexBump, lowerLeft, upperLeft, lowerRight, bumbscale));
+    scene->add(
+        new BumpMapper(
+            new Triangle(b2, b4, b1, topright, &claddingMat),
+    claddingTexBump, upperRight, lowerRight, upperLeft, bumbscale));
 
 
     // MirrorMaterial mirror(0.0f, 0.0f);
@@ -210,14 +281,16 @@ void a_rendering_walls()
 	AreaLight als(light);
 	scene->add(light);*/
 
-	Vector rightQuadVector = cross(forwardVector, upVector) * 10;
-	Vector upQuadVector = upVector * 10;
-	Quad* light = new Quad(cameraPostion - forwardVector * 10, rightQuadVector, upQuadVector, nullptr, lightsource);
-	AreaLight als(light);
-	scene->add(light);
+	// Vector rightQuadVector = cross(forwardVector, upVector) * 10;
+	// Vector upQuadVector = upVector * 10;
+	// Quad* light = new Quad(cameraPostion - forwardVector * 10, rightQuadVector, upQuadVector, nullptr, lightsource);
+	// AreaLight als(light);
+	// scene->add(light);
+    
 
     World world;
-	world.light.push_back(&als);
+    // world.light.push_back(&als);
+	
 
     //directional light
     // DirectionalLight dirl(Vector(0.2f,-0.5f,0.5f).normalize(), RGBColor(RGBColor::rep(100)));
