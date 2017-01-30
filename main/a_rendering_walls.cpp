@@ -90,6 +90,7 @@ void a_rendering_walls()
     Texture* goldtex = new ConstantTexture(RGBColor(0.9f,0.9f,0.0f));
     Texture* whitetex = new ConstantTexture(RGBColor(1.0f,1.0f,1.0f));
     Texture* blacktex1 = new ConstantTexture(RGBColor(0.0f,0.0f,0.0f));
+	Texture* graytex1 = new ConstantTexture(RGBColor(0.1f, 0.1f, 0.1f));
 
 	// Material* lamp_mat = new PhongMaterial(greentex, 20.0f);
 	Material* lamp_mat = new LambertianMaterial(bluetex, bluetex);
@@ -99,7 +100,8 @@ void a_rendering_walls()
     Material* gold_mat = new LambertianMaterial(goldtex, goldtex);
     Material* white_mat = new LambertianMaterial(whitetex, whitetex);
     Material* black_mat = new LambertianMaterial(blacktex1, blacktex1);
-    ImageTexture* woodtex = new ImageTexture("models/wood1.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
+	Material* gray_mat = new LambertianMaterial(graytex1, graytex1);
+	ImageTexture* woodtex = new ImageTexture("models/wood1.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
     FlatMaterial* woodtex_mat = new FlatMaterial(woodtex);
 
 
@@ -111,25 +113,34 @@ void a_rendering_walls()
     matlib->insert(std::pair<std::string, Material*>("stage_floor_mat2", woodtex_mat)); 
 
 
+	CombineMaterial* pianoBlackMat = new CombineMaterial();
+	pianoBlackMat->add(new LambertianMaterial(graytex1, graytex1), 0.5);
+	pianoBlackMat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.5);
+
+	CombineMaterial* pianoWhiteMat = new CombineMaterial();
+	pianoWhiteMat->add(new LambertianMaterial(blacktex1, whitetex), 0.5);
+	pianoWhiteMat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.5);
+
     matlib->insert(std::pair<std::string, Material*>("initialShadingGroup", other_mat)); 
     matlib->insert(std::pair<std::string, Material*>("hemisphere_mat", lamp_mat)); 
-    matlib->insert(std::pair<std::string, Material*>("Piano1:Wood", woodtex_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Wood", gold_mat)); 
     matlib->insert(std::pair<std::string, Material*>("Piano1:Gold", gold_mat)); 
     matlib->insert(std::pair<std::string, Material*>("Piano1:Material_002", white_mat));
-    matlib->insert(std::pair<std::string, Material*>("Piano1:Material_004", black_mat));
-    matlib->insert(std::pair<std::string, Material*>("Piano1:Black", black_mat));
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Material_004", pianoBlackMat));
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Black", pianoBlackMat));
 
     matlib->insert(std::pair<std::string, Material*>("wall_mat", wall_mat)); 
     matlib->insert(std::pair<std::string, Material*>("celing_wall_mat", wall_mat)); 
     matlib->insert(std::pair<std::string, Material*>("ground_mat", wall_mat)); 
+	matlib->insert(std::pair<std::string, Material*>("light_mat", gray_mat));
 
     BVH* scene = new BVH(false);
-    // BVH* lightObj = new BVH(false);
+    BVH* lightObj = new BVH(false);
     // loadOBJ(scene, "models/", "1_sph.obj", matlib);
     
     loadOBJ(scene, "models/", "1_piano.obj", matlib);
-    loadOBJ(scene, "models/", "1_light_object.obj");
-    
+    loadOBJ(lightObj, "models/", "1_light_object.obj", matlib);
+	lightObj->rebuildIndex();
     // make instance etc
 
     // scene->add(lightObj);
@@ -190,36 +201,51 @@ void a_rendering_walls()
     scene->add(new Triangle(f3, f4, b3, bottomleft, &woodMaterial)); 
     scene->add(new Triangle(b4, f4, b3, topright, &woodMaterial)); 
 
-	ConstantTexture* lightsrctex = new ConstantTexture(RGBColor(50, 50, 50));
+	ConstantTexture* lightsrctex = new ConstantTexture(RGBColor(5000, 5, 5000));
 	Material* lightsource = new LambertianMaterial(lightsrctex, blacktex);
 
-	Vector rightQuadVector = cross(forwardVector, upVector) * 10;
+	/*Vector rightQuadVector = cross(forwardVector, upVector) * 10;
 	Vector forwardQuadVector = forwardVector * 10;
 	Quad* light = new Quad((b1 + b2 + f1 + f2) * 0.25 - rightQuadVector / 2 - forwardQuadVector / 2, rightQuadVector, forwardQuadVector, nullptr, lightsource);
+	AreaLight als(light);
+	scene->add(light);*/
+
+	Vector rightQuadVector = cross(forwardVector, upVector) * 10;
+	Vector upQuadVector = upVector * 10;
+	Quad* light = new Quad(cameraPostion - forwardVector * 10, rightQuadVector, upQuadVector, nullptr, lightsource);
 	AreaLight als(light);
 	scene->add(light);
 
     World world;
 	world.light.push_back(&als);
-	world.scene = scene;
-	scene->rebuildIndex();
 
     //directional light
     // DirectionalLight dirl(Vector(0.2f,-0.5f,0.5f).normalize(), RGBColor(RGBColor::rep(100)));
-    DirectionalLight dirl(forwardVector.normalize(), RGBColor(RGBColor::rep(1)));
+    // DirectionalLight dirl(forwardVector.normalize(), RGBColor(RGBColor::rep(100)));
 
-    world.light.push_back(&dirl);
+    // world.light.push_back(&dirl);
     world.light.push_back(new SpotLight(Point(-70, 70, 5), forwardVector.normalize(),  pi, 10.0f, RGBColor(RGBColor::rep(100000))));
 
 	Point pianoCentre = Point(-15, 0, 2 - 70);
 	int channel = 0;
+	float rand = 0.01f;
+
 	int direction = 0;
 	for (int i = 0; i < 9; i++)
 	{
 		Point currentSpotLightPoint = Point(23, 100, -70 + 16 * i);
 		Point currentPianoPoint = pianoCentre + Vector(0, 0, 20 * i);
-		RGBColor color = RGBColor(0, 0, 0);
-		float rand = random();
+		Vector currentLightDirection = (currentPianoPoint - currentSpotLightPoint).normalize();
+
+		Instance* currentLightObj = new Instance(lightObj);
+		
+		//currentLightObj->translate(-1.0f * (currentSpotLightPoint - Point(0, 0, 0)));
+		//currentLightObj->rotate(Vector(0, 1, 0), acos(dot(currentLightDirection, Vector(0, 1, 0))));
+		//currentLightObj->translate(1.0f * (currentSpotLightPoint - Point(0, 0, 0)));
+
+		currentLightObj->translate(Vector(0, 0, 16 * i));
+
+		RGBColor color = RGBColor(0, 0, 0); 
 		
 		if (rand < 0.33f)
 			color = color + RGBColor(1, 0, 0);
@@ -228,11 +254,13 @@ void a_rendering_walls()
 		else
 			color = color + RGBColor(0, 0, 1);
 
-		world.light.push_back(new SpotLight(currentSpotLightPoint, (currentPianoPoint - currentSpotLightPoint).normalize(), pi / 6, 30.0f, 100000 * color));
-		channel = (channel + 1) % 3;
+		world.light.push_back(new SpotLight(currentSpotLightPoint, currentLightDirection, pi / 6, 30.0f, 1000000 * color));
+		scene->add(currentLightObj);
+		rand = rand + 0.33f;
 	}
 
-
+	scene->rebuildIndex();
+	world.scene = scene;
 
 	// PerspectiveCamera cam1(Point(0.0f, 5.0f, 30.0f), Vector(0.0f, 0.0f, -1.0f), Vector(0.0f, 1.0f, 0.0f), pi / 4, pi / 3);
     // PerspectiveCamera cam1(cameraPostion, forwardVector, upVector, pi / 4, pi / 3);

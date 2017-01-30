@@ -111,7 +111,11 @@ namespace rt {
 		{
 			Point intersectedPoint = transformation * intersection.hitPoint();
 			float distance = (intersectedPoint - ray.o).length();
-			Intersection backTransformedIntersection = Intersection(distance, ray, intersection.solid, (inverseTransform.transpose() * intersection.normal()).normalize());
+			Vector normalVector = (inverseTransform.transpose() * intersection.normal()).normalize();
+			if (dot(normalVector, ray.d.normalize()) > 0)
+				normalVector = -1.0f * normalVector;
+
+			Intersection backTransformedIntersection = Intersection(distance, ray, intersection.solid, normalVector);
 			return backTransformedIntersection;
 		}
 		return intersection;
