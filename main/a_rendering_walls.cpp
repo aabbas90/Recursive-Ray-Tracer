@@ -158,12 +158,13 @@ void a_rendering_walls()
     matlib->insert(std::pair<std::string, Material*>("stage_floor_mat1", woodtex_mat)); 
     matlib->insert(std::pair<std::string, Material*>("stage_floor_mat2", woodtex_mat)); 
 
-	Texture* impureBlacktex = new ConstantTexture(RGBColor(0.08f, 0.05f, 0.05f));
+	Texture* impureBlacktex = new ConstantTexture(RGBColor(0.07f, 0.05f, 0.05f));
 	// LambertianMaterial* pianoBlackMat = new LambertianMaterial(impureBlacktex, impureBlacktex);
 
 	CombineMaterial* pianoBlackMat = new CombineMaterial();
-	pianoBlackMat->add(new LambertianMaterial(impureBlacktex, impureBlacktex), 0.5f);
-	pianoBlackMat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.5f);
+	pianoBlackMat->add(new LambertianMaterial(impureBlacktex, impureBlacktex), 0.4f);
+	pianoBlackMat->add(new PhongMaterial(impureBlacktex, 10), 0.1);
+	pianoBlackMat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.01f), 0.5f);
 	// pianoBlackMat->add(new GlassMaterial(1.5), 0.25f);
 
 	// pianoBlackMat->add(new GlassMaterial(1.5), 0.5);
@@ -172,8 +173,9 @@ void a_rendering_walls()
 	// LambertianMaterial* pianoWhiteMat = new LambertianMaterial(whitetex, whitetex);
 
 	CombineMaterial* pianoWhiteMat = new CombineMaterial();
-	pianoWhiteMat->add(new LambertianMaterial(whitetex, whitetex), 0.5f);
-	pianoBlackMat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.5f);
+	pianoWhiteMat->add(new LambertianMaterial(whitetex, whitetex), 0.4f);
+	pianoBlackMat->add(new PhongMaterial(impureBlacktex, 10), 0.1);
+	pianoWhiteMat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.5f);
 	// pianoWhiteMat->add(new GlassMaterial(1.5), 0.25f);
 
 	CombineMaterial* pianoGoldMat = new CombineMaterial();
@@ -379,10 +381,18 @@ void a_rendering_walls()
 	// world.light.push_back(new PointLight(b2, RGBColor::rep(pointLightInt)));
 	// world.light.push_back(new PointLight(b3, RGBColor::rep(pointLightInt)));
 	// world.light.push_back(new PointLight(b4, RGBColor::rep(pointLightInt)));
-	world.light.push_back(new PointLight(f1 - (f1 - b4).normalize(), RGBColor::rep(pointLightInt)));
-	world.light.push_back(new PointLight(f2 - (f2 - b3).normalize(), RGBColor::rep(pointLightInt)));
+
+	Point p1 = f1 - (f1 - b4).normalize();
+	Point p2 = f2 - (f2 - b3).normalize();
+	Point p3 = f3 - (f3 - b2).normalize();
+	Point p4 = f4 - (f4 - b1).normalize();
+
+	/*world.light.push_back(new PointLight(f1 - (f1 - b4).normalize(), RGBColor::rep(pointLightInt)));
+	world.light.push_back(new PointLight(f2 - (f2 - b3).normalize(), RGBColor::rep(pointLightInt)));*/
 	world.light.push_back(new PointLight(f3 - (f3 - b2).normalize(), RGBColor::rep(pointLightInt)));
 	world.light.push_back(new PointLight(f4 - (f4 - b1).normalize(), RGBColor::rep(pointLightInt)));
+
+	world.light.push_back(new PointLight((p1 + p2) * 0.5f, RGBColor::rep(pointLightInt * 2)));
 
 	// world.light.push_back(&als2);
 
@@ -408,8 +418,8 @@ void a_rendering_walls()
 		else
 			color = RGBColor(1, 0, 0);
 
-		Point currentSpotLightPoint = Point(63, 100, -70 + 16 * (i + 1)); // Point(50, 100, -70 + 16 * i);
-		Point currentPianoPoint = pianoCentre + Vector(20, 0, 16 * (i + 1));
+		Point currentSpotLightPoint = Point(23, 131, -70 + 16 * (i + 1)); // Point(50, 100, -70 + 16 * i);
+		Point currentPianoPoint = pianoCentre + Vector(100, 0, 16 * (i + 1));
 		Vector currentLightDirection = (currentPianoPoint - currentSpotLightPoint).normalize();
 
 		Instance* currentLightObj = new Instance(lightObj);
@@ -420,15 +430,19 @@ void a_rendering_walls()
 
 		ConstantTexture* currentLightTex = new ConstantTexture(color * 10000);
 		Material* currentSource = new LambertianMaterial(currentLightTex, blacktex);
-		Point discCentre = Point(35.73, 115.87, -43) + currentLightDirection * 0.5 + Vector(0, 0, 16 * i);
+		// Point discCentre = Point(35.73, 115.87, -43) + currentLightDirection * 0.5 + Vector(0, 0, 16 * i);
+		Point discCentre = Point(-62.5809021, 96.7399216, -44.2987137) + currentLightDirection * 0.5 + Vector(0, 0, 16 * i);
+
 		Disc* currentDisc = new Disc(discCentre, currentLightDirection, 3, nullptr, currentSource);
-		
+
 		AreaSpotLight* als1 = new AreaSpotLight(currentDisc, currentLightDirection, pi / 1.5, 50, color * 0.5f);
 		world.light.push_back(als1);
-		// world.light.push_back(new SpotLight(discCentre, currentLightDirection, pi / 6, 200.0f, 1000000 * color));
-		scene->add(currentDisc);
+		world.light.push_back(new SpotLight(discCentre, currentLightDirection, pi / 1.5, 50, 100000 * color));
+		// scene->add(currentDisc);
 		scene->add(currentLightObj);
 	}
+
+
 
 	scene->rebuildIndex();
 	world.scene = scene;
