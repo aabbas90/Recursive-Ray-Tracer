@@ -117,11 +117,11 @@ void a_rendering_walls()
     FlatMaterial* woodtex_mat = new FlatMaterial(woodtex);
 
 	Point pianoCentre = Point(-15, 0, -70);
-	CombineMaterial* curtainMixedMat = new CombineMaterial();
-	ImageTexture* curtaintex = new ImageTexture("models/curtain_tex.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
-    FlatMaterial* curtaintex_mat = new FlatMaterial(curtaintex);
-    curtainMixedMat->add(new FlatMaterial(curtaintex), .05);
-    curtainMixedMat->add(lamp_mat, .95);
+	//CombineMaterial* curtainMixedMat = new CombineMaterial();
+	//ImageTexture* curtaintex = new ImageTexture("models/curtain_tex.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
+ //   FlatMaterial* curtaintex_mat = new FlatMaterial(curtaintex);
+ //   curtainMixedMat->add(new FlatMaterial(blacktex1), .95);
+ //   curtainMixedMat->add(new LambertianMaterial(blacktex1, goldtex), .05);
 
 	float f = 1;
 	float cameraSizeX = 12;
@@ -137,6 +137,11 @@ void a_rendering_walls()
 
 	Material* camera_mat = new CameraLCDmaterial(sceneCameraCentre, sceneCameraLeftCorner, sceneCameraForwardVector, sceneCameraUpVector.normalize(), pi / 4, pi / 3, cameraSizeX, cameraSizeY, f);
 	Quad* cameraQuad = new Quad(sceneCameraLeftCorner, sceneCameraUpVector, sceneCameraRightVector, nullptr, camera_mat);
+
+	Point cameraBoxLeftCorner = sceneCameraLeftCorner - sceneCameraUpVector * 0.5 - sceneCameraRightVector.normalize() * 0.5;
+	FlatMaterial* cameraMaterial = new FlatMaterial(blacktex1);
+
+	Quad* cameraBox = new Quad(cameraBoxLeftCorner + sceneCameraForwardVector * 0.01, sceneCameraUpVector, sceneCameraRightVector, nullptr, cameraMaterial);
 
     // Material* mat_stones = new MirrorMaterial(0.0f, 0.0f);
 
@@ -174,7 +179,7 @@ void a_rendering_walls()
     matlib->insert(std::pair<std::string, Material*>("ground_mat", wall_mat)); 
 	matlib->insert(std::pair<std::string, Material*>("light_mat", gray_mat));
     matlib->insert(std::pair<std::string, Material*>("specs_mat", &specsMirror));
-    matlib->insert(std::pair<std::string, Material*>("curtain_mat", curtainMixedMat));
+    // matlib->insert(std::pair<std::string, Material*>("curtain_mat", curtainMixedMat));
     matlib->insert(std::pair<std::string, Material*>("chair:Material_001", lamp_mat));
 
     BVH* scene = new BVH(false);
@@ -182,14 +187,17 @@ void a_rendering_walls()
     BVH* specs = new BVH(false);
     BVH* chair = new BVH(false);
     
-    loadOBJ(scene, "models/", "1_piano_stage.obj", matlib);
-    //loadOBJ(scene, "models/", "1_piano_curtain.obj", matlib);
+    loadOBJ(scene, "models/", "1_piano.obj", matlib);
+    // loadOBJ(scene, "models/", "1_piano_curtain.obj", matlib);
+	// loadOBJ(scene, "models/", "1_curtain.obj", matlib);
     loadOBJ(lightObj, "models/", "1_light_object.obj", matlib);
     loadOBJ(specs, "models/", "1_specs_mirror.obj", matlib);
     loadOBJ(chair, "models/", "1_chair.obj", matlib);
 	lightObj->rebuildIndex();
     chair->rebuildIndex();
 	scene->add(cameraQuad);
+	scene->add(cameraBox);
+	// scene->add(chair);
     // specs->rebuildIndex();
     // scene->add(specs); //uncomment for specs
     // make instance etc
@@ -246,8 +254,8 @@ void a_rendering_walls()
     Point w2(42, 113, 80);
 
     //back stage wall TODO uncomment this later
-     scene->add(new Triangle(bs1, bs2, w1, bottomleft, &woodMaterial));
-     scene->add(new Triangle(w2, bs2, w1, topright, &woodMaterial));
+     //scene->add(new Triangle(bs1, bs2, w1, bottomleft, &woodMaterial));
+     //scene->add(new Triangle(w2, bs2, w1, topright, &woodMaterial));
 
     //stage front 
     scene->add(new Triangle(fs3, fs4, fs1, bottomleft, &woodMaterial));
