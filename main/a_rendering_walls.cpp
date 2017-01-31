@@ -123,27 +123,42 @@ void a_rendering_walls()
  //   curtainMixedMat->add(new FlatMaterial(blacktex1), .95);
  //   curtainMixedMat->add(new LambertianMaterial(blacktex1, goldtex), .05);
 
+	//float f = 1;
+	//float cameraSizeX = 12;
+	//float cameraSizeY = 8;
+
+	//Point sceneCameraCentre = Point(126, 35, -6); // cameraPostion + forwardVector * 100 + cross(forwardVector, upVector).normalize() * 40 - upVector.normalize() * 20;
+	//
+	//Vector sceneCameraForwardVector = (pianoCentre - sceneCameraCentre).normalize();
+	//Vector sceneCameraRightVector = cross(sceneCameraForwardVector, upVector).normalize() * cameraSizeX;
+	//Vector sceneCameraUpVector = cross(sceneCameraRightVector, sceneCameraForwardVector).normalize() * cameraSizeY;
+
+	//Point sceneCameraLeftCorner = sceneCameraCentre - sceneCameraUpVector * 0.5 - sceneCameraRightVector.normalize() * 0.5;
+
+	//Material* camera_mat = new CameraLCDmaterial(sceneCameraCentre, sceneCameraLeftCorner, sceneCameraForwardVector, sceneCameraUpVector.normalize(), pi / 4, pi / 3, cameraSizeX, cameraSizeY, f);
+	//Quad* cameraQuad = new Quad(sceneCameraLeftCorner, sceneCameraUpVector, sceneCameraRightVector, nullptr, camera_mat);
+
+	// Scene Camera:
 	float f = 1;
-	float cameraSizeX = 12;
-	float cameraSizeY = 8;
+	float cameraSizeX = 24;
+	float cameraSizeY = 14;
 
-	Point sceneCameraCentre = cameraPostion + forwardVector * 100 + cross(forwardVector, upVector).normalize() * 40 - upVector.normalize() * 20;
-	
-	Vector sceneCameraForwardVector = (pianoCentre - sceneCameraCentre).normalize();
+	Point sceneCameraCentre = Point(-126, 35, -6); // cameraPostion + forwardVector * 100 + cross(forwardVector, upVector).normalize() * 40 - upVector.normalize() * 20;
+
+	float camXRot = 0;
+	float camYRot = 90;
+	float camZRot = 0;
+
+	Matrix camRotationMatrix = getRotationMatrix(camXRot, camYRot, camZRot);
+
+	Vector sceneCameraUpVector = (camRotationMatrix *  Vector(0.0f, 1.0f, 0.0f)).normalize() * cameraSizeY;
+	Vector sceneCameraForwardVector = -(camRotationMatrix *  Vector(0.0f, 0.0f, -1.0f)).normalize();
 	Vector sceneCameraRightVector = cross(sceneCameraForwardVector, upVector).normalize() * cameraSizeX;
-	Vector sceneCameraUpVector = cross(sceneCameraRightVector, sceneCameraForwardVector).normalize() * cameraSizeY;
 
-	Point sceneCameraLeftCorner = sceneCameraCentre - sceneCameraUpVector * 0.5 - sceneCameraRightVector.normalize() * 0.5;
+	Point sceneCameraLeftCorner = sceneCameraCentre - sceneCameraUpVector * 0.5 - sceneCameraRightVector * 0.5;
 
 	Material* camera_mat = new CameraLCDmaterial(sceneCameraCentre, sceneCameraLeftCorner, sceneCameraForwardVector, sceneCameraUpVector.normalize(), pi / 4, pi / 3, cameraSizeX, cameraSizeY, f);
 	Quad* cameraQuad = new Quad(sceneCameraLeftCorner, sceneCameraUpVector, sceneCameraRightVector, nullptr, camera_mat);
-
-	Point cameraBoxLeftCorner = sceneCameraLeftCorner - sceneCameraUpVector * 0.5 - sceneCameraRightVector.normalize() * 0.5;
-	FlatMaterial* cameraMaterial = new FlatMaterial(blacktex1);
-
-	Quad* cameraBox = new Quad(cameraBoxLeftCorner + sceneCameraForwardVector * 0.01, sceneCameraUpVector, sceneCameraRightVector, nullptr, cameraMaterial);
-
-    // Material* mat_stones = new MirrorMaterial(0.0f, 0.0f);
 
     MatLib* matlib = new MatLib;
     matlib->insert(std::pair<std::string, Material*>("stage_floor_mat1", woodtex_mat)); 
@@ -188,6 +203,7 @@ void a_rendering_walls()
     BVH* chair = new BVH(false);
     
     loadOBJ(scene, "models/", "1_piano.obj", matlib);
+	loadOBJ(scene, "models/", "1_camera.obj", matlib);
     // loadOBJ(scene, "models/", "1_piano_curtain.obj", matlib);
 	// loadOBJ(scene, "models/", "1_curtain.obj", matlib);
     loadOBJ(lightObj, "models/", "1_light_object.obj", matlib);
@@ -196,7 +212,7 @@ void a_rendering_walls()
 	lightObj->rebuildIndex();
     chair->rebuildIndex();
 	scene->add(cameraQuad);
-	scene->add(cameraBox);
+	// scene->add(cameraBox);
 	// scene->add(chair);
     // specs->rebuildIndex();
     // scene->add(specs); //uncomment for specs
@@ -361,7 +377,7 @@ void a_rendering_walls()
 
     // world.light.push_back(&dirl);
 	Vector spotLightFV = (Point(-22.2028809, 23.1722298, -1.95628357) - sceneCameraCentre).normalize();// sceneCameraForwardVector.normalize() + sceneCameraRightVector.normalize() * 0.2 + sceneCameraUpVector.normalize() * 0.1;
-    world.light.push_back(new SpotLight(sceneCameraCentre + sceneCameraForwardVector.normalize() * 0.2, spotLightFV,  pi / 3, 300.0f, RGBColor(RGBColor::rep(1000000))));
+    world.light.push_back(new SpotLight(sceneCameraCentre + sceneCameraForwardVector.normalize() * 0.2, spotLightFV,  pi / 3, 300.0f, RGBColor(RGBColor::rep(100000))));
 
 	int channel = 0;
 	int direction = 0;
