@@ -14,6 +14,7 @@ public:
     virtual RGBColor getEmission(const Point& texPoint, const Vector& normal, const Vector& outDir) const;
     virtual SampleReflectance getSampleReflectance(const Point& texPoint, const Vector& normal, const Vector& outDir) const;
     virtual Sampling useSampling() const;
+	virtual Point getRayOrigin(Point& originalPoint) const;
 	Sampling sampling = Material::SAMPLING_NOT_NEEDED;
 
 private:

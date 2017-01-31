@@ -2,6 +2,7 @@
 #define CG1RAYTRACER_MATERIALS_MATERIAL_HEADER
 
 #include <core/vector.h>
+#include <core/point.h>
 #include <core/color.h>
 
 namespace rt {
@@ -31,6 +32,7 @@ public:
 	};
 	virtual SampleReflectance getSampleReflectance(const Point& texPoint, const Vector& normal, const Vector& outDir) const = 0;
 	virtual Sampling useSampling() const = 0;
+	virtual Point getRayOrigin(Point& originalPoint) const = 0;
 	virtual ~Material() {}
 };
 

@@ -63,4 +63,8 @@ namespace rt
     {
         return Material::Sampling::SAMPLING_NOT_NEEDED;
     }
+	Point CookTorranceMaterial::getRayOrigin(Point& originalPoint) const
+	{
+		return originalPoint;
+	}
 }

@@ -270,6 +270,15 @@
     <ClInclude Include="rt\primmod\bmap.h">
       <Filter>rt\primod</Filter>
     </ClInclude>
+    <ClInclude Include="cameraLCD.h">
+      <Filter>rt\solids</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\materials\cameraLCDMaterial.h">
+      <Filter>rt\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="rt\lights\areaspotlight.h">
+      <Filter>rt\lights</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -485,11 +494,9 @@
     <ClCompile Include="rt\loaders\objmat.cpp">
       <Filter>rt\loaders</Filter>
     </ClCompile>
-    <ClCompile Include="rt\materials\glass.cpp" />
     <ClCompile Include="rt\cameras\dofperspective.cpp">
       <Filter>rt\cameras</Filter>
     </ClCompile>
-    <ClCompile Include="rt\materials\fuzzymirror.cpp" />
     <ClCompile Include="main\a_smooth.cpp">
       <Filter>main</Filter>
     </ClCompile>
@@ -514,6 +521,21 @@
     </ClCompile>
     <ClCompile Include="main\a_rendering_walls.cpp">
       <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="cameraLCD.cpp">
+      <Filter>rt\solids</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\materials\glass.cpp">
+      <Filter>rt\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\materials\cameraLCDMaterial.cpp">
+      <Filter>rt\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\materials\fuzzymirror.cpp">
+      <Filter>rt\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="rt\lights\areaspotlight.cpp">
+      <Filter>rt\lights</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

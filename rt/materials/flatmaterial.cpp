@@ -24,4 +24,9 @@ namespace rt
 		return SampleReflectance();
 	}
 
+	Point FlatMaterial::getRayOrigin(Point & originalPoint) const
+	{
+		return originalPoint;
+	}
+
 }

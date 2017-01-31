@@ -6,6 +6,7 @@
 #include <rt/intersection.h>
 #include <rt/solids/solid.h>
 #include <rt/materials/material.h>
+#include <rt/materials/cameraLCDMaterial.h>
 #include <rt/materials/combine.h>
 #include <rt/coordmappers/coordmapper.h>
 
@@ -59,17 +60,24 @@ namespace rt
 				auto reflectance = currentMaterial->getSampleReflectance(texturePoint, normal, outDirFlipped);
 				Vector inDir = reflectance.direction.normalize();
 
-
-				float dotP = dot(normal, inDir);
-				int signOfEpsilon = 1;
-				if (dotP < 0)
+				if (reflectance.reflectance.grayscale() > 0)
 				{
-					signOfEpsilon = -1;
-				}
-				Ray shadowRay = Ray(intersection.hitPoint() + signOfEpsilon * displacement * normal, inDir);
+					float dotP = dot(normal, inDir);
+					int signOfEpsilon = 1;
+					if (dotP < 0)
+					{
+						signOfEpsilon = -1;
+					}
 
-				RGBColor incomingLightColor = this->getRadiance(shadowRay, depth + 1);
-				color = incomingLightColor * reflectance.reflectance;
+					Point rayOrigin = intersection.hitPoint();
+
+					rayOrigin = currentMaterial->getRayOrigin(rayOrigin);
+
+					Ray shadowRay = Ray(rayOrigin + signOfEpsilon * displacement * normal, inDir);
+
+					RGBColor incomingLightColor = this->getRadiance(shadowRay, depth + 1);
+					color = incomingLightColor * reflectance.reflectance;
+				}
 			}
 
 			else if (currentMaterial->useSampling() == Material::Sampling::SAMPLING_SECONDARY)
@@ -89,15 +97,16 @@ namespace rt
 					RGBColor reflected = currentMaterial->getReflectance(texturePoint, normal, outDirFlipped, inDir);
 					color = color + reflected * lightSource->getIntensity(lightHit);
 				}
-				
-				 auto reflectance = currentMaterial->getSampleReflectance(texturePoint, normal, outDirFlipped);
-				 Vector inDir = reflectance.direction.normalize();
-				 Ray shadowRay = Ray(intersection.hitPoint() + displacement * inDir, inDir);
 
-				 RGBColor incomingLightColor = this->getRadiance(shadowRay, depth + 1);
-				 color = color + incomingLightColor * reflectance.reflectance;
+				auto reflectance = currentMaterial->getSampleReflectance(texturePoint, normal, outDirFlipped);
+				Vector inDir = reflectance.direction.normalize();
+
+				Point rayOrigin = intersection.hitPoint();
+				Ray shadowRay = Ray(rayOrigin + displacement * inDir, inDir);
+
+				RGBColor incomingLightColor = this->getRadiance(shadowRay, depth + 1);
+				color = color + incomingLightColor * reflectance.reflectance;
 			}
-			
 			color = color + intersection.solid->material->getEmission(texturePoint, normal, ray.d.normalize());
 		}
 

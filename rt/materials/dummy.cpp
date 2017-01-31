@@ -22,4 +22,8 @@ namespace rt
 	{
 		NOT_IMPLEMENTED;
 	}
+	Point DummyMaterial::getRayOrigin(Point& originalPoint) const
+	{
+		return originalPoint;
+	}
 }

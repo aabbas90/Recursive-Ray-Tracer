@@ -33,10 +33,10 @@ namespace rt {
 			Float4(u.z * u.x * (1 - cos(angle)) - u.y * sin(angle), u.z * u.y * (1 - cos(angle)) + u.x * sin(angle), cos(angle) + u.z * u.z * (1 - cos(angle)), 0),
 			Float4(0, 0, 0, 1));
 
-		Vector originalTranslation = Vector(transformation[0][3], transformation[1][3], transformation[2][3]);
-		this->translate(-originalTranslation);
-		transformation = product(rotation, transformation);
-		this->translate(originalTranslation);
+		// Vector originalTranslation = Vector(transformation[0][3], transformation[1][3], transformation[2][3]);
+		//this->translate(-originalTranslation);
+		transformation = product(transformation, rotation);
+		// this->translate(originalTranslation);
 	}
 
 	void Instance::scale(float scale)

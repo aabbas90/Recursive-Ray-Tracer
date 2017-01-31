@@ -100,9 +100,9 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -110,8 +110,9 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OpenMPSupport>true</OpenMPSupport>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -142,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="cameraLCD.h" />
     <ClInclude Include="CImg-1.7.9_pre102716\CImg.h" />
     <ClInclude Include="core\assert.h" />
     <ClInclude Include="core\CImg.h" />
@@ -183,11 +185,13 @@
     <ClInclude Include="rt\integrators\recraytrace.h" />
     <ClInclude Include="rt\intersection.h" />
     <ClInclude Include="rt\lights\arealight.h" />
+    <ClInclude Include="rt\lights\areaspotlight.h" />
     <ClInclude Include="rt\lights\directional.h" />
     <ClInclude Include="rt\lights\light.h" />
     <ClInclude Include="rt\lights\pointlight.h" />
     <ClInclude Include="rt\lights\spotlight.h" />
     <ClInclude Include="rt\loaders\obj.h" />
+    <ClInclude Include="rt\materials\cameraLCDMaterial.h" />
     <ClInclude Include="rt\materials\combine.h" />
     <ClInclude Include="rt\materials\cookTorrance.h" />
     <ClInclude Include="rt\materials\dummy.h" />
@@ -220,6 +224,7 @@
     <ClInclude Include="rt\world.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cameraLCD.cpp" />
     <ClCompile Include="core\color.cpp" />
     <ClCompile Include="core\float4.cpp" />
     <ClCompile Include="core\image.cpp" />
@@ -271,11 +276,13 @@
     <ClCompile Include="rt\integrators\recraytrace.cpp" />
     <ClCompile Include="rt\intersection.cpp" />
     <ClCompile Include="rt\lights\arealight.cpp" />
+    <ClCompile Include="rt\lights\areaspotlight.cpp" />
     <ClCompile Include="rt\lights\directional.cpp" />
     <ClCompile Include="rt\lights\pointlight.cpp" />
     <ClCompile Include="rt\lights\spotlight.cpp" />
     <ClCompile Include="rt\loaders\obj.cpp" />
     <ClCompile Include="rt\loaders\objmat.cpp" />
+    <ClCompile Include="rt\materials\cameraLCDMaterial.cpp" />
     <ClCompile Include="rt\materials\combine.cpp" />
     <ClCompile Include="rt\materials\cookTorrance.cpp" />
     <ClCompile Include="rt\materials\dummy.cpp" />

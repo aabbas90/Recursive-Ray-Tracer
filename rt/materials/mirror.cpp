@@ -33,4 +33,8 @@ namespace rt
     {
         return Material::Sampling::SAMPLING_ALL;
     }
+	Point MirrorMaterial::getRayOrigin(Point & originalPoint) const
+	{
+		return originalPoint;
+	}
 }

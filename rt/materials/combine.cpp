@@ -54,6 +54,10 @@ namespace rt
     {   
         return Material::SAMPLING_SECONDARY;
     }
+	Point CombineMaterial::getRayOrigin(Point& originalPoint) const
+	{
+		return originalPoint;
+	}
     int getSamplingPriority(Material::Sampling samplingType)  
     {
         if(samplingType == Material::SAMPLING_NOT_NEEDED)

@@ -54,4 +54,8 @@ namespace rt
 		}		
 		return SampleReflectance(finalDirection, RGBColor(1, 1, 1));
 	}
+	Point GlassMaterial::getRayOrigin(Point & originalPoint) const
+	{
+		return originalPoint;
+	}
 }

@@ -54,8 +54,9 @@ namespace rt
 
 			if (distance2FromCentre < radius * radius)
 			{
-				planeInt.SetLocalIntersectingPoint((intersectionPoint - center).ToPoint());
-				return planeInt;
+				Intersection intersect = Intersection(planeInt.distance, ray, this, normal);
+				intersect.SetLocalIntersectingPoint((intersectionPoint - center).ToPoint());
+				return intersect;
 			}
 		}
 

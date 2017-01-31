@@ -53,4 +53,9 @@ namespace rt
 		return SampleReflectance(dir, color);
 	}
 
+	Point FuzzyMirrorMaterial::getRayOrigin(Point & originalPoint) const
+	{
+		return originalPoint;
+	}
+
 }

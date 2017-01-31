@@ -28,4 +28,8 @@ namespace rt
     {
         return Material::Sampling::SAMPLING_NOT_NEEDED;
     }
+	Point LambertianMaterial::getRayOrigin(Point & originalPoint) const
+	{
+		return originalPoint;
+	}
 }

@@ -27,7 +27,7 @@
 #include <rt/materials/mirror.h>
 #include <rt/materials/combine.h>
 #include <rt/materials/cookTorrance.h>
-
+#include <rt/materials/cameraLCDMaterial.h>
 #include <rt/solids/quad.h>
 #include <rt/solids/triangle.h>
 #include <rt/solids/sphere.h>
@@ -39,8 +39,9 @@
 
 #include <rt/integrators/recraytrace.h>
 #include <rt/lights/arealight.h>
+#include <rt/lights/areaspotlight.h>
 #include <core/random.h>
-
+#include <rt/solids/disc.h>
 
 using namespace rt;
 void a_rendering_walls()
@@ -66,7 +67,7 @@ void a_rendering_walls()
 	float yRotation = -451; // -40;
     float zRotation = 0;
     // Point cameraPostion = Point(-130, 85, 100);
-	Point cameraPostion = Point(-450, 80, 0);
+	Point cameraPostion = Point(-350, 80, 0);
     Vector upVector = Vector(0.0f, 1.0f, 0.0f);
     Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
 
@@ -104,7 +105,22 @@ void a_rendering_walls()
 	ImageTexture* woodtex = new ImageTexture("models/wood1.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
     FlatMaterial* woodtex_mat = new FlatMaterial(woodtex);
 
+	Point pianoCentre = Point(-15, 0, -70);
 
+	float f = 1;
+	float cameraSizeX = 12;
+	float cameraSizeY = 8;
+
+	Point sceneCameraCentre = cameraPostion + forwardVector * 100 + cross(forwardVector, upVector).normalize() * 40 - upVector.normalize() * 20;
+	
+	Vector sceneCameraForwardVector = (pianoCentre - sceneCameraCentre).normalize();
+	Vector sceneCameraRightVector = cross(sceneCameraForwardVector, upVector).normalize() * cameraSizeX;
+	Vector sceneCameraUpVector = cross(sceneCameraRightVector, sceneCameraForwardVector).normalize() * cameraSizeY;
+
+	Point sceneCameraLeftCorner = sceneCameraCentre - sceneCameraUpVector * 0.5 - sceneCameraRightVector.normalize() * 0.5;
+
+	Material* camera_mat = new CameraLCDmaterial(sceneCameraCentre, sceneCameraLeftCorner, sceneCameraForwardVector, sceneCameraUpVector.normalize(), pi / 4, pi / 3, cameraSizeX, cameraSizeY, f);
+	Quad* cameraQuad = new Quad(sceneCameraLeftCorner, sceneCameraUpVector, sceneCameraRightVector, nullptr, camera_mat);
 
     // Material* mat_stones = new MirrorMaterial(0.0f, 0.0f);
 
@@ -114,17 +130,22 @@ void a_rendering_walls()
 
 
 	CombineMaterial* pianoBlackMat = new CombineMaterial();
-	pianoBlackMat->add(new LambertianMaterial(graytex1, graytex1), 0.5);
-	pianoBlackMat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.5);
+	pianoBlackMat->add(new LambertianMaterial(blacktex1, blacktex1), 0.5);
+	pianoBlackMat->add(new PhongMaterial(blacktex1, 30), 0.4);
+	pianoBlackMat->add(new FuzzyMirrorMaterial(12.485f, 0.433f, 0.01f), 0.1);
 
 	CombineMaterial* pianoWhiteMat = new CombineMaterial();
-	pianoWhiteMat->add(new LambertianMaterial(blacktex1, whitetex), 0.5);
-	pianoWhiteMat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.5);
+	pianoBlackMat->add(new LambertianMaterial(whitetex, whitetex), 0.1);
+	pianoWhiteMat->add(new FuzzyMirrorMaterial(12.485f, 0.433f, 0.05f), 0.9);
+
+	CombineMaterial* pianoGoldMat = new CombineMaterial();
+	pianoGoldMat->add(new LambertianMaterial(blacktex1, goldtex), 0.5);
+	pianoGoldMat->add(new PhongMaterial(goldtex, 10), 0.5);
 
     matlib->insert(std::pair<std::string, Material*>("initialShadingGroup", other_mat)); 
     matlib->insert(std::pair<std::string, Material*>("hemisphere_mat", lamp_mat)); 
-    matlib->insert(std::pair<std::string, Material*>("Piano1:Wood", gold_mat)); 
-    matlib->insert(std::pair<std::string, Material*>("Piano1:Gold", gold_mat)); 
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Wood", pianoBlackMat));
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Gold", pianoBlackMat));
     matlib->insert(std::pair<std::string, Material*>("Piano1:Material_002", white_mat));
     matlib->insert(std::pair<std::string, Material*>("Piano1:Material_004", pianoBlackMat));
     matlib->insert(std::pair<std::string, Material*>("Piano1:Black", pianoBlackMat));
@@ -141,6 +162,8 @@ void a_rendering_walls()
     loadOBJ(scene, "models/", "1_piano.obj", matlib);
     loadOBJ(lightObj, "models/", "1_light_object.obj", matlib);
 	lightObj->rebuildIndex();
+
+	scene->add(cameraQuad);
     // make instance etc
 
     // scene->add(lightObj);
@@ -201,23 +224,25 @@ void a_rendering_walls()
     scene->add(new Triangle(f3, f4, b3, bottomleft, &woodMaterial)); 
     scene->add(new Triangle(b4, f4, b3, topright, &woodMaterial)); 
 
-	ConstantTexture* lightsrctex = new ConstantTexture(RGBColor(5000, 5, 5000));
+	ConstantTexture* lightsrctex = new ConstantTexture(RGBColor(10, 10, 10));
 	Material* lightsource = new LambertianMaterial(lightsrctex, blacktex);
 
-	/*Vector rightQuadVector = cross(forwardVector, upVector) * 10;
-	Vector forwardQuadVector = forwardVector * 10;
-	Quad* light = new Quad((b1 + b2 + f1 + f2) * 0.25 - rightQuadVector / 2 - forwardQuadVector / 2, rightQuadVector, forwardQuadVector, nullptr, lightsource);
-	AreaLight als(light);
-	scene->add(light);*/
+	Vector rightQuadVector = cross(forwardVector, upVector) * 50;
+	Vector forwardQuadVector = forwardVector * 50;
+	Quad* areaLight1 = new Quad((b1 + b2 + f1 + f2) * 0.25 - rightQuadVector / 2 - forwardQuadVector / 2, rightQuadVector, forwardQuadVector, nullptr, lightsource);
+	AreaLight als1(areaLight1);
+	scene->add(areaLight1);
 
-	Vector rightQuadVector = cross(forwardVector, upVector) * 10;
+
+	rightQuadVector = cross(forwardVector, upVector) * 10;
 	Vector upQuadVector = upVector * 10;
-	Quad* light = new Quad(cameraPostion - forwardVector * 10, rightQuadVector, upQuadVector, nullptr, lightsource);
-	AreaLight als(light);
-	scene->add(light);
+	Quad* areaLight2 = new Quad(cameraPostion - forwardVector * 10, rightQuadVector, upQuadVector, nullptr, lightsource);
+	AreaLight als2(areaLight2);
+	scene->add(areaLight2);
 
     World world;
-	world.light.push_back(&als);
+	world.light.push_back(&als1);
+	world.light.push_back(&als2);
 
     //directional light
     // DirectionalLight dirl(Vector(0.2f,-0.5f,0.5f).normalize(), RGBColor(RGBColor::rep(100)));
@@ -226,37 +251,40 @@ void a_rendering_walls()
     // world.light.push_back(&dirl);
     world.light.push_back(new SpotLight(Point(-70, 70, 5), forwardVector.normalize(),  pi, 10.0f, RGBColor(RGBColor::rep(100000))));
 
-	Point pianoCentre = Point(-15, 0, 2 - 70);
 	int channel = 0;
-	float rand = 0.01f;
-
 	int direction = 0;
-	for (int i = 0; i < 9; i++)
+	Point originalSpotLightPoint = Point(23, 100, -70 + 16);
+	for (int i = 0; i < 7; i++)
 	{
+		RGBColor color = RGBColor(0, 0, 0);
+
+		if (i % 3 == 0)
+			color = RGBColor(0, 0, 1);
+		else if (i % 3 == 1)
+			color = RGBColor(0, 1, 0);
+		else
+			color = RGBColor(1, 0, 0);
+
 		Point currentSpotLightPoint = Point(23, 100, -70 + 16 * i);
-		Point currentPianoPoint = pianoCentre + Vector(0, 0, 20 * i);
+		Point currentPianoPoint = pianoCentre + Vector(0, 0, 16 * i);
 		Vector currentLightDirection = (currentPianoPoint - currentSpotLightPoint).normalize();
 
 		Instance* currentLightObj = new Instance(lightObj);
-		
-		//currentLightObj->translate(-1.0f * (currentSpotLightPoint - Point(0, 0, 0)));
-		//currentLightObj->rotate(Vector(0, 1, 0), acos(dot(currentLightDirection, Vector(0, 1, 0))));
-		//currentLightObj->translate(1.0f * (currentSpotLightPoint - Point(0, 0, 0)));
-
+		currentLightObj->translate(-1.0f * (originalSpotLightPoint - Point(0, 0, 0)));
+		currentLightObj->rotate(Vector(0, 0, 1), atan(currentLightDirection.x / currentLightDirection.y));
+		currentLightObj->translate(1.0f * (originalSpotLightPoint - Point(0, 0, 0)));
 		currentLightObj->translate(Vector(0, 0, 16 * i));
 
-		RGBColor color = RGBColor(0, 0, 0); 
+		ConstantTexture* currentLightTex = new ConstantTexture(color * 10000);
+		Material* currentSource = new LambertianMaterial(currentLightTex, goldtex);
+		Point discCentre = Point(-22.782f, 113.576, -43.059) + currentLightDirection * 0.5 + Vector(0, 0, 16 * i);
+		Disc* currentDisc = new Disc(discCentre, currentLightDirection, 3, nullptr, currentSource);
 		
-		if (rand < 0.33f)
-			color = color + RGBColor(1, 0, 0);
-		else if (rand < 0.66f)
-			color = color + RGBColor(0, 1, 0);
-		else
-			color = color + RGBColor(0, 0, 1);
-
-		world.light.push_back(new SpotLight(currentSpotLightPoint, currentLightDirection, pi / 6, 30.0f, 1000000 * color));
+		AreaSpotLight* als1 = new AreaSpotLight(currentDisc, cross(forwardQuadVector, rightQuadVector).normalize(), pi / 4, 30, color * 100);
+		world.light.push_back(new SpotLight(discCentre, currentLightDirection, pi / 6, 100.0f, 1000000 * color));
+		// world.light.push_back(als1);
+		scene->add(currentDisc);
 		scene->add(currentLightObj);
-		rand = rand + 0.33f;
 	}
 
 	scene->rebuildIndex();
@@ -269,7 +297,7 @@ void a_rendering_walls()
     // RayCastingIntegrator integrator(&world);
     RecursiveRayTracingIntegrator integrator(&world);
     Renderer engine1(&cam1, &integrator);
-	engine1.setSamples(1);
+	engine1.setSamples(10);
     engine1.render(img);
     img.writePNG("1_walls.png");
 }
