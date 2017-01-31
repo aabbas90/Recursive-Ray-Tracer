@@ -105,7 +105,7 @@ void a_rendering_walls()
 	Texture* graytex1 = new ConstantTexture(RGBColor(0.1f, 0.1f, 0.1f));
 
 	// Material* lamp_mat = new PhongMaterial(greentex, 20.0f);
-	Material* lamp_mat = new LambertianMaterial(bluetex, bluetex);
+	Material* lamp_mat = new LambertianMaterial(blacktex, bluetex);
     // Material* lamp_mat = new GlassMaterial(2.0f);
     Material* other_mat = new LambertianMaterial(greentex, bluetex);
     Material* wall_mat = new LambertianMaterial(bluetex, bluetex);
@@ -175,17 +175,20 @@ void a_rendering_walls()
 	matlib->insert(std::pair<std::string, Material*>("light_mat", gray_mat));
     matlib->insert(std::pair<std::string, Material*>("specs_mat", &specsMirror));
     matlib->insert(std::pair<std::string, Material*>("curtain_mat", curtainMixedMat));
+    matlib->insert(std::pair<std::string, Material*>("chair:Material_001", lamp_mat));
 
     BVH* scene = new BVH(false);
     BVH* lightObj = new BVH(false);
     BVH* specs = new BVH(false);
+    BVH* chair = new BVH(false);
     
     loadOBJ(scene, "models/", "1_piano.obj", matlib);
     //loadOBJ(scene, "models/", "1_piano_curtain.obj", matlib);
     loadOBJ(lightObj, "models/", "1_light_object.obj", matlib);
-    // loadOBJ(specs, "models/", "1_specs_mirror.obj", matlib);
+    loadOBJ(specs, "models/", "1_specs_mirror.obj", matlib);
+    loadOBJ(specs, "models/", "1_chair.obj", matlib);
 	lightObj->rebuildIndex();
-
+    chair->rebuildIndex();
 	scene->add(cameraQuad);
     // specs->rebuildIndex();
     // scene->add(specs); //uncomment for specs
