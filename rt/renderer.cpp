@@ -3,7 +3,9 @@
 #include <rt/cameras/orthographic.h>
 #include <rt/integrators/integrator.h>
 #include <core/random.h>
+#include <ppl.h>
 
+using namespace concurrency;
 using namespace rt;
 
 RGBColor a1computeColor(uint x, uint y, uint width, uint height);
@@ -25,17 +27,13 @@ void Renderer::render(Image & img)
 {
 	if(samples > 1)
 	{
-		for (uint i = 0; i < img.width(); ++i)
+		parallel_for(uint(0), img.width(), [&](uint i)
+//		for (uint i = 0; i < img.width(); ++i)
 		{
 			
 			for (uint j = 0; j < img.height(); ++j)
 			{
 				RGBColor color = RGBColor::black();
-				if (i == 200 && j == 153)
-				{
-					i = i;
-				}
-
 				for(uint s = 0; s < samples; ++s)
 				{
 
@@ -47,11 +45,12 @@ void Renderer::render(Image & img)
 				//Regular super-sampling Averaging of N samples per pixel
 				img(i, j) = color / samples;
 			}
-		}
+		});
 	}
 	else
 	{
-		for (uint i = 0; i < img.width(); ++i)
+		parallel_for(uint(0), img.width(), [&](uint i)
+		// for (uint i = 0; i < img.width(); ++i)
 		{
 			float ii = 2.0 * (i + 0.5) / img.width() - 1;
 			for (uint j = 0; j < img.height(); ++j)
@@ -61,7 +60,7 @@ void Renderer::render(Image & img)
 
 				img(i, j) = integrator->getRadiance(currentRay);
 			}
-		}
+		});
 	}
 }
 

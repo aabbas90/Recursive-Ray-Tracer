@@ -50,6 +50,7 @@ using namespace rt;
 void a_rendering_walls()
 {
     Image img(800, 600);
+	int numSamples = 10;
 
 	// Texture* greentex = new ConstantTexture(RGBColor(0.f, .7f, 0.f));
 	// Texture* bluetex = new ConstantTexture(RGBColor(0.f, 0.f, 0.7f));
@@ -66,10 +67,16 @@ void a_rendering_walls()
 
 
 
+	//float xRotation = -15; //  0; // -15; //2_scene zoom //front view
+	//float yRotation = -40; //  -451; // -40;
+ //   float zRotation = 0;
+ //   Point cameraPostion = Point(-130, 85, 100);
+	//// Point cameraPostion = Point(-350, 80, 0);
+
 	float xRotation = 0; // -15; //2_scene zoom //front view
 	float yRotation = -451; // -40;
-    float zRotation = 0;
-    // Point cameraPostion = Point(-130, 85, 100);
+	float zRotation = 0;
+	// Point cameraPostion = Point(-130, 85, 100);
 	Point cameraPostion = Point(-350, 80, 0);
     Vector upVector = Vector(0.0f, 1.0f, 0.0f);
     Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
@@ -138,13 +145,12 @@ void a_rendering_walls()
 
 
 	CombineMaterial* pianoBlackMat = new CombineMaterial();
-	pianoBlackMat->add(new LambertianMaterial(blacktex1, blacktex1), 0.5);
-	pianoBlackMat->add(new PhongMaterial(blacktex1, 30), 0.4);
-	pianoBlackMat->add(new FuzzyMirrorMaterial(12.485f, 0.433f, 0.01f), 0.1);
+	pianoBlackMat->add(new PhongMaterial(blacktex1, 1), 0.5);
+	pianoBlackMat->add(new FuzzyMirrorMaterial(12.485f, 0.433f, 0.01f), 0.5);
 
 	CombineMaterial* pianoWhiteMat = new CombineMaterial();
-	pianoBlackMat->add(new LambertianMaterial(whitetex, whitetex), 0.1);
-	pianoWhiteMat->add(new FuzzyMirrorMaterial(12.485f, 0.433f, 0.05f), 0.9);
+	pianoWhiteMat->add(new LambertianMaterial(blacktex1, whitetex), 0.5);
+	pianoWhiteMat->add(new FuzzyMirrorMaterial(12.485f, 0.433f, 0.05f), 0.5);
 
 	CombineMaterial* pianoGoldMat = new CombineMaterial();
 	pianoGoldMat->add(new LambertianMaterial(blacktex1, goldtex), 0.5);
@@ -156,7 +162,7 @@ void a_rendering_walls()
     matlib->insert(std::pair<std::string, Material*>("hemisphere_mat", lamp_mat)); 
     matlib->insert(std::pair<std::string, Material*>("Piano1:Wood", pianoBlackMat));
     matlib->insert(std::pair<std::string, Material*>("Piano1:Gold", pianoBlackMat));
-    matlib->insert(std::pair<std::string, Material*>("Piano1:Material_002", white_mat));
+    matlib->insert(std::pair<std::string, Material*>("Piano1:Material_002", pianoWhiteMat));
     matlib->insert(std::pair<std::string, Material*>("Piano1:Material_004", pianoBlackMat));
     matlib->insert(std::pair<std::string, Material*>("Piano1:Black", pianoBlackMat));
 
@@ -298,8 +304,8 @@ void a_rendering_walls()
 	ConstantTexture* lightsrctex = new ConstantTexture(RGBColor(10, 10, 10));
 	Material* lightsource = new LambertianMaterial(lightsrctex, blacktex);
 
-	Vector rightQuadVector = cross(forwardVector, upVector) * 50;
-	Vector forwardQuadVector = forwardVector * 50;
+	Vector rightQuadVector = cross(forwardVector, upVector) * 100;
+	Vector forwardQuadVector = forwardVector * 100;
 	Quad* areaLight1 = new Quad((b1 + b2 + f1 + f2) * 0.25 - rightQuadVector / 2 - forwardQuadVector / 2, rightQuadVector, forwardQuadVector, nullptr, lightsource);
 	AreaLight als1(areaLight1);
 	scene->add(areaLight1);
@@ -368,7 +374,7 @@ void a_rendering_walls()
     // RayCastingIntegrator integrator(&world);
     RecursiveRayTracingIntegrator integrator(&world);
     Renderer engine1(&cam1, &integrator);
-	engine1.setSamples(10);
+	engine1.setSamples(numSamples);
     engine1.render(img);
     img.writePNG("1_walls.png");
 }
