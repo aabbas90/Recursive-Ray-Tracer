@@ -45,7 +45,7 @@ Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 Ni 1.00
 Ks 0.50 0.50 0.50
-newmtl chair:Material_001
+newmtl chair4:Material_001
 illum 4
 Kd 0.00 0.00 0.00
 Ka 1.00 1.00 1.00
@@ -53,6 +53,12 @@ Tf 0.00 0.00 0.00
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 96.08
+newmtl chair_small_mat
+illum 4
+Kd 0.50 0.50 0.50
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
 newmtl curtain_mat
 illum 4
 Kd 0.50 0.50 0.50
