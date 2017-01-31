@@ -105,7 +105,7 @@ void a_rendering_walls()
 	Texture* graytex1 = new ConstantTexture(RGBColor(0.1f, 0.1f, 0.1f));
 
 	// Material* lamp_mat = new PhongMaterial(greentex, 20.0f);
-	Material* lamp_mat = new LambertianMaterial(blacktex, bluetex);
+	Material* lamp_mat = new LambertianMaterial(blacktex1, bluetex);
     // Material* lamp_mat = new GlassMaterial(2.0f);
     Material* other_mat = new LambertianMaterial(greentex, bluetex);
     Material* wall_mat = new LambertianMaterial(bluetex, bluetex);
@@ -182,11 +182,11 @@ void a_rendering_walls()
     BVH* specs = new BVH(false);
     BVH* chair = new BVH(false);
     
-    loadOBJ(scene, "models/", "1_piano.obj", matlib);
+    loadOBJ(scene, "models/", "1_piano_stage.obj", matlib);
     //loadOBJ(scene, "models/", "1_piano_curtain.obj", matlib);
     loadOBJ(lightObj, "models/", "1_light_object.obj", matlib);
     loadOBJ(specs, "models/", "1_specs_mirror.obj", matlib);
-    loadOBJ(specs, "models/", "1_chair.obj", matlib);
+    loadOBJ(chair, "models/", "1_chair.obj", matlib);
 	lightObj->rebuildIndex();
     chair->rebuildIndex();
 	scene->add(cameraQuad);
