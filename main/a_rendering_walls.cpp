@@ -141,9 +141,9 @@ void a_rendering_walls()
 	// Scene Camera:
 	float f = 1;
 	float cameraSizeX = 24;
-	float cameraSizeY = 14;
+	float cameraSizeY = 15;
 
-	Point sceneCameraCentre = Point(-126, 35, -6); // cameraPostion + forwardVector * 100 + cross(forwardVector, upVector).normalize() * 40 - upVector.normalize() * 20;
+	Point sceneCameraCentre = Point(-128, 35, -26); // cameraPostion + forwardVector * 100 + cross(forwardVector, upVector).normalize() * 40 - upVector.normalize() * 20;
 
 	float camXRot = 0;
 	float camYRot = 90;
@@ -151,9 +151,9 @@ void a_rendering_walls()
 
 	Matrix camRotationMatrix = getRotationMatrix(camXRot, camYRot, camZRot);
 
-	Vector sceneCameraUpVector = (camRotationMatrix *  Vector(0.0f, 1.0f, 0.0f)).normalize() * cameraSizeY;
-	Vector sceneCameraForwardVector = -(camRotationMatrix *  Vector(0.0f, 0.0f, -1.0f)).normalize();
-	Vector sceneCameraRightVector = cross(sceneCameraForwardVector, upVector).normalize() * cameraSizeX;
+	Vector sceneCameraUpVector = Vector(0, 1, 0.0f) * cameraSizeY; // (camRotationMatrix *  Vector(0.0f, 1.0f, 0.0f)).normalize() * cameraSizeY;
+	Vector sceneCameraForwardVector = Vector(1, 0.0f, 0); // -(camRotationMatrix *  Vector(0.0f, 0.0f, -1.0f)).normalize();
+	Vector sceneCameraRightVector = Vector(0, 0, 1) * cameraSizeX; // cross(sceneCameraForwardVector, upVector).normalize() * cameraSizeX;
 
 	Point sceneCameraLeftCorner = sceneCameraCentre - sceneCameraUpVector * 0.5 - sceneCameraRightVector * 0.5;
 
@@ -196,6 +196,13 @@ void a_rendering_walls()
     matlib->insert(std::pair<std::string, Material*>("specs_mat", &specsMirror));
     // matlib->insert(std::pair<std::string, Material*>("curtain_mat", curtainMixedMat));
     matlib->insert(std::pair<std::string, Material*>("chair:Material_001", lamp_mat));
+
+	Texture* cameraColor = new ConstantTexture(RGBColor::rep(0.2));
+	CombineMaterial* cameraMaterial = new CombineMaterial();
+	cameraMaterial->add(new LambertianMaterial(blacktex1, cameraColor), 0.75);
+	cameraMaterial->add(new MirrorMaterial(2.485f, 3.433f), 0.25);
+
+	matlib->insert(std::pair<std::string, Material*>("camera_view_mat", cameraMaterial));
 
     BVH* scene = new BVH(false);
     BVH* lightObj = new BVH(false);
@@ -359,7 +366,7 @@ void a_rendering_walls()
 
     World world;
 
-	float pointLightInt = 100000;
+	float pointLightInt = 200000;
 	// world.light.push_back(new PointLight(b1, RGBColor::rep(pointLightInt)));
 	// world.light.push_back(new PointLight(b2, RGBColor::rep(pointLightInt)));
 	// world.light.push_back(new PointLight(b3, RGBColor::rep(pointLightInt)));

@@ -49,6 +49,7 @@ namespace rt
 
 	Point CameraLCDmaterial::getRayOrigin(Point & originalPoint) const
 	{
-		return originalPoint;
+		Vector forwardVector = cross(spanningH, spanningV).normalize();
+		return originalPoint + Vector(0, 0, 50);
 	}
 }
