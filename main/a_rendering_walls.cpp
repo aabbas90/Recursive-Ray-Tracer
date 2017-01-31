@@ -53,11 +53,6 @@ void a_rendering_walls()
     Image img(800, 600);
 	int numSamples = 1;
 
-	// Texture* greentex = new ConstantTexture(RGBColor(0.f, .7f, 0.f));
-	// Texture* bluetex = new ConstantTexture(RGBColor(0.f, 0.f, 0.7f));
-	// Texture* goldtex = new ConstantTexture(RGBColor(0.9f, 0.9f, 0.0f));
-	// Texture* whitetex = new ConstantTexture(RGBColor(1.0f, 1.0f, 1.0f));
-
     // float xRotation = -15; //2_scene
     // float yRotation = -40;
     // float zRotation = 0;
@@ -67,11 +62,30 @@ void a_rendering_walls()
 
 
 
-	Point cameraPostion = Point(-265, 83, 152);
+	//Point cameraPostion = Point(-265, 83, 152);
 
-	float xRotation = -6.6f; // -15; //  0; // -15; //2_scene zoom //front view
-	float yRotation = -51; //  -451; // -40;
-    float zRotation = 0;
+	//float xRotation = -6.6f; // -15; //  0; // -15; //2_scene zoom //front view
+	//float yRotation = -51; //  -451; // -40;
+ //   float zRotation = 0;
+
+
+	// Zoomed-in:
+	//Vector zoomingVector = (Point(-228, 72, 133) - Point(-265, 83, 152)).normalize();
+	//Point cameraPostion = Point(-228, 72, 133) + zoomingVector * 30;
+
+	//float xRotation = -6.6f; // -15; //  0; // -15; //2_scene zoom //front view
+	//float yRotation = -51; //  -451; // -40;
+	//float zRotation = 0;
+
+
+	// Changing direction:
+
+	Point cameraPostion = Point(-220, 75, 62);
+
+	float xRotation = -32; // -15; //  0; // -15; //2_scene zoom //front view
+	float yRotation = -67; //  -451; // -40;
+	float zRotation = -25;
+
 
 	//float xRotation = 0; // -15; //2_scene zoom //front view
 	//float yRotation = -451; // -40;
@@ -117,26 +131,6 @@ void a_rendering_walls()
     FlatMaterial* woodtex_mat = new FlatMaterial(woodtex);
 
 	Point pianoCentre = Point(-15, 0, -70);
-	//CombineMaterial* curtainMixedMat = new CombineMaterial();
-	//ImageTexture* curtaintex = new ImageTexture("models/curtain_tex.png", ImageTexture::REPEAT, ImageTexture::BILINEAR);
- //   FlatMaterial* curtaintex_mat = new FlatMaterial(curtaintex);
- //   curtainMixedMat->add(new FlatMaterial(blacktex1), .95);
- //   curtainMixedMat->add(new LambertianMaterial(blacktex1, goldtex), .05);
-
-	//float f = 1;
-	//float cameraSizeX = 12;
-	//float cameraSizeY = 8;
-
-	//Point sceneCameraCentre = Point(126, 35, -6); // cameraPostion + forwardVector * 100 + cross(forwardVector, upVector).normalize() * 40 - upVector.normalize() * 20;
-	//
-	//Vector sceneCameraForwardVector = (pianoCentre - sceneCameraCentre).normalize();
-	//Vector sceneCameraRightVector = cross(sceneCameraForwardVector, upVector).normalize() * cameraSizeX;
-	//Vector sceneCameraUpVector = cross(sceneCameraRightVector, sceneCameraForwardVector).normalize() * cameraSizeY;
-
-	//Point sceneCameraLeftCorner = sceneCameraCentre - sceneCameraUpVector * 0.5 - sceneCameraRightVector.normalize() * 0.5;
-
-	//Material* camera_mat = new CameraLCDmaterial(sceneCameraCentre, sceneCameraLeftCorner, sceneCameraForwardVector, sceneCameraUpVector.normalize(), pi / 4, pi / 3, cameraSizeX, cameraSizeY, f);
-	//Quad* cameraQuad = new Quad(sceneCameraLeftCorner, sceneCameraUpVector, sceneCameraRightVector, nullptr, camera_mat);
 
 	// Scene Camera:
 	float f = 1;
@@ -164,22 +158,27 @@ void a_rendering_walls()
     matlib->insert(std::pair<std::string, Material*>("stage_floor_mat1", woodtex_mat)); 
     matlib->insert(std::pair<std::string, Material*>("stage_floor_mat2", woodtex_mat)); 
 
+	Texture* impureBlacktex = new ConstantTexture(RGBColor(0.08f, 0.05f, 0.05f));
+	// LambertianMaterial* pianoBlackMat = new LambertianMaterial(impureBlacktex, impureBlacktex);
 
 	CombineMaterial* pianoBlackMat = new CombineMaterial();
-	Texture* impureBlacktex = new ConstantTexture(RGBColor(0.05f, 0.05f, 0.05f));
-	pianoBlackMat->add(new LambertianMaterial(blacktex1, impureBlacktex), 0.5);
-	pianoBlackMat->add(new PhongMaterial(blacktex1, 3), 0.2);
-	pianoBlackMat->add(new MirrorMaterial(12.485f, 0.433f), 0.35f);
+	pianoBlackMat->add(new LambertianMaterial(impureBlacktex, impureBlacktex), 0.5f);
+	pianoBlackMat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.5f);
+	// pianoBlackMat->add(new GlassMaterial(1.5), 0.25f);
+
+	// pianoBlackMat->add(new GlassMaterial(1.5), 0.5);
+	// pianoBlackMat->add(new MirrorMaterial(1.5485f, 0.433f), 0.2f);
+
+	// LambertianMaterial* pianoWhiteMat = new LambertianMaterial(whitetex, whitetex);
 
 	CombineMaterial* pianoWhiteMat = new CombineMaterial();
-	pianoWhiteMat->add(new LambertianMaterial(blacktex1, whitetex), 0.5);
-	pianoWhiteMat->add(new FuzzyMirrorMaterial(12.485f, 0.433f, 0.1f), 0.5);
+	pianoWhiteMat->add(new LambertianMaterial(whitetex, whitetex), 0.5f);
+	pianoBlackMat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.5f);
+	// pianoWhiteMat->add(new GlassMaterial(1.5), 0.25f);
 
 	CombineMaterial* pianoGoldMat = new CombineMaterial();
 	pianoGoldMat->add(new LambertianMaterial(goldtex, goldtex), 0.5);
-	pianoGoldMat->add(new FuzzyMirrorMaterial(12.485f, 0.433f, 0.1f), 0.5);
-
-    MirrorMaterial specsMirror(0.0f, 0.0f);
+	pianoGoldMat->add(new FuzzyMirrorMaterial(1.5485f, 0.433f, 0.1f), 0.5);
 
     matlib->insert(std::pair<std::string, Material*>("initialShadingGroup", other_mat)); 
     matlib->insert(std::pair<std::string, Material*>("hemisphere_mat", lamp_mat)); 
@@ -193,7 +192,7 @@ void a_rendering_walls()
     matlib->insert(std::pair<std::string, Material*>("celing_wall_mat", wall_mat)); 
     matlib->insert(std::pair<std::string, Material*>("ground_mat", wall_mat)); 
 	matlib->insert(std::pair<std::string, Material*>("light_mat", gray_mat));
-    matlib->insert(std::pair<std::string, Material*>("specs_mat", &specsMirror));
+    // matlib->insert(std::pair<std::string, Material*>("specs_mat", &specsMirror));
     // matlib->insert(std::pair<std::string, Material*>("curtain_mat", curtainMixedMat));
     matlib->insert(std::pair<std::string, Material*>("chair:Material_001", lamp_mat));
 
@@ -203,18 +202,19 @@ void a_rendering_walls()
 	cameraMaterial->add(new MirrorMaterial(2.485f, 3.433f), 0.25);
 
 	matlib->insert(std::pair<std::string, Material*>("camera_view_mat", cameraMaterial));
+	matlib->insert(std::pair<std::string, Material*>("tripod_mat", cameraMaterial));
 
     BVH* scene = new BVH(false);
     BVH* lightObj = new BVH(false);
-    BVH* specs = new BVH(false);
+    // BVH* specs = new BVH(false);
     BVH* chair = new BVH(false);
     
-    loadOBJ(scene, "models/", "1_piano.obj", matlib);
+    loadOBJ(scene, "models/", "1_piano_rotated.obj", matlib);
 	loadOBJ(scene, "models/", "1_camera.obj", matlib);
     // loadOBJ(scene, "models/", "1_piano_curtain.obj", matlib);
 	// loadOBJ(scene, "models/", "1_curtain.obj", matlib);
     loadOBJ(lightObj, "models/", "1_light_object.obj", matlib);
-    loadOBJ(specs, "models/", "1_specs_mirror.obj", matlib);
+    // loadOBJ(specs, "models/", "1_specs_mirror.obj", matlib);
     loadOBJ(chair, "models/", "1_chair.obj", matlib);
 	lightObj->rebuildIndex();
     chair->rebuildIndex();
@@ -245,9 +245,9 @@ void a_rendering_walls()
 	black_mat2->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.25);
 	black_mat2->add(new LambertianMaterial(blacktex, greentex), 0.25);
 
-    CombineMaterial* specs_mat = new CombineMaterial();
-	specs_mat->add(new PhongMaterial(whitetex, 10), 0.2);
-	specs_mat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.8);
+ //   CombineMaterial* specs_mat = new CombineMaterial();
+	//specs_mat->add(new PhongMaterial(whitetex, 10), 0.2);
+	//specs_mat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.8);
 
     Point lowerLeft(0,0,0);
     Point lowerRight(1,0,0);
@@ -288,7 +288,7 @@ void a_rendering_walls()
     scene->add(new Triangle(fs1, fs2, bs1, bottomleft, &woodMaterial));
     scene->add(new Triangle(bs2, fs2, bs1, topright, &woodMaterial));
 
-	FuzzyMirrorMaterial *leftWallMirror = new FuzzyMirrorMaterial(12.485f, 0.433f, 0.001f);
+	FuzzyMirrorMaterial *leftWallMirror = new FuzzyMirrorMaterial(2.485f, 3.433f, 0.01f); // , 0.05f);
 
 	//stage left 
 	scene->add(new Triangle(bs3, fs3, bs1, bottomleft, &woodMaterial));
@@ -309,19 +309,19 @@ void a_rendering_walls()
     Point f4(-360, 0, 180);
 
 
-    float bumbscale = 0.9f;
+    float bumbscale = 1;
     //back wall
 
-     scene->add(new Triangle(b3, b4, b1, bottomleft, &claddingMat));
-     scene->add(new Triangle(b2, b4, b1, topright, &claddingMat));
+     //scene->add(new Triangle(b3, b4, b1, bottomleft, &claddingMat));
+     //scene->add(new Triangle(b2, b4, b1, topright, &claddingMat));
 
-    //scene->add(new BumpMapper(
-    //        new Triangle(b3, b4, b1, bottomleft1, &claddingMat), 
-    //claddingTexBump, lowerLeft, upperLeft, lowerRight, bumbscale));
-    //scene->add(
-    //    new BumpMapper(
-    //        new Triangle(b2, b4, b1, topright1, &claddingMat),
-    //claddingTexBump, upperRight, lowerRight, upperLeft, bumbscale));
+    scene->add(new BumpMapper(
+            new Triangle(b3, b4, b1, bottomleft, &claddingMat), 
+    claddingTex, lowerLeft, lowerRight, upperLeft, bumbscale));
+    scene->add(
+        new BumpMapper(
+            new Triangle(b2, b4, b1, topright, &claddingMat),
+    claddingTex, upperRight, lowerRight, upperLeft, bumbscale));
 
 
     // MirrorMaterial mirror(0.0f, 0.0f);
@@ -342,8 +342,16 @@ void a_rendering_walls()
     scene->add(new Triangle(b1, b3, f1, nullptr, leftWallMirror));
 
     //ground
-    scene->add(new Triangle(f3, f4, b3, bottomleft, &woodMaterial)); 
-    scene->add(new Triangle(b4, f4, b3, topright, &woodMaterial)); 
+    /*scene->add(new Triangle(f3, f4, b3, bottomleft, &woodMaterial)); 
+    scene->add(new Triangle(b4, f4, b3, topright, &woodMaterial)); */
+
+	scene->add(new BumpMapper(
+		new Triangle(f3, f4, b3, bottomleft, &woodMaterial),
+		woodTex, lowerLeft, lowerRight, upperLeft, bumbscale));
+	scene->add(
+		new BumpMapper(
+			new Triangle(b4, f4, b3, topright, &woodMaterial),
+			woodTex, upperRight, lowerRight, upperLeft, bumbscale));
 
 	ConstantTexture* lightsrctex = new ConstantTexture(RGBColor(10, 10, 10));
 	ConstantTexture* arealightsrctex = new ConstantTexture(RGBColor::rep(50));
@@ -415,9 +423,9 @@ void a_rendering_walls()
 		Point discCentre = Point(35.73, 115.87, -43) + currentLightDirection * 0.5 + Vector(0, 0, 16 * i);
 		Disc* currentDisc = new Disc(discCentre, currentLightDirection, 3, nullptr, currentSource);
 		
-		// AreaSpotLight* als1 = new AreaSpotLight(currentDisc, cross(forwardQuadVector, rightQuadVector).normalize(), pi / 4, 30, color * 100);
-		// world.light.push_back(als1);
-		world.light.push_back(new SpotLight(discCentre, currentLightDirection, pi / 6, 200.0f, 1000000 * color));
+		AreaSpotLight* als1 = new AreaSpotLight(currentDisc, currentLightDirection, pi / 1.5, 50, color * 0.5f);
+		world.light.push_back(als1);
+		// world.light.push_back(new SpotLight(discCentre, currentLightDirection, pi / 6, 200.0f, 1000000 * color));
 		scene->add(currentDisc);
 		scene->add(currentLightObj);
 	}
