@@ -340,5 +340,5 @@ void Render_Piano_Scene()
     Renderer engine1(&cam1, &integrator);
 	engine1.setSamples(numSamples);
     engine1.render(img);
-    img.writePNG("Piano_scene.png");
+    img.writePNG("example Images/Piano_scene.png");
 }
