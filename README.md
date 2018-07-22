@@ -3,7 +3,7 @@ Implementation of a Ray-Tracer for Rendering in C++ carried out for the course o
 The goal of the project was to implement Ray-Tracing without using any Rendering Library for a developing a deeper understanding of
 Rendering concepts.
 ## Example Output:
-![ScreenShot](/examples Images/Piano.png)
+![ScreenShot](/example Images/Piano.png)
 ## Features:
 - Spatial Indexing (BVH)
 - Material Models
