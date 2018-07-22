@@ -18,7 +18,7 @@ void a_rendering();
 void Render_Piano_Scene();
 
 int main(int argc, char* argv[])
-{
+{ 
 	Render_Piano_Scene();
     return 0;
 }

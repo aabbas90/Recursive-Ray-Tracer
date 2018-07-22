@@ -277,12 +277,12 @@ void Render_Piano_Scene()
 
     World world;
 
-	float pointLightInt = 200000;
-
 	Point p1 = f1 - (f1 - b4).normalize();
 	Point p2 = f2 - (f2 - b3).normalize();
 	Point p3 = f3 - (f3 - b2).normalize();
 	Point p4 = f4 - (f4 - b1).normalize();
+
+	float pointLightInt = 60000;
 
 	world.light.push_back(new PointLight(f3 - (f3 - b2).normalize(), RGBColor::rep(pointLightInt)));
 	world.light.push_back(new PointLight(f4 - (f4 - b1).normalize(), RGBColor::rep(pointLightInt)));
@@ -291,7 +291,7 @@ void Render_Piano_Scene()
 
     // world.light.push_back(&dirl);
 	Vector spotLightFV = (Point(-22.2028809, 23.1722298, -1.95628357) - sceneCameraCentre).normalize();// sceneCameraForwardVector.normalize() + sceneCameraRightVector.normalize() * 0.2 + sceneCameraUpVector.normalize() * 0.1;
-    world.light.push_back(new SpotLight(sceneCameraCentre + sceneCameraForwardVector.normalize() * 0.2, spotLightFV,  pi / 3, 300.0f, RGBColor(RGBColor::rep(100000))));
+    world.light.push_back(new SpotLight(sceneCameraCentre + sceneCameraForwardVector.normalize() * 0.2, spotLightFV,  pi / 3, 300.0f, RGBColor(RGBColor::rep(100))));
 
 	int channel = 0;
 	int direction = 0;
@@ -312,7 +312,7 @@ void Render_Piano_Scene()
 		Vector currentLightDirection = (currentPianoPoint - currentSpotLightPoint).normalize();
 
 		Instance* currentLightObj = new Instance(lightObj);
-		currentLightObj->translate(-1.0f * (originalSpotLightPoint - Point(0, 0, 0)));
+		currentLightObj->translate(-1.0f * (originalSpotLightPoint - Point(0, 0, 0))); 
 		currentLightObj->rotate(Vector(0, 0, 1), atan(currentLightDirection.x / currentLightDirection.y));
 		currentLightObj->translate(1.0f * (originalSpotLightPoint - Point(0, 0, 0)));
 		currentLightObj->translate(currentSpotLightPoint - originalSpotLightPoint);
@@ -328,7 +328,7 @@ void Render_Piano_Scene()
 		world.light.push_back(als1);
 		world.light.push_back(new SpotLight(discCentre, currentLightDirection, pi / 1.5, 50, 100000 * color));
 		// scene->add(currentDisc);
-		scene->add(currentLightObj);
+		// scene->add(currentLightObj);
 	}
 
 	scene->rebuildIndex();
