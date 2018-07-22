@@ -1,4 +1,3 @@
-
 #include <core/assert.h>
 #include <core/scalar.h>
 #include <core/image.h>
@@ -48,64 +47,19 @@
 #include <rt/solids/disc.h>
 
 using namespace rt;
-void a_rendering_walls()
+void Render_Piano_Scene()
 {
-    Image img(800, 600);
-	int numSamples = 1;
-
-    // float xRotation = -15; //2_scene
-    // float yRotation = -40;
-    // float zRotation = 0;
-    // Point cameraPostion = Point(-500, 200, 400);
-    // Vector upVector = Vector(0.0f, 1.0f, 0.0f);
-    // Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
-
-
-
-	//Point cameraPostion = Point(-265, 83, 152);
-
-	//float xRotation = -6.6f; // -15; //  0; // -15; //2_scene zoom //front view
-	//float yRotation = -51; //  -451; // -40;
- //   float zRotation = 0;
-
-
-	// Zoomed-in:
-	//Vector zoomingVector = (Point(-228, 72, 133) - Point(-265, 83, 152)).normalize();
-	//Point cameraPostion = Point(-228, 72, 133) + zoomingVector * 30;
-
-	//float xRotation = -6.6f; // -15; //  0; // -15; //2_scene zoom //front view
-	//float yRotation = -51; //  -451; // -40;
-	//float zRotation = 0;
-
+    Image img(1920, 1200);
+	int numSamples = 10;
 
 	// Changing direction:
 
 	Point cameraPostion = Point(-220, 75, 62);
 
-	float xRotation = -32; // -15; //  0; // -15; //2_scene zoom //front view
-	float yRotation = -67; //  -451; // -40;
-	float zRotation = -25;
-
-
-	//float xRotation = 0; // -15; //2_scene zoom //front view
-	//float yRotation = -451; // -40;
-	//float zRotation = 0;
-	//Point cameraPostion = Point(-350, 80, 0);
-
+	float xRotation = -32; float yRotation = -67; float zRotation = -25;
 
     Vector upVector = Vector(0.0f, 1.0f, 0.0f);
     Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
-
-
-
-	// float xRotation = 0;  //opposite view
-	// float yRotation = -270; // -40;
-    // float zRotation = 0;
-    
-	// Point cameraPostion = Point(0, 110, 0);
-    // Vector upVector = Vector(0.0f, 1.0f, 0.0f);
-    // Vector forwardVector = Vector(0.0f, 0.0f, -1.0f);
-
 
 	Matrix rotationMatrix = getRotationMatrix(xRotation, yRotation, zRotation);
     upVector = rotationMatrix * upVector;
@@ -165,18 +119,11 @@ void a_rendering_walls()
 	pianoBlackMat->add(new LambertianMaterial(impureBlacktex, impureBlacktex), 0.4f);
 	pianoBlackMat->add(new PhongMaterial(impureBlacktex, 10), 0.1);
 	pianoBlackMat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.01f), 0.5f);
-	// pianoBlackMat->add(new GlassMaterial(1.5), 0.25f);
-
-	// pianoBlackMat->add(new GlassMaterial(1.5), 0.5);
-	// pianoBlackMat->add(new MirrorMaterial(1.5485f, 0.433f), 0.2f);
-
-	// LambertianMaterial* pianoWhiteMat = new LambertianMaterial(whitetex, whitetex);
 
 	CombineMaterial* pianoWhiteMat = new CombineMaterial();
 	pianoWhiteMat->add(new LambertianMaterial(whitetex, whitetex), 0.4f);
 	pianoBlackMat->add(new PhongMaterial(impureBlacktex, 10), 0.1);
 	pianoWhiteMat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.5f);
-	// pianoWhiteMat->add(new GlassMaterial(1.5), 0.25f);
 
 	CombineMaterial* pianoGoldMat = new CombineMaterial();
 	pianoGoldMat->add(new LambertianMaterial(goldtex, goldtex), 0.5);
@@ -194,8 +141,6 @@ void a_rendering_walls()
     matlib->insert(std::pair<std::string, Material*>("celing_wall_mat", wall_mat)); 
     matlib->insert(std::pair<std::string, Material*>("ground_mat", wall_mat)); 
 	matlib->insert(std::pair<std::string, Material*>("light_mat", gray_mat));
-    // matlib->insert(std::pair<std::string, Material*>("specs_mat", &specsMirror));
-    // matlib->insert(std::pair<std::string, Material*>("curtain_mat", curtainMixedMat));
     matlib->insert(std::pair<std::string, Material*>("chair:Material_001", lamp_mat));
 
 	Texture* cameraColor = new ConstantTexture(RGBColor::rep(0.2));
@@ -213,23 +158,11 @@ void a_rendering_walls()
     
     loadOBJ(scene, "models/", "1_piano_rotated.obj", matlib);
 	loadOBJ(scene, "models/", "1_camera.obj", matlib);
-    // loadOBJ(scene, "models/", "1_piano_curtain.obj", matlib);
-	// loadOBJ(scene, "models/", "1_curtain.obj", matlib);
     loadOBJ(lightObj, "models/", "1_light_object.obj", matlib);
-    // loadOBJ(specs, "models/", "1_specs_mirror.obj", matlib);
     loadOBJ(chair, "models/", "1_chair.obj", matlib);
 	lightObj->rebuildIndex();
     chair->rebuildIndex();
 	scene->add(cameraQuad);
-	// scene->add(cameraBox);
-	// scene->add(chair);
-    // specs->rebuildIndex();
-    // scene->add(specs); //uncomment for specs
-    // make instance etc
-
-    // scene->add(lightObj);
-
-  
 
     ImageTexture* woodTex = new ImageTexture("models/wood1.png");
     ConstantTexture* blacktex = new ConstantTexture(RGBColor::rep(0.0f));
@@ -246,10 +179,6 @@ void a_rendering_walls()
 	black_mat2->add(new PhongMaterial(whitetex, 1), 0.5);
 	black_mat2->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.25);
 	black_mat2->add(new LambertianMaterial(blacktex, greentex), 0.25);
-
- //   CombineMaterial* specs_mat = new CombineMaterial();
-	//specs_mat->add(new PhongMaterial(whitetex, 10), 0.2);
-	//specs_mat->add(new FuzzyMirrorMaterial(2.485f, 3.433f, 0.05f), 0.8);
 
     Point lowerLeft(0,0,0);
     Point lowerRight(1,0,0);
@@ -277,10 +206,6 @@ void a_rendering_walls()
     //back stage wall
     Point w1(42, 113, -80);
     Point w2(42, 113, 80);
-
-    //back stage wall TODO uncomment this later
-     //scene->add(new Triangle(bs1, bs2, w1, bottomleft, &woodMaterial));
-     //scene->add(new Triangle(w2, bs2, w1, topright, &woodMaterial));
 
     //stage front 
     scene->add(new Triangle(fs3, fs4, fs1, bottomleft, &woodMaterial));
@@ -312,10 +237,6 @@ void a_rendering_walls()
 
 
     float bumbscale = 1;
-    //back wall
-
-     //scene->add(new Triangle(b3, b4, b1, bottomleft, &claddingMat));
-     //scene->add(new Triangle(b2, b4, b1, topright, &claddingMat));
 
     scene->add(new BumpMapper(
             new Triangle(b3, b4, b1, bottomleft, &claddingMat), 
@@ -324,12 +245,6 @@ void a_rendering_walls()
         new BumpMapper(
             new Triangle(b2, b4, b1, topright, &claddingMat),
     claddingTex, upperRight, lowerRight, upperLeft, bumbscale));
-
-
-    // MirrorMaterial mirror(0.0f, 0.0f);
-    // //front wall
-    // scene->add(new Triangle(f3, f4, f1, bottomleft, &mirror));
-    // scene->add(new Triangle(f2, f4, f1, topright, &mirror));
 
     //ceiling
     scene->add(new Triangle(b1, b2, f1, nullptr, leftWallMirror));
@@ -342,10 +257,6 @@ void a_rendering_walls()
     //left wall
     scene->add(new Triangle(f3, b3, f1, nullptr, leftWallMirror));
     scene->add(new Triangle(b1, b3, f1, nullptr, leftWallMirror));
-
-    //ground
-    /*scene->add(new Triangle(f3, f4, b3, bottomleft, &woodMaterial)); 
-    scene->add(new Triangle(b4, f4, b3, topright, &woodMaterial)); */
 
 	scene->add(new BumpMapper(
 		new Triangle(f3, f4, b3, bottomleft, &woodMaterial),
@@ -363,42 +274,20 @@ void a_rendering_walls()
 	Vector forwardQuadVector = forwardVector * 20;
 	Quad* areaLight1 = new Quad((b1 + b2 + f1 + f2) * 0.25 - rightQuadVector / 2 - forwardQuadVector / 2, rightQuadVector, forwardQuadVector, nullptr, lightsource);
 	AreaLight als1(areaLight1);
-	// scene->add(areaLight1);
-
-
-	// Vector areaLs2FV = (pianoCentre - cameraPostion + Vector(0, 0, 20)).normalize();
-	//Vector areaLs2RV = cross(areaLs2FV, upVector).normalize() * 30;
-	//Vector areaLs2UV = cross(areaLs2FV, areaLs2RV).normalize() * 30;
-
-	//Quad* areaLight2 = new Quad(cameraPostion - forwardVector * 10, areaLs2RV, areaLs2UV, nullptr, lightsource);
-	//AreaLight als2(areaLight2);
-	//scene->add(areaLight2);
 
     World world;
 
 	float pointLightInt = 200000;
-	// world.light.push_back(new PointLight(b1, RGBColor::rep(pointLightInt)));
-	// world.light.push_back(new PointLight(b2, RGBColor::rep(pointLightInt)));
-	// world.light.push_back(new PointLight(b3, RGBColor::rep(pointLightInt)));
-	// world.light.push_back(new PointLight(b4, RGBColor::rep(pointLightInt)));
 
 	Point p1 = f1 - (f1 - b4).normalize();
 	Point p2 = f2 - (f2 - b3).normalize();
 	Point p3 = f3 - (f3 - b2).normalize();
 	Point p4 = f4 - (f4 - b1).normalize();
 
-	/*world.light.push_back(new PointLight(f1 - (f1 - b4).normalize(), RGBColor::rep(pointLightInt)));
-	world.light.push_back(new PointLight(f2 - (f2 - b3).normalize(), RGBColor::rep(pointLightInt)));*/
 	world.light.push_back(new PointLight(f3 - (f3 - b2).normalize(), RGBColor::rep(pointLightInt)));
 	world.light.push_back(new PointLight(f4 - (f4 - b1).normalize(), RGBColor::rep(pointLightInt)));
 
 	world.light.push_back(new PointLight((p1 + p2) * 0.5f, RGBColor::rep(pointLightInt * 2)));
-
-	// world.light.push_back(&als2);
-
-    //directional light
-    // DirectionalLight dirl(Vector(0.2f,-0.5f,0.5f).normalize(), RGBColor(RGBColor::rep(100)));
-    // DirectionalLight dirl(forwardVector.normalize(), RGBColor(RGBColor::rep(100)));
 
     // world.light.push_back(&dirl);
 	Vector spotLightFV = (Point(-22.2028809, 23.1722298, -1.95628357) - sceneCameraCentre).normalize();// sceneCameraForwardVector.normalize() + sceneCameraRightVector.normalize() * 0.2 + sceneCameraUpVector.normalize() * 0.1;
@@ -442,19 +331,14 @@ void a_rendering_walls()
 		scene->add(currentLightObj);
 	}
 
-
-
 	scene->rebuildIndex();
 	world.scene = scene;
 
-	// PerspectiveCamera cam1(Point(0.0f, 5.0f, 30.0f), Vector(0.0f, 0.0f, -1.0f), Vector(0.0f, 1.0f, 0.0f), pi / 4, pi / 3);
-    // PerspectiveCamera cam1(cameraPostion, forwardVector, upVector, pi / 4, pi / 3);
     PerspectiveCamera cam1(cameraPostion, forwardVector, upVector, pi / 4, pi / 3);
 
-    // RayCastingIntegrator integrator(&world);
     RecursiveRayTracingIntegrator integrator(&world);
     Renderer engine1(&cam1, &integrator);
 	engine1.setSamples(numSamples);
     engine1.render(img);
-    img.writePNG("1_walls.png");
+    img.writePNG("Piano_scene.png");
 }

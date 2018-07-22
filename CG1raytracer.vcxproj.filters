@@ -519,9 +519,6 @@
     <ClCompile Include="main\a_rendering.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="main\a_rendering_walls.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
     <ClCompile Include="cameraLCD.cpp">
       <Filter>rt\solids</Filter>
     </ClCompile>
@@ -536,6 +533,9 @@
     </ClCompile>
     <ClCompile Include="rt\lights\areaspotlight.cpp">
       <Filter>rt\lights</Filter>
+    </ClCompile>
+    <ClCompile Include="main\a_render_piano.cpp">
+      <Filter>main</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
