@@ -13,6 +13,7 @@ Rendering concepts.
   - Motion-blur
   - Fuzzy Reflections/Refractions
   - Soft Shadows
+- Camera with an LCD placed inside scene.
   
 ## Requirements:
 - Microsoft Visual Studio 2017 (C++)
