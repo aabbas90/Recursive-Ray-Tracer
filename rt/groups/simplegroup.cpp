@@ -38,10 +38,16 @@ namespace rt
 	}
 	void SimpleGroup::setMaterial(Material* m)
 	{
-		NOT_IMPLEMENTED;
+		for (auto &primitive : primitives)
+		{
+			primitive->setMaterial(m);
+		}
 	}
 	void SimpleGroup::setCoordMapper(CoordMapper* cm)
 	{
-		NOT_IMPLEMENTED;
+		for (auto &primitive : primitives)
+		{
+			primitive->setCoordMapper(cm);
+		}
 	}
 }

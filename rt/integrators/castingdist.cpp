@@ -4,8 +4,6 @@
 
 namespace rt
 {
-	float MAX_DIST2 = 10000000;
-
 	RayCastingDistIntegrator::RayCastingDistIntegrator(World * world, const RGBColor & nearColor, float nearDist, const RGBColor & farColor, float farDist)
 	{
 		this->world = world;
@@ -15,9 +13,9 @@ namespace rt
 		this->farDist = farDist;
 	}
 
-	RGBColor RayCastingDistIntegrator::getRadiance(const Ray & ray) const
+	RGBColor RayCastingDistIntegrator::getRadiance(const Ray & ray, int depth) const
 	{
-		Intersection intersection = this->world->scene->intersect(ray, MAX_DIST2);
+		Intersection intersection = this->world->scene->intersect(ray, MAX_DIST);
 		RGBColor colorValue = RGBColor(0, 0, 0);
 		if (intersection)
 		{

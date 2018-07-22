@@ -2,6 +2,7 @@
 #include "point.h"
 #include <algorithm>
 #include <math.h>	
+#include "float4.h"
 #include <core/assert.h>
 
 namespace rt
@@ -108,15 +109,31 @@ namespace rt
 		return Point(a.x - b.x, a.y - b.y, a.z - b.z);
 	}
 
-	// Incomplete:
+	//TODO check for w
 	Point operator*(const Float4 & scale, const Point & p)
 	{
-		NOT_IMPLEMENTED;
+		return Point(scale.x * p.x, scale.y * p.y, scale.z * p.z);
 	}
 
 	std::ostream& operator<<(std::ostream& os, const Vector& v)
 	{
 	    os << "VECTOR x:" << v.x << " y:" << v.y << " z:" << v.z  << " length: " << v.length();
 	    return os;
+	}
+
+	Vector::Vector(const Float4 & f4)
+	{
+		if(f4.w != 0.0f)
+		{
+			this->x = f4.x / f4.w;
+			this->y = f4.y / f4.w;
+			this->z = f4.z / f4.w;
+		}
+		else
+		{
+			this->x = f4.x;
+			this->y = f4.y;
+			this->z = f4.z;
+		}
 	}
 }

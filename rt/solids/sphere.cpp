@@ -59,7 +59,7 @@ namespace rt
 
 	Point Sphere::sample() const
 	{
-		NOT_IMPLEMENTED;
+		return center;
 	}
 
 	float Sphere::getArea() const

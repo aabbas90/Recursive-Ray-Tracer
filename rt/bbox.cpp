@@ -3,10 +3,16 @@
 #include <rt/ray.h>
 #include <core/point.h>
 #include <algorithm>
+<<<<<<< HEAD
 #include <tuple>
+=======
+#include<tuple>
+#include <math.h>
+
+>>>>>>> chitra
 
 const float maxFloat = std::numeric_limits<float>::max();
-const float minFloat = std::numeric_limits<float>::min();
+const float minFloat = -std::numeric_limits<float>::max();
 
 namespace rt
 {
@@ -54,6 +60,7 @@ namespace rt
 		}
 		this->isEmpty = false;
 	}
+<<<<<<< HEAD
 
 	void BBox::Inflate(float factor)
 	{
@@ -87,6 +94,8 @@ namespace rt
 		this->maxCorner = this->maxCorner + inflationVector;
 	}
 
+=======
+>>>>>>> chitra
 	std::tuple< float, float, bool> BBox::intersect(const Ray & ray) const
 	{
 		// Return no intersection if empty:
@@ -122,7 +131,11 @@ namespace rt
 		float tyMax = std::max(ty0, ty1);
 
 		// Are these the two t0's and t1's required? Because there are two more of them as well.
+<<<<<<< HEAD
 		if ((minT > tyMax + 0.5) || (tyMin > maxT + 0.5))
+=======
+		if ((minT > tyMax) || (tyMin > maxT))
+>>>>>>> chitra
 			return std::tuple<float, float, bool>( tyMin, maxT, false);
 
 		if (tyMin > minT)
@@ -142,7 +155,11 @@ namespace rt
 		float tzMax = std::max(tz0, tz1);
 
 		// Are these the two t0's and t1's required? Because there are two more of them as well.
+<<<<<<< HEAD
 		if ((minT > tzMax + 0.5) || (tzMin > maxT + 0.5))
+=======
+		if ((minT > tzMax) || (tzMin > maxT))
+>>>>>>> chitra
 			return std::tuple<float, float, bool>(tzMin, maxT, false);
 
 		if (tzMin > minT)
@@ -158,10 +175,51 @@ namespace rt
 		if (minT < 0 && maxT < 0)
 			return std::tuple<float, float, bool>(minT, maxT, false);
 
+<<<<<<< HEAD
 		if (minT < 0)
 			minT = maxT;
 
 		return std::tuple<float, float, bool>(minT, maxT, true);
+=======
+		// TO DO: What to do when the ray origin is inside the box? then one intersection is -ive and one +ive
+		// if (minT < 0)
+		//	minT = maxT;
+
+		return std::tuple<float, float, bool>(minT, maxT, true);
+	}
+
+
+	void BBox::Inflate(float factor)
+	{
+		float width = maxCorner.x - minCorner.x;
+		float length = maxCorner.y - minCorner.y;
+		float height = maxCorner.z - minCorner.z;
+		Vector inflationVector = Vector(0, 0, 0);
+		if (width < length)
+		{
+			if (width < height)
+			{
+				inflationVector = Vector(factor, 0, 0);
+			}
+			else
+			{
+				inflationVector = Vector(0, 0, factor);
+			}
+		}
+		else
+		{
+			if (length < height)
+			{
+				inflationVector = Vector(0, factor, 0);
+			}
+			else
+			{
+				inflationVector = Vector(0, 0, factor);
+			}
+		}
+		this->minCorner = this->minCorner - inflationVector;
+		this->maxCorner = this->maxCorner + inflationVector;
+>>>>>>> chitra
 	}
 
 	bool BBox::isUnbound()
@@ -206,5 +264,41 @@ namespace rt
 		}
 
 		return std::pair<int, float>();
+	}
+
+	float BBox::getSurfaceArea()
+	{
+		float length = maxCorner.x - minCorner.x;
+		float width = maxCorner.y - minCorner.y;
+		float height = maxCorner.z - minCorner.z;
+
+		float xyPlaneArea = fabs(length * width);
+		float yzPlaneArea = fabs(width * height);
+		float zxPlaneArea = fabs(length * height);
+
+		return 2 * (xyPlaneArea + yzPlaneArea + zxPlaneArea);
+	}
+	float BBox::getXLength()
+	{
+		if (isEmpty)
+			return 0;
+
+		return this->maxCorner.x - this->minCorner.x;
+	}
+
+	float BBox::getYLength()
+	{
+		if (isEmpty)
+			return 0;
+
+		return this->maxCorner.y - this->minCorner.y;
+	}
+
+	float BBox::getZLength()
+	{
+		if (isEmpty)
+			return 0;
+
+		return this->maxCorner.z - this->minCorner.z;
 	}
 }

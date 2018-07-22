@@ -3,6 +3,7 @@
 #include <rt/intersection.h>
 #include <core/assert.h>
 #include<rt/bbox.h>
+#include<core/random.h>
 
 namespace rt
 {
@@ -37,7 +38,11 @@ namespace rt
 		Intersection tri1Intersection = tri1.intersect(ray, previousBestDistance);
 		if (tri1Intersection)
 		{
-			Intersection intersectionObject = Intersection(tri1Intersection.distance, ray, this, tri1Intersection.normal());
+			Vector normal = tri1Intersection.normal();
+			if (dot(normal, ray.d) > 0)
+				normal = -1.0f * normal;
+
+			Intersection intersectionObject = Intersection(tri1Intersection.distance, ray, this, normal);
 			intersectionObject.SetLocalIntersectingPoint((ray.getPoint(tri1Intersection.distance) - v1).ToPoint());
 			return intersectionObject;
 		}
@@ -46,7 +51,11 @@ namespace rt
 		Intersection tri2Intersection = tri2.intersect(ray, previousBestDistance);
 		if (tri2Intersection)
 		{
-			Intersection intersectionObject = Intersection(tri2Intersection.distance, ray, this, tri2Intersection.normal());
+			Vector normal = tri2Intersection.normal();
+			if (dot(normal, ray.d) > 0)
+				normal = -1.0f * normal;
+
+			Intersection intersectionObject = Intersection(tri2Intersection.distance, ray, this, normal);
 			intersectionObject.SetLocalIntersectingPoint((ray.getPoint(tri2Intersection.distance) - v1).ToPoint());
 			return intersectionObject;
 		}
@@ -56,7 +65,8 @@ namespace rt
 
 	Point Quad::sample() const
 	{
-		NOT_IMPLEMENTED;
+		// http://stackoverflow.com/questions/240778/random-points-inside-a-polygon
+		return p1 + random() * span1 + random() * span2;
 	}
 
 	float Quad::getArea() const

@@ -2,6 +2,7 @@
 #include "infiniteplane.h"
 #include<core/assert.h>
 #include<rt/bbox.h>
+#include <core/random.h>
 
 namespace rt
 {
@@ -39,11 +40,13 @@ namespace rt
 		float fullArea = normalVector.length() / 2;
 
 		InfinitePlane plane = InfinitePlane(v1, normalVector.normalize(), texMapper, material);
-		Intersection intersectionObject = plane.intersect(ray, previousBestDistance);
+		Intersection planeInt = plane.intersect(ray, previousBestDistance);
+		Intersection intObject;
 
-		if (intersectionObject)
+		if (planeInt)
 		{
-			Point p = intersectionObject.hitPoint();
+			
+			Point p = planeInt.hitPoint();
 
 			Vector v3v2 = v3 - v2;
 			Vector pv2 = p - v2;
@@ -64,15 +67,24 @@ namespace rt
 			if (w < 0 || w > 1)
 				return Intersection();
 
-			intersectionObject.SetLocalIntersectingPoint(u * v1 + v * v2 + w * v3);
+			if (dot(normalVector, ray.d.normalize()) > 0)
+				normalVector = -1.0f * normalVector;
+
+			intObject = Intersection(planeInt.distance, ray, this, normalVector.normalize());
+			intObject.SetLocalIntersectingPoint(Point(u, v, w));
 		}
 
-		return intersectionObject;
+		return intObject;
 	}
 
 	Point Triangle::sample() const
 	{
-		NOT_IMPLEMENTED;
+		// http://math.stackexchange.com/questions/18686/uniform-random-point-in-triangle
+		float r1 = random();
+		float r2 = random();
+		float r3 = random();
+		float r1Root = std::sqrt(r1);
+		return (1 - r1Root) * v1 + (r1Root * (1 - r2)) * v2 + (r2 * r1Root) * v3;
 	}
 
 	float Triangle::getArea() const

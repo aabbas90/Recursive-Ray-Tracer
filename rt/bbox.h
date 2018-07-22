@@ -38,11 +38,20 @@ public:
 			return maxCorner - minCorner;
 	}
 
+<<<<<<< HEAD
 	std::tuple<float, float, bool> intersect(const Ray& ray) const;
+=======
+	std::tuple< float, float, bool> intersect(const Ray & ray) const;
+>>>>>>> chitra
 
 	bool isUnbound();
 	static bool isInside(BBox& parent, BBox& child);
 	std::pair<int, float> findGreatestDimensionAndMiddleLocation();
+	float getSurfaceArea();
+	float getXLength();
+	float getYLength();
+	float getZLength();
+
 };
 
 }

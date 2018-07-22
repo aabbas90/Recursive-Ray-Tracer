@@ -4,8 +4,10 @@
 #include <core/macros.h>
 #include <iostream>
 
-namespace rt {
 
+namespace rt {
+	
+static int BIG_POINT = 100000;
 class Vector;
 class Float4;
 

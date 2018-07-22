@@ -4,9 +4,7 @@
 
 namespace rt
 {
-	float MAX_DIST = 10000000;
-
-	RGBColor RayCastingIntegrator::getRadiance(const Ray& ray) const
+	RGBColor RayCastingIntegrator::getRadiance(const Ray& ray, int depth) const
 	{
 		Intersection intersection = this->world->scene->intersect(ray, MAX_DIST);
 		float grayColor = 0;

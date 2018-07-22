@@ -49,7 +49,6 @@ artifacts/
 *_i.h
 *.ilk
 *.meta
-*.obj
 *.pch
 *.pdb
 *.pgc
@@ -248,3 +247,5 @@ cgray
 # Generated Images
 .png
 /Report20161117-1331.diagsession
+/enc_temp_folder/7df166cc56556efdca9e32a12a15e/glass.cpp
+/models/11.mb

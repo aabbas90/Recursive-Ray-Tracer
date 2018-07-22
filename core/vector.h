@@ -6,8 +6,9 @@
 
 namespace rt {
 
-class Float4;
 class Point;
+class Float4;
+
 class ALIGN(16) Vector {
 public:
 	float x, y, z;

@@ -1,7 +1,8 @@
 #ifndef CG1RAYTRACER_GROUPS_BVH_HEADER
 #define CG1RAYTRACER_GROUPS_BVH_HEADER
 
-const int maxNumberElementsInLeaf = 5;
+const int maxNumberElementsInLeaf = 2;
+const int numberBins = 50;
 #include <vector>
 #include <rt/groups/group.h>
 #include <rt/bbox.h>
@@ -20,45 +21,35 @@ class PrimitiveComparator
 
 };
 
-class IntersectionElement
-{
-public:
-	BVHNode* node;
-	float nodeDistance;
-	bool isIntersected = false;
-	IntersectionElement() {}
-	IntersectionElement(BVHNode * node, float nodeDistance, bool isIntersected)
-		:node(node), nodeDistance(nodeDistance), isIntersected(isIntersected) {}
-	bool operator < (const IntersectionElement& r) const
-	{
-		return this->nodeDistance > r.nodeDistance;
-	}
-
-	bool operator() (const IntersectionElement& l, const IntersectionElement& r) const
-	{
-		return l.nodeDistance > r.nodeDistance;
-	}
-};
-
-
 class BVH : public Group {
 public:
-	BVH();
+	int numNodes;
+	BVH(bool doSAH = true);
 	virtual BBox getBounds() const;
 	virtual Intersection intersect(const Ray& ray, float previousBestDistance=FLT_MAX) const;
+	Intersection intersectNode(const Ray & ray, float previousBestDistance, BVHNode* node) const;
 	virtual void rebuildIndex();
 	virtual ~BVH();
 	virtual void add(Primitive* p);
 	virtual void setMaterial(Material* m);
 	virtual void setCoordMapper(CoordMapper* cm);
+<<<<<<< HEAD
 	int getIndexFromPlaneLocation(const int startindex, const int endIncludingIndex, int dimensionIndex, float planeLocation);
 	void buildBVH(BVHNode* parentNode, const int startIndex, const int endIncludingIndex);
 	void setBoundingBoxOfNode(BVHNode *node, unsigned int startIndex, unsigned int endIncludingIndex);
 	Intersection IterateOverQueue(std::priority_queue<IntersectionElement>& pqueue, const Ray & ray, float previousBestDistance) const;
 	bool BVH::SanityCheck(BVHNode* parent, int* count);
+=======
+	int getIndexFromPlaneLocation(unsigned int startindex, unsigned int endIncludingIndex, int dimensionIndex, float planeLocation);
+	void buildBVH(BVHNode* parentNode, int startIndex, int endIncludingIndex);
+	void setBoundingBoxOfNode(BVHNode *node, unsigned int startIndex, unsigned int endIncludingIndex);
+	std::pair<int, int> getSplittingIndexAndDimensionSAH(int startIndex, int endIncludingIndex);
+	BBox getBBoxOfPrimitives(int startIndex, int endIncludingIndex);
+>>>>>>> chitra
 private:
 	Primitives unsortedList;
-	BVHNode* root;
+	BVHNode* root = nullptr;
+	bool doSAH = true;
 };
 
 }
